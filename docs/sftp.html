@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SFTP file transfers — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 4: SFTP file transfers">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 04</p>
+    <h1>SFTP file transfers</h1>
+    <p class="lede">Remote file browsing, the transfer queue, pause and resume, and how cancellation treats partial files.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html" class="current">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 4</p>
+<h2 id="browse">Remote file browsing</h2>
+<ul>
+  <li>A remote file tree with directory listing, read, write, rename, delete and create-directory operations.</li>
+  <li>Upload and download over SFTP (<code>russh-sftp</code>), reusing the same SSH session channel as the terminal.</li>
+  <li>Local and remote browsing share the <code>RemoteFs</code> abstraction, so local and remote panels behave alike.</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> Permission or ownership editing, symlink handling, hidden-file toggles and multi-select
+  gestures are not described in the source material.
+</div>
+
+<h2 id="queue">Transfer queue</h2>
+<p>Every queued file is its own row, showing completed bytes against the total and the live transfer speed.</p>
+<ul>
+  <li>Directories and drag-and-drop uploads are walked once on the Rust side with <code>walkdir</code>.</li>
+  <li>Progress is reported in 4 MiB chunks; single-file uploads use 64 KB chunks.</li>
+  <li>Progress arrives through the <code>transfer-progress</code> event.</li>
+</ul>
+
+<h2 id="pause">Pause, resume and cancel</h2>
+<ul>
+  <li>Transfers support <strong>pause and resume</strong>.</li>
+  <li><strong>Cancelling an upload cleans up the partial remote files created by that upload.</strong></li>
+  <li>Files that already completed stay in place.</li>
+  <li>Target files that existed before the upload are <strong>not</strong> deleted.</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> Whether resume survives an application restart, how many transfers may run concurrently,
+  and whether bandwidth limits can be configured are not documented.
+</div>
+
+<h2 id="tools">Built-in network file tools</h2>
+<p>Besides SFTP, the application ships file-transfer tools that run from the same window:</p>
+<ul>
+  <li><strong>FTP server</strong> with PASV and EPSV modes.</li>
+  <li><strong>HTTP/HTTPS file server</strong> with one-click generation of a self-signed certificate.</li>
+  <li><strong>TFTP server</strong>.</li>
+  <li><strong>FTP client</strong> supporting no TLS, explicit TLS and implicit TLS.</li>
+  <li><strong>TFTP client</strong>.</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> Default ports, bind addresses, authentication for the FTP server and certificate fields
+  for the HTTPS server are not stated in the source material.
+</div>
+<div class="pager">
+<a class="prev" href="sessions.html"><span class="dir">Previous</span>Sessions &amp; tabs</a>
+<a class="next" href="editor.html"><span class="dir">Next</span>Remote file editing</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

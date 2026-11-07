@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation & system requirements — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 1: Installation & system requirements">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 01</p>
+    <h1>Installation &amp; system requirements</h1>
+    <p class="lede">Install the Windows MSI, or build the application from source on Windows, Linux or macOS.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html" class="current">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 1</p>
+<h2 id="platforms">Supported platforms</h2>
+<p>Windows is the primary target and the only platform with a published installer. The project can also run and be
+developed on Linux and macOS, but those platforms are built from source.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Platform</th><th>Published package</th><th>Source build</th></tr></thead>
+    <tbody>
+      <tr><td>Windows</td><td>MSI</td><td>Supported</td></tr>
+      <tr><td>Linux</td><td>None</td><td>Supported; the Debian/Ubuntu packages below are required</td></tr>
+      <tr><td>macOS</td><td>None</td><td>Supported; no extra system dependencies according to the README</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="callout">
+  <strong>Why MSI only.</strong> The bundle target in <code>tauri.conf.json</code> is <code>["msi"]</code>, so the
+  release process publishes no other installer format.
+</div>
+
+<h2 id="download">Installing the Windows build</h2>
+<p>The current release is <strong>v0.0.12</strong> (2026-11-07, not a pre-release). Download the MSI from the
+<a href="https://github.com/wrolp/wrolp/releases">GitHub Releases page</a> and run the installer.</p>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The source material does not describe installer options, per-user versus per-machine
+  installation, an installation directory, silent-install flags or uninstall behaviour. Those steps are omitted rather
+  than invented.
+</div>
+
+<h2 id="requirements">Build requirements</h2>
+<h3>Linux system packages (Debian/Ubuntu)</h3>
+<pre><code>sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
+  libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev</code></pre>
+<p>macOS and Windows need no additional system dependencies according to the README.</p>
+
+<h3>Toolchain</h3>
+<ul>
+  <li><strong>Rust</strong>, installed through <code>rustup</code>.</li>
+  <li><strong>Frontend dependencies</strong> installed with yarn; the repository commits a <code>yarn.lock</code>, so yarn is the recommended package manager.</li>
+</ul>
+<pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+yarn</code></pre>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> No minimum OS version, Node.js version, RAM/disk figure or WebView2 runtime requirement
+  is stated in the README, release notes, <code>package.json</code> or <code>tauri.conf.json</code>.
+</div>
+
+<h2 id="build">Build, run and test</h2>
+<pre><code>yarn tauri dev      # full stack (Tauri starts the Vite dev server automatically)
+yarn dev            # frontend only, for pure UI debugging (no Rust/SSH)
+yarn build:clean    # release build in src-tauri/target-release/release/bundle/
+yarn tauri build    # incremental build in src-tauri/target/</code></pre>
+<pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
+cd src-tauri &amp;&amp; cargo run --bin ssh_test   # standalone russh connectivity probe
+npx playwright install &amp;&amp; yarn test:e2e    # frontend E2E with a stubbed Tauri IPC</code></pre>
+<p>The E2E suite lives under <code>e2e/ui/</code> and contains about 100 specs. Because the backend is stubbed through
+<code>window.__TAURI_INTERNALS__</code>, the Playwright run does not need a Rust build.</p>
+
+<h2 id="releases">Releasing</h2>
+<pre><code>gh auth login -h github.com
+yarn run publish    # builds, then uploads to a GitHub Release</code></pre>
+<p>Set <code>RELEASE_SKIP_CLEAN=1</code> to reuse existing artifacts instead of cleaning first. The auto-updater uses a
+GitHub Release endpoint and requires a real <code>pubkey</code> in <code>tauri.conf.json</code>.</p>
+
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The file tree contains no <code>.github/workflows/</code>, so whether an automated
+  build/test pipeline exists cannot be verified.
+</div>
+<div class="pager">
+<a class="next" href="connections.html"><span class="dir">Next</span>Your first connection</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

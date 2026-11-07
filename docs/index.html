@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User manual — Wrolp Terminal</title>
+<meta name="description" content="Thirteen-chapter user manual for Wrolp Terminal covering installation, connections, sessions, SFTP, editing, tunnels, Docker, Kubernetes, Git, AI, recording, data migration and troubleshooting.">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Documentation</p>
+    <h1>User manual</h1>
+    <p class="lede">Thirteen chapters, from installation to troubleshooting, with every unconfirmed interface detail marked as such.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p>This manual documents Wrolp Terminal v0.0.12 as described by the repository's README, release notes,
+<code>package.json</code>, <code>src-tauri/Cargo.toml</code>, configuration files and source layout (retrieved 2026-11-07).</p>
+
+<div class="callout">
+  <strong>How to read it.</strong> Each chapter separates what the source material confirms from what it does not.
+  Where a dialog, menu path, field name, default value or screenshot is not documented, the chapter says so explicitly
+  under “Not confirmed” instead of inventing a procedure. No screenshots are reproduced because none are available in
+  the source material.
+</div>
+
+<h2 id="chapters">Chapters</h2>
+<div class="grid">
+    <div class="card">
+      <div class="chapter-no">CHAPTER 01</div>
+      <h3><a href="installation.html">Installation &amp; system requirements</a></h3>
+      <p>Platforms, system packages, toolchain, build, test and release commands.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 02</div>
+      <h3><a href="connections.html">Your first connection</a></h3>
+      <p>SSH, Telnet, serial and local sessions, authentication and connection health.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 03</div>
+      <h3><a href="sessions.html">Sessions &amp; tabs</a></h3>
+      <p>Tabs, split trees, floating panes, keybindings and window behaviour.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 04</div>
+      <h3><a href="sftp.html">SFTP file transfers</a></h3>
+      <p>Remote file browsing, the transfer queue, pause/resume and cancel semantics.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 05</div>
+      <h3><a href="editor.html">Remote file editing</a></h3>
+      <p>Monaco editing, encoding detection, hex view, image preview and network file tools.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 06</div>
+      <h3><a href="tunnels.html">SSH tunnels</a></h3>
+      <p>Per-connection local port forwarding and how the backend syncs tunnel state.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 07</div>
+      <h3><a href="docker.html">Docker &amp; host analysis</a></h3>
+      <p>Docker and podman hosts, container actions, logs, analysis reports and host probing.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 08</div>
+      <h3><a href="kubernetes.html">Kubernetes &amp; Helm</a></h3>
+      <p>Contexts, namespaces, ten resource kinds, row actions and the Helm tab.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 09</div>
+      <h3><a href="git.html">Git panel</a></h3>
+      <p>Status, diff, history, branches, commit, push safeguards, conflicts and local ignore.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 10</div>
+      <h3><a href="ai.html">AI assistant</a></h3>
+      <p>Chat versus Agent, endpoint profiles, key vault, images and send-to-terminal behaviour.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 11</div>
+      <h3><a href="recording.html">Session recording &amp; export</a></h3>
+      <p>Opt-in recording, NDJSON layout, replay, asciinema export and index repair.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 12</div>
+      <h3><a href="data.html">Data location, migration &amp; backup</a></h3>
+      <p>Files in the data directory, migration rules, compacting and backup considerations.</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">CHAPTER 13</div>
+      <h3><a href="troubleshooting.html">Troubleshooting</a></h3>
+      <p>Symptoms and the documented facts that explain or bound them.</p>
+    </div>
+</div>
+
+<h2 id="paths">Suggested reading paths</h2>
+<ul>
+  <li><strong>First-time setup</strong>: 1 → 2 → 3. Install, connect, then learn how tabs and panes behave.</li>
+  <li><strong>Everyday file work</strong>: 4 → 5 → 6. Transfers, editing and port forwarding.</li>
+  <li><strong>Server operations</strong>: 7 → 8 → 9. Docker, Kubernetes/Helm and Git.</li>
+  <li><strong>AI and record keeping</strong>: 10 → 11 → 12. Assistant configuration, recording and data movement.</li>
+  <li><strong>When something breaks</strong>: jump to 13; each symptom links back to the relevant chapter.</li>
+</ul>
+
+<h2 id="coverage">Coverage and source limits</h2>
+<ul>
+  <li><strong>Release packages are MSI only</strong>; Linux/macOS must build from source.</li>
+  <li><strong>No CONTRIBUTING.md, code of conduct or development-process document</strong> exists. The repository provides issue templates (bug report and feature request) and a pull request template.</li>
+  <li><strong>No roadmap document</strong>: the README states that it describes the current code, not future plans.</li>
+  <li><strong>No CI configuration</strong> (<code>.github/workflows/</code> is absent), so automated checks cannot be confirmed.</li>
+  <li>UI entry points and parameter defaults that are not present in the README, release notes, configuration or source
+  layout remain marked as unconfirmed in the relevant chapter.</li>
+</ul>
+
+<p>Prefer a guided tour of the features first? Return to the <a href="../features.html">feature overview</a>, or go
+straight to <a href="../getting-started.html">getting started</a>.</p>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

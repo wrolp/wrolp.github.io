@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remote file editing — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 5: Remote file editing">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 05</p>
+    <h1>Remote file editing</h1>
+    <p class="lede">Monaco-based editing over the same session, encoding detection, and read-only views for binary files and images.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html" class="current">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 5</p>
+<h2 id="monaco">Editing with Monaco</h2>
+<ul>
+  <li>The editor is an embedded <strong>Monaco</strong> editor.</li>
+  <li>It opens either in a split pane or in a floating window, and is isolated per session like other panes.</li>
+  <li>Text encoding is detected automatically for <strong>UTF-8 and GBK</strong> using <code>encoding_rs</code>.</li>
+  <li>Editors can be opened from the remote file tree alongside terminal tabs.</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> Save behaviour (auto-save, atomic write, external-change detection), maximum file size,
+  line-ending handling, backup files and editor preference controls are not described in the README, release notes or
+  configuration files.
+</div>
+
+<h2 id="binary">Binary files and images</h2>
+<ul>
+  <li>Binary files open as a <strong>hex dump</strong>.</li>
+  <li>Images are previewed inline according to their MIME type.</li>
+</ul>
+<p>These views are read-oriented; the documentation does not describe editing or saving binary content.</p>
+
+<h2 id="languages">Language support</h2>
+<p>Monaco initialisation and custom language definitions live in <code>src/editor/</code>, including shell syntax. The
+README does not enumerate every supported language, so consult that directory for the exact set in your build.</p>
+
+<h2 id="related">Related chapters</h2>
+<ul>
+  <li><a href="sftp.html">Chapter 4 — SFTP file transfers</a> for upload, download and the transfer queue.</li>
+  <li><a href="git.html">Chapter 9 — Git panel</a> for repository-level file changes and diffs.</li>
+</ul>
+<div class="pager">
+<a class="prev" href="sftp.html"><span class="dir">Previous</span>SFTP file transfers</a>
+<a class="next" href="tunnels.html"><span class="dir">Next</span>SSH tunnels</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

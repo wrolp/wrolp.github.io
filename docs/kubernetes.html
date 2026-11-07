@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kubernetes & Helm — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 8: Kubernetes & Helm">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 08</p>
+    <h1>Kubernetes &amp; Helm</h1>
+    <p class="lede">Contexts, namespaces and resource rows, plus release management in the Helm tab.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html" class="current">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 8</p>
+<h2 id="host">Which cluster you are looking at</h2>
+<p>Kubernetes mode follows the <strong>currently focused terminal</strong> to choose its host: either an SSH jump host or
+the local kubeconfig. Switching focus therefore switches the cluster context source, which is why the panel and the
+terminal should be read together.</p>
+
+<h2 id="navigation">Contexts and namespaces</h2>
+<ul>
+  <li>Context and namespace selectors, plus a search box.</li>
+  <li>The default namespace filter is <strong>All namespaces</strong>.</li>
+  <li>Namespace labels are coloured by name with a stable mapping, so the same namespace keeps its colour.</li>
+</ul>
+
+<h2 id="resources">Resource kinds</h2>
+<p>Ten kinds share one row model: pods, deployments, statefulsets, daemonsets, services, ingresses, jobs, cronjobs,
+configmaps and secrets.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Row action</th><th>Notes from the source</th></tr></thead>
+    <tbody>
+      <tr><td>View and edit</td><td>Edit and apply YAML</td></tr>
+      <tr><td>Scale</td><td>Available on the shared row model</td></tr>
+      <tr><td>Delete</td><td>Requires an in-app confirmation</td></tr>
+      <tr><td>Logs</td><td>View or stream, with ANSI colours preserved</td></tr>
+      <tr><td>Pod shell</td><td>Enter a shell in a Pod</td></tr>
+      <tr><td>Pod files</td><td>Browse files inside a Pod</td></tr>
+      <tr><td>Port forwarding</td><td>Rules can be saved</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="helm">Helm</h2>
+<ul>
+  <li>Detect the Helm CLI.</li>
+  <li>List releases and view values and revision history.</li>
+  <li>Roll back, uninstall, install and upgrade.</li>
+</ul>
+
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> Required kubectl/Helm versions, how kubeconfig paths are chosen, custom resource
+  definitions beyond the ten kinds, whether apply uses server-side apply, and the fields of the install/upgrade dialog
+  are not documented. The documentation also does not state how a jump host authenticates kubectl.
+</div>
+
+<h2 id="related">Related chapters</h2>
+<ul>
+  <li><a href="sessions.html">Chapter 3 — Sessions &amp; tabs</a>: focus determines the host.</li>
+  <li><a href="tunnels.html">Chapter 6 — SSH tunnels</a>: a different port-forwarding mechanism.</li>
+</ul>
+<div class="pager">
+<a class="prev" href="docker.html"><span class="dir">Previous</span>Docker &amp; host analysis</a>
+<a class="next" href="git.html"><span class="dir">Next</span>Git panel</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

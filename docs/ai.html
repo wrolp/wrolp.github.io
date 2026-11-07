@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI assistant — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 10: AI assistant">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 10</p>
+    <h1>AI assistant</h1>
+    <p class="lede">Chat and Agent modes, isolated conversations, endpoint profiles, key storage and the review-first send-to-terminal step.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html" class="current">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 10</p>
+<h2 id="modes">Two modes</h2>
+<ul>
+  <li><strong>Chat</strong> — non-streaming, implemented as <code>ai_chat_sync</code>.</li>
+  <li><strong>Agent</strong> — streaming with tool calling, implemented as <code>run_agent_stream</code>. In Agent mode the
+  assistant can call tools on connected servers.</li>
+</ul>
+
+<h2 id="isolation">Two isolated kinds of chat</h2>
+<ul>
+  <li><strong>Application-level chat</strong> in the inspector sidebar: it belongs to no terminal, and the backend refuses
+  all of its shell tools.</li>
+  <li><strong>Terminal-bound chat</strong> docked in each pane: it can execute <code>run_command</code>, read files and
+  “send to terminal”.</li>
+</ul>
+<p>This split is the main safety boundary: only the conversation attached to a terminal can act on that host.</p>
+
+<h2 id="endpoints">Endpoint profiles</h2>
+<p>Several <code>AiEndpointProfile</code> entries can be saved, each with its own:</p>
+<ul>
+  <li>API key (stored encrypted)</li>
+  <li>Endpoint URL</li>
+  <li>Model name</li>
+  <li>System prompt</li>
+</ul>
+<p>Available models can be pulled from <code>{endpoint}/v1/models</code>.</p>
+
+<h2 id="keys">API key storage</h2>
+<p>Keys are encrypted with an <strong>AES-256-GCM file vault</strong>. The vault key file is <code>vault.key</code>, which
+is described as a machine-bound file. The operating system keychain is <strong>not</strong> used.</p>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The exact dialog layout, the accepted URL format, which providers are supported beyond
+  an OpenAI-style interface, token or context limits, and whether request retries are configurable are not documented.
+  The field name <code>openai_content</code> indicates the message shape the backend accepts, not a list of supported
+  vendors.
+</div>
+
+<h2 id="usage">Using the assistant</h2>
+<ul>
+  <li><strong>Images</strong>: attach images to a message, or paste them; clicking a thumbnail opens the full image.</li>
+  <li><strong>Templates</strong>: a template dropdown inserts prompts.</li>
+  <li><strong>Resend</strong>: edit any historical message and send it again.</li>
+  <li><strong>Cancel</strong>: <code>cancel_ai_chat</code> aborts an in-flight generation.</li>
+  <li><strong>Send to terminal</strong>: code blocks or selected text are inserted into the target pane according to the
+  connection type (SSH, local shell, serial or Telnet). Insertion only; nothing is executed.</li>
+</ul>
+<div class="callout">
+  <strong>Review before running.</strong> The insert-only behaviour is deliberate: you can inspect the generated command
+  in the terminal prompt and press Enter yourself.
+</div>
+
+<h2 id="related">Related chapters</h2>
+<ul>
+  <li><a href="data.html">Chapter 12 — Data location, migration &amp; backup</a>: where the vault key lives.</li>
+  <li><a href="troubleshooting.html">Chapter 13 — Troubleshooting</a>: key errors after moving data.</li>
+</ul>
+<div class="pager">
+<a class="prev" href="git.html"><span class="dir">Previous</span>Git panel</a>
+<a class="next" href="recording.html"><span class="dir">Next</span>Session recording &amp; export</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

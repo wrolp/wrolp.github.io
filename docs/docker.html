@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker & host analysis — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 7: Docker & host analysis">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 07</p>
+    <h1>Docker &amp; host analysis</h1>
+    <p class="lede">One command surface for remote containers and the local daemon, plus read-only host inspection.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html" class="current">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 7</p>
+<h2 id="hosts">Two kinds of host</h2>
+<p>Docker commands are addressed through <code>DockerHostRef</code>, which can refer to either:</p>
+<ul>
+  <li><strong>An SSH session jump host</strong> — containers are reached by running <code>docker exec</code> over the
+  session's exec channel.</li>
+  <li><strong>The local daemon</strong> — the CLI is spawned directly, which avoids quoting problems.</li>
+</ul>
+<p>Local probing (<code>probe_local_docker</code>) tries <code>docker</code> first and then <code>podman</code>, and
+distinguishes “not installed” from “installed but the daemon is not running”. That distinction matters when diagnosing
+why a container list is empty.</p>
+
+<h2 id="containers">Container operations</h2>
+<ul>
+  <li>List containers and create, delete, start and stop them.</li>
+  <li>One-shot and <strong>streaming logs</strong>.</li>
+  <li>A three-layer analysis report.</li>
+  <li>Browse container files.</li>
+  <li>Open a shell inside a container.</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The names and contents of the three analysis layers are not enumerated in the source
+  material, nor are the required Docker permissions, registry access, or whether container creation exposes every
+  runtime option.
+</div>
+
+<h2 id="host-analysis">Host analysis</h2>
+<p><code>analyze_host</code> performs a <strong>read-only</strong> inspection of the server: OS, kernel, architecture,
+installed packages and installed tools. <code>command_help</code> looks up help for a command.</p>
+
+<h2 id="safety">Read-only versus mutating actions</h2>
+<p>Only the analysis commands are described as read-only. Container start/stop/delete and shell access are mutating
+operations; the documentation does not describe a confirmation step for them, unlike Kubernetes resource deletion,
+which does have an in-app confirmation.</p>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> Audit logging of container actions, image management, volume or network management,
+  compose support and Kubernetes-based Docker access are not documented.
+</div>
+
+<h2 id="related">Related chapters</h2>
+<ul>
+  <li><a href="sessions.html">Chapter 3 — Sessions &amp; tabs</a>: Docker logs are one of the pane content types.</li>
+  <li><a href="kubernetes.html">Chapter 8 — Kubernetes &amp; Helm</a>: the same “host follows the focused terminal” rule.</li>
+</ul>
+<div class="pager">
+<a class="prev" href="tunnels.html"><span class="dir">Previous</span>SSH tunnels</a>
+<a class="next" href="kubernetes.html"><span class="dir">Next</span>Kubernetes &amp; Helm</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

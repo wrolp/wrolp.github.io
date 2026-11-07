@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 13: Troubleshooting">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 13</p>
+    <h1>Troubleshooting</h1>
+    <p class="lede">Symptoms, the documented facts behind them, and where the source material stops short.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html" class="current">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 13</p>
+<h2 id="table">Common situations</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Symptom</th><th>Confirmed behaviour</th><th>What to check</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Tab dot is yellow</td>
+        <td><code>connection-suspect</code>: keepalive reports trouble</td>
+        <td>Network path and keepalive interval/retry settings; reconnect the tab</td>
+      </tr>
+      <tr>
+        <td>Tab dot is red</td>
+        <td><code>connection-closed</code>: the session ended</td>
+        <td>Reconnect reuses the tab; a new <code>session_id</code> is assigned</td>
+      </tr>
+      <tr>
+        <td>No containers listed locally</td>
+        <td><code>probe_local_docker</code> tries <code>docker</code>, then <code>podman</code>, and separates “not installed” from “daemon not running”</td>
+        <td>Read which of the two states the probe reports before changing anything</td>
+      </tr>
+      <tr>
+        <td>Remote Git command hangs</td>
+        <td>Remote Git runs with <code>GIT_TERMINAL_PROMPT=0</code>, so no interactive prompt is possible</td>
+        <td>Ensure credentials are already available to the non-interactive shell</td>
+      </tr>
+      <tr>
+        <td>Recordings are missing</td>
+        <td>Recording is off by default; <code>WROLP_RECORDING=1</code> forces it on</td>
+        <td>Check the setting and the environment variable, then look under <code>recordings/</code></td>
+      </tr>
+      <tr>
+        <td>AI keys stop working after moving data</td>
+        <td><code>vault.key</code> is machine-bound and only moves if you migrate it explicitly</td>
+        <td>Re-run migration with the vault key, or re-enter the API keys</td>
+      </tr>
+      <tr>
+        <td>A shortcut cannot be assigned</td>
+        <td>Tab, Enter, Ctrl+C/V/X/Z/D/W are reserved</td>
+        <td>Choose another combination</td>
+      </tr>
+      <tr>
+        <td>Unknown Git state in the panel</td>
+        <td>Status comes from porcelain v2 and diff is capped at 2 MB</td>
+        <td>A very large change set is truncated by design</td>
+      </tr>
+      <tr>
+        <td>Updater does not work</td>
+        <td>It uses a GitHub Release endpoint and needs a real <code>pubkey</code> in <code>tauri.conf.json</code></td>
+        <td>Configure the key before expecting updates</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="platform">Platform and packaging problems</h2>
+<ul>
+  <li>There is no Linux or macOS installer; build from source following <a href="installation.html">chapter 1</a>.</li>
+  <li>Linux builds require the Debian/Ubuntu packages listed in that chapter.</li>
+  <li>No <code>.github/workflows/</code> exists, so there is no confirmed automated build to compare your local build
+  against.</li>
+</ul>
+
+<h2 id="database">Database size</h2>
+<p>Recordings live as files and only their index is stored in SQLite, so <code>wrolp.db</code> should not grow with
+recording length. If it has grown for other reasons, settings show the reclaimable space and offer
+<strong>Compact now</strong> (<code>VACUUM</code>).</p>
+
+<h2 id="gaps">What cannot be diagnosed from the documentation</h2>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The source material does not describe log file locations, a diagnostics bundle,
+  crash-report handling, a safe-mode flag or a supported reset procedure. Those items are omitted rather than guessed.
+</div>
+
+<h2 id="report">Reporting a problem</h2>
+<p>The repository provides issue templates for bug reports and feature requests (<code>.github/ISSUE_TEMPLATE/</code>)
+and a pull request template. It has <strong>no CONTRIBUTING.md</strong>, code of conduct or roadmap document, so there is
+no documented support channel beyond those templates.</p>
+
+<h2 id="related">Related chapters</h2>
+<ul>
+  <li><a href="connections.html">Chapter 2 — Your first connection</a> for status states and reconnect.</li>
+  <li><a href="data.html">Chapter 12 — Data location, migration &amp; backup</a> for vault and database details.</li>
+</ul>
+<div class="pager">
+<a class="prev" href="data.html"><span class="dir">Previous</span>Data location, migration &amp; backup</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

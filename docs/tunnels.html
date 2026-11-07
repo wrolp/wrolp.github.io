@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSH tunnels — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 6: SSH tunnels">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 06</p>
+    <h1>SSH tunnels</h1>
+    <p class="lede">Per-connection local port forwarding, managed from the sidebar and synchronised by a backend event.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html" class="current">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 6</p>
+<h2 id="what">What is supported</h2>
+<p>Local port-forwarding rules are stored <strong>per connection</strong>. They can be added, edited, deleted, started
+and stopped from the sidebar. Because tunnels are carried by the SSH session itself, they reuse the same
+<code>russh</code> channel as the terminal.</p>
+
+<h2 id="state">State synchronisation</h2>
+<p>When tunnel state changes, the backend emits <code>tunnel-changed</code> so the UI reflects the actual state rather
+than a local guess.</p>
+
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The source material describes local forwarding only. It does not document remote
+  forwarding (<code>-R</code>), dynamic SOCKS forwarding (<code>-D</code>), a bind-address field, a preferred local port,
+  or whether rules auto-start when a connection opens. Fields and defaults for the add/edit dialog are also not documented.
+</div>
+
+<h2 id="usage">Using a tunnel</h2>
+<p>The confirmed workflow is limited to what the README states: create a local forwarding rule for a connection, then
+start or stop it from the sidebar and confirm the state change propagated from the backend.</p>
+<div class="callout">
+  <strong>Operational note.</strong> A tunnel lives on the SSH session that owns it, so a tunnel stop can also follow
+  from the session closing; the documented <code>connection-closed</code> status is the signal to watch in the tab.
+</div>
+
+<h2 id="related">Related chapters</h2>
+<ul>
+  <li><a href="connections.html">Chapter 2 — Your first connection</a> for session status and reconnect behaviour.</li>
+  <li><a href="kubernetes.html">Chapter 8 — Kubernetes &amp; Helm</a>, whose pod port forwarding is a separate feature.</li>
+</ul>
+<div class="pager">
+<a class="prev" href="editor.html"><span class="dir">Previous</span>Remote file editing</a>
+<a class="next" href="docker.html"><span class="dir">Next</span>Docker &amp; host analysis</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

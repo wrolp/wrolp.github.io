@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sessions & tabs — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 3: Sessions & tabs">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 03</p>
+    <h1>Sessions &amp; tabs</h1>
+    <p class="lede">How terminals are arranged, how session state is isolated, and how keybindings and window behaviour are configured.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html" class="current">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 3</p>
+<h2 id="tabs">Tabs</h2>
+<p>Connections open as tabs in a multi-tab terminal area. Each tab carries its own status indicator (see chapter 2) and
+can be reconnected without spawning a second session.</p>
+
+<h2 id="split-tree">Split trees and floating panes</h2>
+<ul>
+  <li>The terminal area is a <strong>split-tree layout</strong>: panes can be split horizontally or vertically, and leaf
+  nodes hold a terminal, Docker logs or the editor.</li>
+  <li>Any pane can be <strong>popped out into its own floating window</strong>.</li>
+  <li>Open files and logs are <strong>isolated per session</strong>, so one connection's editor or log view does not leak
+  into another's.</li>
+  <li>A local shell and remote shells can sit side by side because both use the same <code>RemoteFs</code> abstraction.</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The exact commands or drag targets for splitting a pane, and whether layout is restored
+  across restarts, are not described in the source material. Window geometry and opacity are persisted, but that does not
+  by itself confirm tab or split layout persistence.
+</div>
+
+<h2 id="keybindings">Keybindings</h2>
+<p>All shortcuts live in a single table in <code>src/lib/keybindings.ts</code>. Settings allow rebinding an individual
+entry, resetting one entry, or resetting everything.</p>
+<p>Reserved keys cannot be bound: <strong>Tab, Enter, Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, Ctrl+D, Ctrl+W</strong>.</p>
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> The README does not list the default shortcut assignments, so no default key table is
+  reproduced here. Read them from the table in <code>src/lib/keybindings.ts</code> for the exact build you are running.
+</div>
+
+<h2 id="window">Window and application behaviour</h2>
+<ul>
+  <li>Custom title bar.</li>
+  <li>Window geometry and opacity are persisted between runs.</li>
+  <li>Single-instance protection: launching the application again does not create a second instance.</li>
+  <li>Chinese and English interface strings; the language follows the system language by default.</li>
+</ul>
+
+<h2 id="updater">Updating</h2>
+<p>The application includes an auto-updater that points at a GitHub Release endpoint. It requires a real
+<code>pubkey</code> to be configured in <code>tauri.conf.json</code>; without that key your own builds are not updatable.</p>
+<div class="pager">
+<a class="prev" href="connections.html"><span class="dir">Previous</span>Your first connection</a>
+<a class="next" href="sftp.html"><span class="dir">Next</span>SFTP file transfers</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git panel — Wrolp Terminal manual</title>
+<meta name="description" content="Wrolp Terminal user manual, chapter 9: Git panel">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../features.html">Features</a>
+      <a href="../getting-started.html">Get started</a>
+      <a href="../docs/index.html" class="current">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Chapter 09</p>
+    <h1>Git panel</h1>
+    <p class="lede">Repository status, diffs, history and history-changing operations, all executed through the real git CLI.</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="User manual chapters">
+    <p class="doc-nav-title">User manual</p>
+<ol>
+  <li><a href="installation.html">Installation &amp; system requirements</a></li>
+  <li><a href="connections.html">Your first connection</a></li>
+  <li><a href="sessions.html">Sessions &amp; tabs</a></li>
+  <li><a href="sftp.html">SFTP file transfers</a></li>
+  <li><a href="editor.html">Remote file editing</a></li>
+  <li><a href="tunnels.html">SSH tunnels</a></li>
+  <li><a href="docker.html">Docker &amp; host analysis</a></li>
+  <li><a href="kubernetes.html">Kubernetes &amp; Helm</a></li>
+  <li><a href="git.html" class="current">Git panel</a></li>
+  <li><a href="ai.html">AI assistant</a></li>
+  <li><a href="recording.html">Session recording &amp; export</a></li>
+  <li><a href="data.html">Data location, migration &amp; backup</a></li>
+  <li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 9</p>
+<h2 id="scope">Scope and host</h2>
+<p>The panel manages <strong>one repository at a time</strong>, and the host follows the focused terminal: remote
+repositories run through the SSH exec channel, local ones are spawned directly on the machine.</p>
+<ul>
+  <li>Remote commands are wrapped as <code>env LC_ALL=C GIT_TERMINAL_PROMPT=0 … bash -lc</code>.</li>
+  <li>Local commands are spawned with <code>HideConsole</code>.</li>
+  <li>All operations call the real <code>git</code> CLI rather than reimplementing Git internals.</li>
+</ul>
+
+<h2 id="read">Reading and reviewing</h2>
+<ul>
+  <li><strong>Status</strong> from porcelain v2.</li>
+  <li><strong>Line-by-line diff</strong>, capped at 2 MB.</li>
+  <li><strong>Paginated history</strong> with commit-graph lanes.</li>
+  <li><strong>Blame</strong>.</li>
+  <li><strong>Conflict three-way view</strong>, with an operation abort.</li>
+</ul>
+
+<h2 id="change">Changing the repository</h2>
+<ul>
+  <li>Branch and remote management.</li>
+  <li>Stage, unstage and discard.</li>
+  <li>Commit and amend.</li>
+  <li><code>fetch</code>, <code>pull</code> and <code>push</code>.</li>
+  <li>Stash.</li>
+  <li><code>clone</code> with progress.</li>
+  <li>Repository scanning and <code>git init</code>.</li>
+</ul>
+
+<h2 id="safeguards">Built-in safeguards</h2>
+<ul>
+  <li><code>pull</code> always uses <code>--ff-only</code>.</li>
+  <li>Force push is only offered as <code>--force-with-lease</code> and requires a second confirmation.</li>
+  <li>Kubernetes resource deletion has its own in-app confirmation; the Git-specific confirmation described in the
+  README is the force-push one, and conflicts can be viewed three-way and aborted.</li>
+  <li>Path arguments are never concatenated into a shell command. The backend rejects absolute paths, drive letters,
+  backslashes and <code>..</code>.</li>
+  <li>“Local ignore” writes only to <code>.git/info/exclude</code>, never to a tracked <code>.gitignore</code>.</li>
+</ul>
+
+<div class="callout unconfirmed">
+  <strong>Not confirmed.</strong> How credentials are supplied for remote HTTPS or SSH operations, commit signing,
+  submodule and Git LFS handling, interactive rebase and worktree support are not described. Because remote commands run
+  with <code>GIT_TERMINAL_PROMPT=0</code>, no interactive credential prompt can be expected; the source material does not
+  describe a credential setup screen.
+</div>
+
+<h2 id="related">Related chapters</h2>
+<ul>
+  <li><a href="editor.html">Chapter 5 — Remote file editing</a> for direct file changes.</li>
+  <li><a href="docker.html">Chapter 7 — Docker &amp; host analysis</a> for the same host-selection rule.</li>
+</ul>
+<div class="pager">
+<a class="prev" href="kubernetes.html"><span class="dir">Previous</span>Kubernetes &amp; Helm</a>
+<a class="next" href="ai.html"><span class="dir">Next</span>AI assistant</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>

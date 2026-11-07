@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features — Wrolp Terminal</title>
+<meta name="description" content="Feature inventory for Wrolp Terminal: connection and terminal, files and editing, Docker, Kubernetes/Helm, Git, AI assistant, session recording and data handling.">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><img class="brand-mark" src="assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="features.html" class="current">Features</a>
+      <a href="getting-started.html">Get started</a>
+      <a href="docs/index.html">User manual</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">Feature tour</p>
+    <h1>Features</h1>
+    <p class="lede">What the application does, grouped the way the project README groups it.</p>
+  </div>
+</header>
+
+<div class="wrap page-body">
+  <main id="main">
+<div class="wrap page-body">
+<main id="main">
+  <p>This feature inventory follows the functional list in the project README. Anchors on this page are linked from
+  the homepage cards and the user manual.</p>
+<section id="connection-terminal">
+  <h2>Connection and terminal</h2>
+  <ul>
+    <li><strong>Multi-tab SSH terminal</strong>: rendered with xterm.js, supporting password and SSH-key authentication, an <code>xterm-256color</code> PTY and window-size synchronisation.</li>
+    <li><strong>Connection health</strong>: configurable SSH keepalive (interval plus retry count); the tab status dot goes from green to yellow (<code>connection-suspect</code>) and then red (<code>connection-closed</code>); a “Reconnect” button reuses the same tab instance, and a monotonically increasing <code>session_id</code> prevents stale background tasks from polluting state.</li>
+    <li><strong>Telnet</strong>: plain TCP with a built-in IAC negotiation state machine (ECHO / SGA / TERMINAL-TYPE / NAWS); optional auto-login, off by default (plain-text protocol).</li>
+    <li><strong>Serial (COM)</strong>: enumerates ports and shows USB device friendly names with VID:PID; configurable baud rate, data bits, stop bits, parity and flow control; includes <strong>baud-rate auto-detection</strong> (trying each rate in turn and ranking them by “how much it looks like terminal text”).</li>
+    <li><strong>Local terminal</strong>: opens the local shell as a top-level tab or a split pane, side by side with remote tabs.</li>
+    <li><strong>SSH tunnels</strong>: local port-forwarding rules saved per connection, which can be added, edited, deleted, started and stopped from the sidebar; the backend syncs state through the <code>tunnel-changed</code> event.</li>
+    <li><strong>Network scan</strong>: scans a subnet for hosts with open SSH/Telnet ports and can create connections directly from the results.</li>
+  </ul>
+</section>
+
+<section id="files-editing">
+  <h2>Files and editing</h2>
+  <ul>
+    <li><strong>SFTP file management</strong>: remote file tree, listing directories / read / write / rename / delete / create directory, upload and download; supports <strong>pause and resume</strong>, with <code>transfer-progress</code> events.</li>
+    <li><strong>Transfer queue</strong>: one row per file showing completed/total size and live speed; directories and drag-and-drop uploads are walked once on the Rust side with <code>walkdir</code>, with progress reported in 4 MiB chunks (single-file uploads use 64 KB chunks); <strong>cancelling an upload cleans up the partial remote files it created</strong>, completed files are kept, and target files that already existed are not deleted.</li>
+    <li><strong>Remote editor</strong>: embedded Monaco editing, presented in a split pane or a floating window; UTF-8 / GBK encoding auto-detection (<code>encoding_rs</code>).</li>
+    <li><strong>Hex and image viewing</strong>: binary files are viewed as a hex dump, and images are previewed inline by MIME type.</li>
+    <li><strong>Network file tools</strong>: a built-in FTP server (PASV/EPSV), an HTTP/HTTPS file server (one-click generation of a self-signed certificate), a TFTP server, plus an FTP client (no TLS / explicit / implicit) and a TFTP client.</li>
+  </ul>
+</section>
+
+<section id="ops-panels">
+  <h2>Operations panels</h2>
+  <ul>
+    <li><strong>Docker and host analysis</strong>: one command surface supports two kinds of host (<code>DockerHostRef</code>) — containers on an SSH session jump host (running <code>docker exec</code> over the exec channel), or the local daemon (spawning the CLI directly to avoid quoting issues); <code>probe_local_docker</code> tries <code>docker</code> and then <code>podman</code>, and distinguishes “not installed” from “installed but the daemon is not running”. Features include a container list with create/delete/start/stop, one-shot and streaming logs, a three-layer analysis report, container file browsing and entering a container shell; there is also <code>analyze_host</code>, a read-only analysis of the server's OS/kernel/architecture/packages/installed tools, and <code>command_help</code> for looking up command help.</li>
+    <li><strong>Kubernetes and Helm</strong>: K8s mode follows the currently focused terminal to choose the host (an SSH jump host or the local kubeconfig); context/namespace selectors plus a search box, defaulting to <strong>All namespaces</strong>, with namespace labels stably colored by name. Ten resource kinds (pods/deployments/statefulsets/daemonsets/services/ingresses/jobs/cronjobs/configmaps/secrets) share one row model; each row supports viewing/editing and applying YAML, scaling, deleting (with an in-app confirmation), viewing/streaming logs (with ANSI colors), entering a Pod shell, browsing Pod files and port forwarding (rules can be saved); the Helm tab supports CLI detection, listing releases, viewing values and revision history, rollback, uninstall, and install/upgrade.</li>
+    <li><strong>Git panel</strong>: manages one repository at a time, with the host likewise following the focused terminal; everything calls the real <code>git</code> CLI (remote via the exec channel with <code>env LC_ALL=C GIT_TERMINAL_PROMPT=0 … bash -lc</code>, local spawned directly with <code>HideConsole</code>). It covers status (porcelain v2), line-by-line diff (2 MB cap), paginated history with commit-graph lanes, branch and remote management, stage/unstage/discard, commit/amend, fetch/pull/push (pull forces <code>--ff-only</code>, and force push only offers <code>--force-with-lease</code> and requires a second confirmation), a three-way conflict view with operation abort, stash, blame, clone (with progress), repository scanning, <code>git init</code>, and a “local ignore” that writes only to <code>.git/info/exclude</code>. Path arguments are never shell-concatenated; the backend rejects absolute paths, drive letters, backslashes and <code>..</code>.</li>
+    <li><strong>Session recording</strong>: off by default; it can be enabled in settings or forced with the <code>WROLP_RECORDING=1/0</code> environment variable. Events are written per session to <code>&lt;data dir&gt;/recordings/&lt;workspace&gt;/&lt;group&gt;/&lt;connection&gt;/&lt;timestamp&gt;_&lt;session8&gt;.jsonl</code> (NDJSON), flushed every 5 seconds and on disconnect; SQLite stores only the index (<code>events_file</code>, <code>event_count</code>), so <code>wrolp.db</code> does not grow with recordings. A bottom panel lets you browse recordings, reveal them in the file manager, export to asciinema v2 (<code>.cast</code>), replay and delete, and it supports legacy-data migration and index rebuilding by directory.</li>
+    <li><strong>Command sets</strong>: reusable command groups stored in SQLite (bindable to connections).</li>
+  </ul>
+</section>
+
+<section id="ai-assistant">
+  <h2>AI assistant</h2>
+  <ul>
+    <li>Two modes: <strong>Chat</strong> (non-streaming <code>ai_chat_sync</code>) and <strong>Agent</strong> (streaming plus tool calling via <code>run_agent_stream</code>); Agent can call tools on connected servers.</li>
+    <li><strong>Isolated dual chat</strong>: the AI in the inspector sidebar is an application-level conversation (it belongs to no terminal, and the backend refuses all of its shell tools); terminal-bound AI docks inside each pane and can run <code>run_command</code>, read files and “send to terminal”.</li>
+    <li><strong>Multimodal input</strong>: messages can carry images (the backend receives them as <code>openai_content</code> multi-part structures), images can also be pasted, and clicking a thumbnail opens the full image.</li>
+    <li><strong>Send to terminal</strong>: AI code blocks or selected text are injected into the target pane according to connection type (SSH/local shell/serial/Telnet); it only inserts and never executes, so you can review before running.</li>
+    <li><strong>Templates and resend</strong>: a template dropdown inserts prompts; any historical message can be edited and resent; <code>cancel_ai_chat</code> aborts in-flight generation.</li>
+    <li><strong>Multiple endpoints</strong>: several <code>AiEndpointProfile</code>s can be saved (each with its own encrypted API key, URL, model and system prompt), and model lists can be fetched from <code>{endpoint}/v1/models</code>.</li>
+    <li><strong>Security</strong>: API keys are encrypted with an AES-256-GCM file vault (<code>vault.key</code> is a machine-bound file); the OS keychain is not used.</li>
+  </ul>
+</section>
+
+<section id="interaction-data">
+  <h2>Interaction and data</h2>
+  <ul>
+    <li><strong>Split trees and floating panes</strong>: the terminal area is a split-tree layout that splits horizontally or vertically, with leaf nodes holding a terminal, Docker logs or the editor; any pane can pop out into its own floating window, and each session's open files and logs are isolated from the others.</li>
+    <li><strong>Relocatable data directory</strong>: settings can point the data directory at any location, migrating <code>wrolp.db</code>, <code>recordings/</code>, <code>connections.json</code> and the window configuration together; the choice is recorded in <code>data_root.json</code> at the default location and takes effect on the next start; an empty target is copied into, a non-empty one is reused, and existing data is never overwritten. <code>vault.key</code> can optionally be migrated too, making the whole directory portable.</li>
+    <li><strong>Database maintenance</strong>: shows the current size of <code>wrolp.db</code> and the space that can be reclaimed, with a “Compact now” (<code>VACUUM</code>) action.</li>
+    <li><strong>Keybindings</strong>: all shortcuts live in a single table in <code>src/lib/keybindings.ts</code>; settings allow rebinding each entry, resetting a single one, or resetting everything; reserved keys (Tab, Enter, Ctrl+C/V/X/Z/D/W) are refused.</li>
+    <li><strong>Other</strong>: custom title bar, persisted window geometry and opacity, single-instance protection, an auto-updater (GitHub Release endpoint, which requires a real <code>pubkey</code> in <code>tauri.conf.json</code>), and a Chinese/English UI (following the system language by default).</li>
+  </ul>
+</section>
+
+<section id="tech-stack">
+  <h2>Tech stack</h2>
+  <p><strong>Frontend</strong>: React 19 + TypeScript + xterm.js 5.5 (fit/serialize/webgl addons) + Monaco Editor + Vite 6 + SCSS.
+  Dependencies are deliberately few; runtime dependencies are essentially only the Tauri API, xterm, Monaco,
+  react-markdown/remark-gfm, uuid and similar.</p>
+
+  <p><strong>Backend</strong>: Tauri 2 + Rust (tokio). Key crates:</p>
+  <ul>
+    <li><code>russh</code> 0.64 + <code>russh-sftp</code> 3 (pure-Rust async SSH / SFTP)</li>
+    <li><code>rusqlite</code> 0.31 (bundled SQLite, WAL mode)</li>
+    <li><code>portable-pty</code>, <code>serialport</code> (local PTY and serial ports)</li>
+    <li><code>aes-gcm</code>, <code>rand</code>, <code>base64</code> (key vault)</li>
+    <li><code>axum</code> + <code>tower-http</code> + <code>axum-server</code> + <code>rcgen</code> (built-in HTTP/HTTPS file server and self-signed certificates)</li>
+    <li><code>suppaftp</code> (FTP), <code>reqwest</code> (AI endpoint calls), <code>encoding_rs</code>, <code>walkdir</code>, <code>chrono</code></li>
+    <li>Windows-specific: <code>windows</code> / <code>windows-core</code> / <code>webview2-com</code></li>
+  </ul>
+
+  <p><strong>IPC and storage</strong>: Tauri <code>invoke</code> commands are the primary mechanism, and terminal output
+  is polled from the frontend (the README explains this as a workaround for Windows background tasks). Tauri events
+  are used only for pushes the UI cannot poll — <code>connection-closed</code>, <code>connection-suspect</code>,
+  <code>connection-ok</code>, <code>transfer-progress</code>, <code>tunnel-changed</code>, <code>ai-term-mark</code>,
+  <code>native-drag-drop</code>, <code>baud-detect-progress</code>. All data lives in one relocatable directory:
+  <code>window.json</code> (window, recording and keepalive settings), the encrypted <code>connections.json</code>
+  (connections and workspaces), <code>wrolp.db</code> (session index, command sets, snippets), and
+  <code>recordings/</code> (NDJSON recordings).</p>
+</section>
+</main>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>
