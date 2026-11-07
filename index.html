@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrolp Terminal — Desktop SSH terminal and server-ops tool</title>
+<meta name="description" content="Wrolp Terminal is a Rust-powered desktop SSH terminal and server-ops tool: multi-tab terminal, SFTP, remote editor, session recording, Docker and Kubernetes analysis, Git panel and an AI assistant.">
+<style>
+  :root {
+    --bg: #fbfcfd;
+    --panel: #ffffff;
+    --panel-alt: #f4f7fa;
+    --text: #16202b;
+    --heading: #0e1720;
+    --muted: #5c6b7a;
+    --border: #e2e8ee;
+    --accent: #2563eb;
+    --accent-soft: #e8efff;
+    --code-bg: #f4f6f9;
+    --radius: 12px;
+    --max: 1120px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1419;
+      --panel: #151c23;
+      --panel-alt: #1a232c;
+      --text: #e7eef5;
+      --heading: #f5f9fd;
+      --muted: #9fb0c0;
+      --border: #25313c;
+      --accent: #7aa7ff;
+      --accent-soft: #17243a;
+      --code-bg: #111a22;
+    }
+    .hero {
+      background: linear-gradient(165deg, #15233a 0%, #0f1419 62%) !important;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero {
+    background: linear-gradient(165deg, #eaf2ff 0%, #fbfcfd 62%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-inner {
+    padding: 72px 0 60px;
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.3rem, 5vw, 3.35rem);
+    line-height: 1.1;
+    letter-spacing: -0.022em;
+    color: var(--heading);
+  }
+
+  .tagline {
+    max-width: 46em;
+    margin: 18px 0 0;
+    font-size: 1.08rem;
+    color: var(--muted);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 28px;
+    font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .meta span + span::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--muted);
+    opacity: 0.7;
+  }
+
+  /* ---------- layout ---------- */
+
+  .layout {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    gap: 56px;
+    padding-top: 48px;
+    padding-bottom: 96px;
+  }
+
+  .toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    font-size: 13px;
+  }
+
+  .toc-title {
+    margin: 0 0 12px;
+    font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .toc ul { list-style: none; margin: 0; padding: 0; }
+  .toc li { margin: 0; }
+  .toc a {
+    display: block;
+    padding: 5px 0 5px 12px;
+    border-left: 2px solid transparent;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .toc a:hover {
+    color: var(--text);
+    border-left-color: var(--accent);
+    text-decoration: none;
+  }
+  .toc .sub a { padding-left: 26px; font-size: 12.5px; }
+
+  main { min-width: 0; }
+
+  /* ---------- content ---------- */
+
+  .note {
+    margin: 0 0 40px;
+    padding: 16px 20px;
+    background: var(--panel-alt);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .note strong { color: var(--text); }
+
+  section { scroll-margin-top: 24px; }
+
+  h2 {
+    margin: 64px 0 20px;
+    padding-top: 26px;
+    border-top: 1px solid var(--border);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+    color: var(--heading);
+  }
+  section:first-of-type h2 { margin-top: 0; }
+
+  h3 {
+    margin: 34px 0 12px;
+    font-size: 1.02rem;
+    line-height: 1.4;
+    letter-spacing: 0.005em;
+    color: var(--accent);
+  }
+
+  p { margin: 0 0 18px; }
+
+  main ul {
+    margin: 0 0 22px;
+    padding: 0;
+    list-style: none;
+  }
+  main ul li {
+    position: relative;
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+  main ul li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.72em;
+    width: 5px;
+    height: 5px;
+    border-radius: 2px;
+    background: var(--accent);
+    opacity: 0.55;
+  }
+  li strong { color: var(--heading); }
+
+  code {
+    font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
+    font-size: 0.88em;
+    padding: 2px 5px;
+    background: var(--code-bg);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  pre {
+    margin: 0 0 22px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    line-height: 1.6;
+  }
+  pre code {
+    padding: 0;
+    background: none;
+    border: 0;
+    font-size: 13px;
+    white-space: pre;
+  }
+  .tree code { font-size: 12.5px; }
+
+  /* ---------- facts ---------- */
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    margin: 0 0 8px;
+  }
+
+  .fact {
+    padding: 14px 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .fact.wide { grid-column: 1 / -1; }
+
+  .fact dt {
+    margin: 0 0 4px;
+    font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .fact dd {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--panel-alt);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    justify-content: space-between;
+    padding: 28px 0 36px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 880px) {
+    .layout {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-top: 32px;
+    }
+    .toc {
+      position: static;
+      padding: 0 0 22px;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc ul { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+    .toc a { padding: 2px 0; border-left: 0; }
+    .toc .sub { display: none; }
+    .hero-inner { padding: 52px 0 44px; }
+    h2 { margin-top: 48px; }
+  }
+
+  @media print {
+    .hero { background: none; }
+    .layout { grid-template-columns: 1fr; padding-bottom: 24px; }
+    .toc { display: none; }
+    a { color: inherit; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Project overview</p>
+    <h1>Wrolp Terminal</h1>
+    <p class="tagline">A Rust-powered desktop SSH terminal and server-ops tool — multi-tab, SFTP, remote editor, session recording, Docker analysis &amp; AI assistant.</p>
+    <p class="meta">
+      <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a></span>
+      <span>v0.0.12</span>
+      <span>MIT License</span>
+      <span>Windows first</span>
+    </p>
+  </div>
+</header>
+
+<div class="wrap layout">
+
+  <nav class="toc" aria-label="Contents">
+    <p class="toc-title">Contents</p>
+    <ul>
+      <li><a href="#at-a-glance">At a glance</a></li>
+      <li><a href="#what-it-is">What it is</a></li>
+      <li>
+        <a href="#core-features">Core features</a>
+        <ul class="sub">
+          <li><a href="#connection-terminal">Connection &amp; terminal</a></li>
+          <li><a href="#files-editing">Files &amp; editing</a></li>
+          <li><a href="#ops-panels">Ops panels</a></li>
+          <li><a href="#ai-assistant">AI assistant</a></li>
+          <li><a href="#interaction-data">Interaction &amp; data</a></li>
+        </ul>
+      </li>
+      <li><a href="#tech-stack">Tech stack</a></li>
+      <li><a href="#getting-started">Getting started</a></li>
+      <li><a href="#repository-layout">Repository layout</a></li>
+      <li><a href="#who-its-for">Who it is for</a></li>
+      <li><a href="#limitations">Limitations</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <aside class="note">
+      <strong>Source.</strong> Everything on this page comes from the GitHub repository
+      <a href="https://github.com/wrolp/wrolp">wrolp/wrolp</a>: its README, RELEASE_NOTES, <code>package.json</code>,
+      <code>src-tauri/Cargo.toml</code>, file tree and repository metadata, retrieved on 2026-11-07.
+      Only information actually found there is included; nothing has been inferred or added.
+    </aside>
+
+    <section id="at-a-glance">
+      <h2>At a glance</h2>
+      <dl class="facts">
+        <div class="fact"><dt>Repository</dt><dd><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a></dd></div>
+        <div class="fact"><dt>Current version</dt><dd>v0.0.12 (released 2026-11-07, not a pre-release)</dd></div>
+        <div class="fact"><dt>License</dt><dd>MIT (Copyright (c) 2026 Wrolp)</dd></div>
+        <div class="fact"><dt>Primary language</dt><dd>TypeScript (largest share of code), followed by Rust (about 1.2 MB of source)</dd></div>
+        <div class="fact"><dt>Languages</dt><dd>TypeScript / Rust / JavaScript / SCSS / HTML</dd></div>
+        <div class="fact"><dt>Repository created</dt><dd>2026-06-28</dd></div>
+        <div class="fact"><dt>Default branch</dt><dd>main</dd></div>
+        <div class="fact"><dt>Repository size</dt><dd>About 8.2 MB, 4 stars, 0 forks, 0 open issues</dd></div>
+        <div class="fact wide"><dt>Description</dt><dd>A Rust-powered desktop SSH terminal and server-ops tool — multi-tab, SFTP, remote editor, session recording, Docker analysis &amp; AI assistant</dd></div>
+        <div class="fact"><dt>Platforms</dt><dd>Windows is the primary target (release packages are MSI only); it can run and be developed on Linux/macOS</dd></div>
+        <div class="fact wide"><dt>Topics</dt><dd>react, rust, terminal, typescript, tauri, ai-assistant, docker, sftp, ssh-client, xterm, server-ops</dd></div>
+      </dl>
+    </section>
+
+    <section id="what-it-is">
+      <h2>What it is and the problem it solves</h2>
+      <p>Wrolp Terminal is a desktop terminal and server-operations tool built on Tauri 2 + React 19 + TypeScript.
+      It brings “connect to servers, transfer files, edit files, read logs, manage containers, manage K8s, manage Git,
+      ask an AI” into a single application window, replacing a workflow that otherwise bounces between an SSH client,
+      an SFTP tool, an editor, a Docker dashboard and a Git GUI.</p>
+
+      <p>Its key difference from conventional SSH clients: SSH connections are implemented directly on the Rust side
+      with the pure-Rust async library <code>russh</code> (with no dependency on an external <code>ssh</code> command or
+      the OpenSSH binary), so terminal, SFTP, tunnels, Docker exec and kubectl exec all reuse the same session channel.
+      Local and remote file browsing share a single <code>RemoteFs</code> abstraction, so a local shell and remote hosts
+      work side by side in one UI.</p>
+    </section>
+
+    <section id="core-features">
+      <h2>Core features</h2>
+      <p>The list below is organised from the functional inventory in the README.</p>
+
+      <h3 id="connection-terminal">Connection and terminal</h3>
+      <ul>
+        <li><strong>Multi-tab SSH terminal</strong>: rendered with xterm.js, supporting password and SSH-key authentication, an <code>xterm-256color</code> PTY and window-size synchronisation.</li>
+        <li><strong>Connection health</strong>: configurable SSH keepalive (interval plus retry count); the tab status dot goes from green to yellow (<code>connection-suspect</code>) and then red (<code>connection-closed</code>); a “Reconnect” button reuses the same tab instance, and a monotonically increasing <code>session_id</code> prevents stale background tasks from polluting state.</li>
+        <li><strong>Telnet</strong>: plain TCP with a built-in IAC negotiation state machine (ECHO / SGA / TERMINAL-TYPE / NAWS); optional auto-login, off by default (plain-text protocol).</li>
+        <li><strong>Serial (COM)</strong>: enumerates ports and shows USB device friendly names with VID:PID; configurable baud rate, data bits, stop bits, parity and flow control; includes <strong>baud-rate auto-detection</strong> (trying each rate in turn and ranking them by “how much it looks like terminal text”).</li>
+        <li><strong>Local terminal</strong>: opens the local shell as a top-level tab or a split pane, side by side with remote tabs.</li>
+        <li><strong>SSH tunnels</strong>: local port-forwarding rules saved per connection, which can be added, edited, deleted, started and stopped from the sidebar; the backend syncs state through the <code>tunnel-changed</code> event.</li>
+        <li><strong>Network scan</strong>: scans a subnet for hosts with open SSH/Telnet ports and can create connections directly from the results.</li>
+      </ul>
+
+      <h3 id="files-editing">Files and editing</h3>
+      <ul>
+        <li><strong>SFTP file management</strong>: remote file tree, listing directories / read / write / rename / delete / create directory, upload and download; supports <strong>pause and resume</strong>, with <code>transfer-progress</code> events.</li>
+        <li><strong>Transfer queue</strong>: one row per file showing completed/total size and live speed; directories and drag-and-drop uploads are walked once on the Rust side with <code>walkdir</code>, with progress reported in 4 MiB chunks (single-file uploads use 64 KB chunks); <strong>cancelling an upload cleans up the partial remote files it created</strong>, completed files are kept, and target files that already existed are not deleted.</li>
+        <li><strong>Remote editor</strong>: embedded Monaco editing, presented in a split pane or a floating window; UTF-8 / GBK encoding auto-detection (<code>encoding_rs</code>).</li>
+        <li><strong>Hex and image viewing</strong>: binary files are viewed as a hex dump, and images are previewed inline by MIME type.</li>
+        <li><strong>Network file tools</strong>: a built-in FTP server (PASV/EPSV), an HTTP/HTTPS file server (one-click generation of a self-signed certificate), a TFTP server, plus an FTP client (no TLS / explicit / implicit) and a TFTP client.</li>
+      </ul>
+
+      <h3 id="ops-panels">Operations panels</h3>
+      <ul>
+        <li><strong>Docker and host analysis</strong>: one command surface supports two kinds of host (<code>DockerHostRef</code>) — containers on an SSH session jump host (running <code>docker exec</code> over the exec channel), or the local daemon (spawning the CLI directly to avoid quoting issues); <code>probe_local_docker</code> tries <code>docker</code> and then <code>podman</code>, and distinguishes “not installed” from “installed but the daemon is not running”. Features include a container list with create/delete/start/stop, one-shot and streaming logs, a three-layer analysis report, container file browsing and entering a container shell; there is also <code>analyze_host</code>, a read-only analysis of the server's OS/kernel/architecture/packages/installed tools, and <code>command_help</code> for looking up command help.</li>
+        <li><strong>Kubernetes and Helm</strong>: K8s mode follows the currently focused terminal to choose the host (an SSH jump host or the local kubeconfig); context/namespace selectors plus a search box, defaulting to <strong>All namespaces</strong>, with namespace labels stably colored by name. Ten resource kinds (pods/deployments/statefulsets/daemonsets/services/ingresses/jobs/cronjobs/configmaps/secrets) share one row model; each row supports viewing/editing and applying YAML, scaling, deleting (with an in-app confirmation), viewing/streaming logs (with ANSI colors), entering a Pod shell, browsing Pod files and port forwarding (rules can be saved); the Helm tab supports CLI detection, listing releases, viewing values and revision history, rollback, uninstall, and install/upgrade.</li>
+        <li><strong>Git panel</strong>: manages one repository at a time, with the host likewise following the focused terminal; everything calls the real <code>git</code> CLI (remote via the exec channel with <code>env LC_ALL=C GIT_TERMINAL_PROMPT=0 … bash -lc</code>, local spawned directly with <code>HideConsole</code>). It covers status (porcelain v2), line-by-line diff (2 MB cap), paginated history with commit-graph lanes, branch and remote management, stage/unstage/discard, commit/amend, fetch/pull/push (pull forces <code>--ff-only</code>, and force push only offers <code>--force-with-lease</code> and requires a second confirmation), a three-way conflict view with operation abort, stash, blame, clone (with progress), repository scanning, <code>git init</code>, and a “local ignore” that writes only to <code>.git/info/exclude</code>. Path arguments are never shell-concatenated; the backend rejects absolute paths, drive letters, backslashes and <code>..</code>.</li>
+        <li><strong>Session recording</strong>: off by default; it can be enabled in settings or forced with the <code>WROLP_RECORDING=1/0</code> environment variable. Events are written per session to <code>&lt;data dir&gt;/recordings/&lt;workspace&gt;/&lt;group&gt;/&lt;connection&gt;/&lt;timestamp&gt;_&lt;session8&gt;.jsonl</code> (NDJSON), flushed every 5 seconds and on disconnect; SQLite stores only the index (<code>events_file</code>, <code>event_count</code>), so <code>wrolp.db</code> does not grow with recordings. A bottom panel lets you browse recordings, reveal them in the file manager, export to asciinema v2 (<code>.cast</code>), replay and delete, and it supports legacy-data migration and index rebuilding by directory.</li>
+        <li><strong>Command sets</strong>: reusable command groups stored in SQLite (bindable to connections).</li>
+      </ul>
+
+      <h3 id="ai-assistant">AI assistant</h3>
+      <ul>
+        <li>Two modes: <strong>Chat</strong> (non-streaming <code>ai_chat_sync</code>) and <strong>Agent</strong> (streaming plus tool calling via <code>run_agent_stream</code>); Agent can call tools on connected servers.</li>
+        <li><strong>Isolated dual chat</strong>: the AI in the inspector sidebar is an application-level conversation (it belongs to no terminal, and the backend refuses all of its shell tools); terminal-bound AI docks inside each pane and can run <code>run_command</code>, read files and “send to terminal”.</li>
+        <li><strong>Multimodal input</strong>: messages can carry images (the backend receives them as <code>openai_content</code> multi-part structures), images can also be pasted, and clicking a thumbnail opens the full image.</li>
+        <li><strong>Send to terminal</strong>: AI code blocks or selected text are injected into the target pane according to connection type (SSH/local shell/serial/Telnet); it only inserts and never executes, so you can review before running.</li>
+        <li><strong>Templates and resend</strong>: a template dropdown inserts prompts; any historical message can be edited and resent; <code>cancel_ai_chat</code> aborts in-flight generation.</li>
+        <li><strong>Multiple endpoints</strong>: several <code>AiEndpointProfile</code>s can be saved (each with its own encrypted API key, URL, model and system prompt), and model lists can be fetched from <code>{endpoint}/v1/models</code>.</li>
+        <li><strong>Security</strong>: API keys are encrypted with an AES-256-GCM file vault (<code>vault.key</code> is a machine-bound file); the OS keychain is not used.</li>
+      </ul>
+
+      <h3 id="interaction-data">Interaction and data</h3>
+      <ul>
+        <li><strong>Split trees and floating panes</strong>: the terminal area is a split-tree layout that splits horizontally or vertically, with leaf nodes holding a terminal, Docker logs or the editor; any pane can pop out into its own floating window, and each session's open files and logs are isolated from the others.</li>
+        <li><strong>Relocatable data directory</strong>: settings can point the data directory at any location, migrating <code>wrolp.db</code>, <code>recordings/</code>, <code>connections.json</code> and the window configuration together; the choice is recorded in <code>data_root.json</code> at the default location and takes effect on the next start; an empty target is copied into, a non-empty one is reused, and existing data is never overwritten. <code>vault.key</code> can optionally be migrated too, making the whole directory portable.</li>
+        <li><strong>Database maintenance</strong>: shows the current size of <code>wrolp.db</code> and the space that can be reclaimed, with a “Compact now” (<code>VACUUM</code>) action.</li>
+        <li><strong>Keybindings</strong>: all shortcuts live in a single table in <code>src/lib/keybindings.ts</code>; settings allow rebinding each entry, resetting a single one, or resetting everything; reserved keys (Tab, Enter, Ctrl+C/V/X/Z/D/W) are refused.</li>
+        <li><strong>Other</strong>: custom title bar, persisted window geometry and opacity, single-instance protection, an auto-updater (GitHub Release endpoint, which requires a real <code>pubkey</code> in <code>tauri.conf.json</code>), and a Chinese/English UI (following the system language by default).</li>
+      </ul>
+    </section>
+
+    <section id="tech-stack">
+      <h2>Tech stack</h2>
+      <p><strong>Frontend</strong>: React 19 + TypeScript + xterm.js 5.5 (fit/serialize/webgl addons) + Monaco Editor + Vite 6 + SCSS.
+      Dependencies are deliberately few; runtime dependencies are essentially only the Tauri API, xterm, Monaco,
+      react-markdown/remark-gfm, uuid and similar.</p>
+
+      <p><strong>Backend</strong>: Tauri 2 + Rust (tokio). Key crates:</p>
+      <ul>
+        <li><code>russh</code> 0.64 + <code>russh-sftp</code> 3 (pure-Rust async SSH / SFTP)</li>
+        <li><code>rusqlite</code> 0.31 (bundled SQLite, WAL mode)</li>
+        <li><code>portable-pty</code>, <code>serialport</code> (local PTY and serial ports)</li>
+        <li><code>aes-gcm</code>, <code>rand</code>, <code>base64</code> (key vault)</li>
+        <li><code>axum</code> + <code>tower-http</code> + <code>axum-server</code> + <code>rcgen</code> (built-in HTTP/HTTPS file server and self-signed certificates)</li>
+        <li><code>suppaftp</code> (FTP), <code>reqwest</code> (AI endpoint calls), <code>encoding_rs</code>, <code>walkdir</code>, <code>chrono</code></li>
+        <li>Windows-specific: <code>windows</code> / <code>windows-core</code> / <code>webview2-com</code></li>
+      </ul>
+
+      <p><strong>IPC and storage</strong>: Tauri <code>invoke</code> commands are the primary mechanism, and terminal output
+      is polled from the frontend (the README explains this as a workaround for Windows background tasks). Tauri events
+      are used only for pushes the UI cannot poll — <code>connection-closed</code>, <code>connection-suspect</code>,
+      <code>connection-ok</code>, <code>transfer-progress</code>, <code>tunnel-changed</code>, <code>ai-term-mark</code>,
+      <code>native-drag-drop</code>, <code>baud-detect-progress</code>. All data lives in one relocatable directory:
+      <code>window.json</code> (window, recording and keepalive settings), the encrypted <code>connections.json</code>
+      (connections and workspaces), <code>wrolp.db</code> (session index, command sets, snippets), and
+      <code>recordings/</code> (NDJSON recordings).</p>
+    </section>
+
+    <section id="getting-started">
+      <h2>Getting started</h2>
+      <p>Environment dependencies (Linux Debian/Ubuntu; macOS and Windows need no extra system dependencies):</p>
+      <pre><code>sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
+  libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev</code></pre>
+
+      <p>Install Rust and the frontend dependencies (the repository commits a <code>yarn.lock</code>, so yarn is recommended):</p>
+      <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+yarn</code></pre>
+
+      <p>Run in development:</p>
+      <pre><code>yarn tauri dev      # full stack (Tauri starts the Vite dev server automatically)
+yarn dev            # frontend only, for pure UI debugging (no Rust/SSH)</code></pre>
+
+      <p>Build:</p>
+      <pre><code>yarn build:clean    # build after clearing the separate target directory; output in src-tauri/target-release/release/bundle/
+yarn tauri build    # incremental development build; output in src-tauri/target/</code></pre>
+
+      <p>Publish:</p>
+      <pre><code>gh auth login -h github.com
+yarn run publish    # build first, then upload to a GitHub Release; RELEASE_SKIP_CLEAN=1 reuses existing artifacts</code></pre>
+
+      <p>Tests:</p>
+      <pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
+cd src-tauri &amp;&amp; cargo run --bin ssh_test   # a standalone russh connectivity probe
+npx playwright install &amp;&amp; yarn test:e2e    # Playwright frontend E2E; the backend is stubbed via window.__TAURI_INTERNALS__, so no Rust build is needed</code></pre>
+    </section>
+
+    <section id="repository-layout">
+      <h2>Repository layout</h2>
+      <pre class="tree"><code>├── src/                    # React frontend
+│   ├── components/         # Terminals, file panel, Docker/K8s/Git panels, AI chat, floating windows, etc.
+│   │   ├── terminal/       # Terminal enhancements: highlighting, completion, cwd sync, line numbers, newline detection, etc.
+│   │   └── nettools/       # FTP/HTTP/TFTP client and server panels
+│   ├── editor/             # Monaco initialization and custom languages (including shell syntax)
+│   ├── hooks/ lib/         # Keybindings, themes, transfer queue, Git/K8s helper logic
+│   ├── i18n/               # Chinese and English strings
+│   └── styles/             # SCSS partials split by feature
+├── src-tauri/              # Rust backend
+│   ├── src/commands/       # Tauri commands split by protocol/domain (ssh, sftp, docker, k8s, git, ftp, serial, etc.)
+│   ├── src/git/            # Git parsing, status, branches, conflicts, history, remotes, stash, scanning
+│   ├── src/*_fs.rs         # RemoteFs abstraction: local / remote(SFTP) / docker / k8s / wsl / ftp
+│   ├── src/k8s_host.rs     # Unified K8s resource model and host abstraction
+│   ├── src/vault.rs        # AES-256-GCM file vault
+│   ├── src/schema.sql      # SQLite schema
+│   └── tauri.conf.json     # Packaging config (bundle target is msi only)
+├── e2e/ui/                 # Playwright specs (about 100) and Tauri IPC stubs
+├── tests/                  # Pure-logic frontend check scripts (ls parsing, paste protection, highlighting rules, etc.)
+├── scripts/                # Build, publish, icons, latest.json generation
+├── docs/                   # User guide (Chinese and English) and screenshots
+└── README.md / README.zh.md / RELEASE_NOTES.md / RELEASE_NOTES.zh.md</code></pre>
+    </section>
+
+    <section id="who-its-for">
+      <h2>Who it is for</h2>
+      <ul>
+        <li>Operations engineers and developers who need to manage several Linux servers at once from a Windows desktop, and would rather not switch between an SSH client, WinSCP, an editor, Docker Desktop, a Git GUI and a kubectl terminal.</li>
+        <li>People who repeatedly chain actions such as “connect, check logs, edit a config file, pull code, restart a container”, and want those actions to stay in one window.</li>
+        <li>Anyone who wants an AI assistant to run diagnostic commands and read files on connected hosts, while keeping a human review step before anything executes.</li>
+        <li>Scenarios that need session recording and replay for auditing or post-mortems (NDJSON on disk, exportable to asciinema).</li>
+        <li>Cases where application data (including encrypted connection configuration) must be kept in a custom or portable directory.</li>
+      </ul>
+    </section>
+
+    <section id="limitations">
+      <h2>Known limitations and missing information</h2>
+      <ul>
+        <li><strong>Release packages are MSI only</strong> (the bundle target in <code>tauri.conf.json</code> is <code>["msi"]</code>); no installers are provided for other platforms, so Linux/macOS users must build from source.</li>
+        <li><strong>The README explicitly states</strong> that it describes the current state of the code rather than a roadmap (“not a roadmap”), and the repository contains no roadmap or planning document.</li>
+        <li><strong>How to contribute</strong>: the repository only has <code>.github/ISSUE_TEMPLATE/</code> (bug_report, feature_request) and <code>pull_request_template.md</code>. There is <strong>no CONTRIBUTING.md</strong>, and no code of conduct or development-process document; the only practical guidance is the code conventions mentioned in the README (Rust side uses <code>#[serde(rename_all = "camelCase")]</code> to match the frontend's camelCase types, Prettier rules apply, and a new command must be registered in <code>generate_handler!</code> in <code>lib.rs</code> and given a frontend wrapper in <code>src/commands.ts</code>).</li>
+        <li><strong>CI configuration is missing</strong>: there is no <code>.github/workflows/</code> in the file tree, so it cannot be confirmed whether an automated build/test pipeline exists.</li>
+        <li>The repository is small and has very few stars (4), and no external user feedback is available for reference.</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+  </div>
+</footer>
+
+</body>
+</html>
