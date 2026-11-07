@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSH 隧道 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 6 章：SSH 隧道">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/tunnels.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 06 章</p>
+    <h1>SSH 隧道</h1>
+    <p class="lede">按连接配置的本地端口转发，从侧栏管理，并由后端事件同步状态。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html" class="current">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 6 章</p>
+<h2 id="what">支持的范围</h2>
+<p>本地端口转发规则<strong>按连接</strong>保存。可以在侧栏中添加、编辑、删除、启动
+和停止。由于隧道由 SSH 会话本身承载，它们复用与终端相同的
+<code>russh</code> 通道。</p>
+
+<h2 id="state">状态同步</h2>
+<p>当隧道状态变化时，后端会发出 <code>tunnel-changed</code>，使界面反映实际状态，
+而不是本地推测。</p>
+
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 源材料只描述了本地转发。它没有记录远程
+  转发（<code>-R</code>）、动态 SOCKS 转发（<code>-D</code>）、绑定地址字段、首选本地端口，
+  也没有说明连接打开时规则是否自动启动。添加/编辑对话框的字段与默认值同样未记录。
+</div>
+
+<h2 id="usage">使用隧道</h2>
+<p>已确认的工作流仅限于 README 所述内容：为某个连接创建本地转发规则，然后
+在侧栏启动或停止它，并确认状态变更已由后端传播过来。</p>
+<div class="callout">
+  <strong>操作提示。</strong> 隧道依附于拥有它的 SSH 会话，因此会话关闭也可能导致隧道停止；
+  文档中记录的 <code>connection-closed</code> 状态是标签上需要留意的信号。
+</div>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="connections.html">第 2 章 — 第一个连接</a>，了解会话状态与重连行为。</li>
+  <li><a href="kubernetes.html">第 8 章 — Kubernetes 与 Helm</a>，其中的 Pod 端口转发是另一项独立功能。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="editor.html"><span class="dir">上一章</span>远程文件编辑</a>
+<a class="next" href="docker.html"><span class="dir">下一章</span>Docker 与主机分析</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用户手册 — Wrolp Terminal</title>
+<meta name="description" content="Wrolp Terminal 的十三章用户手册，涵盖安装、连接、会话、SFTP、编辑、隧道、Docker、Kubernetes、Git、AI、录制、数据迁移与故障排查。">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/index.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">文档</p>
+    <h1>用户手册</h1>
+    <p class="lede">十三章，从安装到故障排查，所有未确认的界面细节都明确标注。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p>本手册记录 Wrolp Terminal v0.0.12，依据仓库的 README、发布说明、
+<code>package.json</code>、<code>src-tauri/Cargo.toml</code>、配置文件与源码结构（资料截至 2026-11-07）。</p>
+
+<div class="callout">
+  <strong>如何阅读。</strong>每章都会区分源材料已确认与未确认的内容。
+  当某个对话框、菜单路径、字段名、默认值或截图没有文档记载时，该章会在「未确认」下明确说明，
+  而不是编造操作步骤。由于源材料中没有可用的截图，本手册未复现任何截图。
+</div>
+
+<h2 id="chapters">章节</h2>
+<div class="grid">
+    <div class="card">
+      <div class="chapter-no">第 01 章</div>
+      <h3><a href="installation.html">安装与系统要求</a></h3>
+      <p>平台、系统软件包、工具链、构建、测试与发布命令。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 02 章</div>
+      <h3><a href="connections.html">第一个连接</a></h3>
+      <p>SSH、Telnet、串口与本地会话，身份验证与连接健康状态。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 03 章</div>
+      <h3><a href="sessions.html">会话与多标签</a></h3>
+      <p>标签页、分割树、浮动窗格、快捷键与窗口行为。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 04 章</div>
+      <h3><a href="sftp.html">SFTP 文件传输</a></h3>
+      <p>远程文件浏览、传输队列、暂停/续传与取消语义。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 05 章</div>
+      <h3><a href="editor.html">远程文件编辑</a></h3>
+      <p>Monaco 编辑、编码检测、十六进制视图、图片预览与网络文件工具。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 06 章</div>
+      <h3><a href="tunnels.html">SSH 隧道</a></h3>
+      <p>按连接配置的本地端口转发，以及后端如何同步隧道状态。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 07 章</div>
+      <h3><a href="docker.html">Docker 与主机分析</a></h3>
+      <p>Docker 与 podman 主机、容器操作、日志、分析报告与主机探测。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 08 章</div>
+      <h3><a href="kubernetes.html">Kubernetes 与 Helm</a></h3>
+      <p>上下文、命名空间、十种资源类型、行操作与 Helm 标签页。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 09 章</div>
+      <h3><a href="git.html">Git 面板</a></h3>
+      <p>状态、diff、历史、分支、提交、推送保护、冲突与本地忽略。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 10 章</div>
+      <h3><a href="ai.html">AI 助手</a></h3>
+      <p>Chat 与 Agent、端点配置、密钥保险库、图片与发送到终端的行为。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 11 章</div>
+      <h3><a href="recording.html">会话录制与导出</a></h3>
+      <p>可选录制、NDJSON 布局、回放、asciinema 导出与索引修复。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 12 章</div>
+      <h3><a href="data.html">数据位置、迁移与备份</a></h3>
+      <p>数据目录中的文件、迁移规则、压缩与备份注意事项。</p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 13 章</div>
+      <h3><a href="troubleshooting.html">故障排查</a></h3>
+      <p>各种症状，以及解释或界定它们的已文档化事实。</p>
+    </div>
+</div>
+
+<h2 id="paths">建议阅读路径</h2>
+<ul>
+  <li><strong>首次安装配置</strong>：1 → 2 → 3。先安装、连接，然后了解标签页与窗格的行为。</li>
+  <li><strong>日常文件操作</strong>：4 → 5 → 6。传输、编辑与端口转发。</li>
+  <li><strong>服务器运维</strong>：7 → 8 → 9。Docker、Kubernetes/Helm 与 Git。</li>
+  <li><strong>AI 与记录留存</strong>：10 → 11 → 12。助手配置、录制与数据迁移。</li>
+  <li><strong>出问题时</strong>：直接跳到 13；每个症状都会链接回相关章节。</li>
+</ul>
+
+<h2 id="coverage">覆盖范围与源材料限制</h2>
+<ul>
+  <li><strong>发布包仅提供 MSI</strong>；Linux/macOS 必须从源码构建。</li>
+  <li><strong>不存在 CONTRIBUTING.md、行为准则或开发流程文档</strong>。仓库提供 issue 模板（缺陷报告与功能请求）和 pull request 模板。</li>
+  <li><strong>没有路线图文档</strong>：README 说明它描述的是当前代码，而不是未来计划。</li>
+  <li><strong>没有 CI 配置</strong>（缺少 <code>.github/workflows/</code>），因此无法确认自动化检查。</li>
+  <li>README、发布说明、配置或源码结构中未出现的界面入口与参数默认值，
+  会在相关章节中继续标注为未确认。</li>
+</ul>
+
+<p>想先看功能导览？返回<a href="../../features.html">功能概览</a>，或
+直接前往<a href="../../getting-started.html">快速开始</a>。</p>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

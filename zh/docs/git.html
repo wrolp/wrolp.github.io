@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git 面板 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 9 章：Git 面板">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/git.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 09 章</p>
+    <h1>Git 面板</h1>
+    <p class="lede">仓库状态、diff、历史以及改写历史的操作，全部通过真实的 git CLI 执行。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html" class="current">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 9 章</p>
+<h2 id="scope">范围与主机</h2>
+<p>该面板一次管理<strong>一个仓库</strong>，主机跟随聚焦的终端：远程仓库通过 SSH exec 通道运行，本地仓库则
+直接在本机启动。</p>
+<ul>
+  <li>远程命令被包装为 <code>env LC_ALL=C GIT_TERMINAL_PROMPT=0 … bash -lc</code>。</li>
+  <li>本地命令以 <code>HideConsole</code> 启动。</li>
+  <li>所有操作都调用真实的 <code>git</code> CLI，而不是重新实现 Git 的内部逻辑。</li>
+</ul>
+
+<h2 id="read">读取与审阅</h2>
+<ul>
+  <li>来自 porcelain v2 的<strong>状态</strong>。</li>
+  <li>上限为 2 MB 的<strong>逐行 diff</strong>。</li>
+  <li>带 commit-graph 泳道的<strong>分页历史</strong>。</li>
+  <li><strong>Blame</strong>。</li>
+  <li><strong>冲突三方视图</strong>，并支持中止操作。</li>
+</ul>
+
+<h2 id="change">修改仓库</h2>
+<ul>
+  <li>分支与远程管理。</li>
+  <li>暂存、取消暂存与丢弃。</li>
+  <li>提交与 amend。</li>
+  <li><code>fetch</code>、<code>pull</code> 和 <code>push</code>。</li>
+  <li>Stash。</li>
+  <li>带进度的 <code>clone</code>。</li>
+  <li>仓库扫描与 <code>git init</code>。</li>
+</ul>
+
+<h2 id="safeguards">内置保护措施</h2>
+<ul>
+  <li><code>pull</code> 始终使用 <code>--ff-only</code>。</li>
+  <li>强制推送仅以 <code>--force-with-lease</code> 的形式提供，并且需要二次确认。</li>
+  <li>Kubernetes 资源删除有自己的应用内确认；README 中描述的 Git 专属确认是强制推送那一个，冲突可以三方查看并中止。</li>
+  <li>路径参数绝不会拼接进 shell 命令。后端会拒绝绝对路径、盘符、反斜杠和 <code>..</code>。</li>
+  <li>“本地忽略”只写入 <code>.git/info/exclude</code>，绝不写入被跟踪的 <code>.gitignore</code>。</li>
+</ul>
+
+<div class="callout unconfirmed">
+  <strong>未确认。</strong>远程 HTTPS 或 SSH 操作如何提供凭证、提交签名、子模块与 Git LFS 的处理、交互式 rebase
+  与 worktree 支持均未描述。由于远程命令以 <code>GIT_TERMINAL_PROMPT=0</code> 运行，不能指望出现交互式凭证提示；
+  源材料也没有描述凭证设置界面。
+</div>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="editor.html">第 5 章 — 远程文件编辑</a>，用于直接修改文件。</li>
+  <li><a href="docker.html">第 7 章 — Docker 与主机分析</a>，用于同样的主机选择规则。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="kubernetes.html"><span class="dir">上一章</span>Kubernetes 与 Helm</a>
+<a class="next" href="ai.html"><span class="dir">下一章</span>AI 助手</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

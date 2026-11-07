@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 助手 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 10 章：AI 助手">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/ai.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 10 章</p>
+    <h1>AI 助手</h1>
+    <p class="lede">Chat 与 Agent 两种模式、相互隔离的会话、端点配置、密钥存储，以及先审阅再发送到终端的步骤。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html" class="current">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 10 章</p>
+<h2 id="modes">两种模式</h2>
+<ul>
+  <li><strong>Chat</strong> — 非流式，实现为 <code>ai_chat_sync</code>。</li>
+  <li><strong>Agent</strong> — 带工具调用的流式模式，实现为 <code>run_agent_stream</code>。在 Agent 模式下，
+  助手可以在已连接的服务器上调用工具。</li>
+</ul>
+
+<h2 id="isolation">两种相互隔离的聊天</h2>
+<ul>
+  <li>检查器侧栏中的<strong>应用级聊天</strong>：它不属于任何终端，后端会拒绝它的所有 shell 工具。</li>
+  <li>停靠在每个分栏中的<strong>终端绑定聊天</strong>：它可以执行 <code>run_command</code>、读取文件，并
+  「发送到终端」。</li>
+</ul>
+<p>这一划分是主要的安全边界：只有附加到终端的会话才能对该主机执行操作。</p>
+
+<h2 id="endpoints">端点配置</h2>
+<p>可以保存多个 <code>AiEndpointProfile</code> 条目，每个条目各自拥有：</p>
+<ul>
+  <li>API 密钥（加密存储）</li>
+  <li>端点 URL</li>
+  <li>模型名称</li>
+  <li>系统提示词</li>
+</ul>
+<p>可用模型可以从 <code>{endpoint}/v1/models</code> 拉取。</p>
+
+<h2 id="keys">API 密钥存储</h2>
+<p>密钥使用 <strong>AES-256-GCM 文件保险库</strong>加密。保险库密钥文件为 <code>vault.key</code>，被描述为与
+机器绑定的文件。<strong>不</strong>使用操作系统钥匙串。</p>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong>确切的对话框布局、可接受的 URL 格式、OpenAI 风格接口之外还支持哪些提供商、令牌或
+  上下文限制，以及请求重试是否可配置，均未记录。字段名 <code>openai_content</code> 表明后端接受的消息形状，
+  而不是受支持厂商的列表。
+</div>
+
+<h2 id="usage">使用助手</h2>
+<ul>
+  <li><strong>图片</strong>：将图片附加到消息，或直接粘贴；点击缩略图可打开完整图片。</li>
+  <li><strong>模板</strong>：模板下拉菜单可插入提示词。</li>
+  <li><strong>重发</strong>：编辑任意历史消息并再次发送。</li>
+  <li><strong>取消</strong>：<code>cancel_ai_chat</code> 中止正在进行的生成。</li>
+  <li><strong>发送到终端</strong>：代码块或选中文本会按连接类型（SSH、本地 shell、串口或 Telnet）插入目标
+  分栏。仅插入，不执行任何内容。</li>
+</ul>
+<div class="callout">
+  <strong>运行前审阅。</strong>仅插入的行为是刻意设计的：你可以在终端提示符处检查生成的命令，然后自己按
+  Enter。
+</div>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="data.html">第 12 章 — 数据位置、迁移与备份</a>：保险库密钥所在的位置。</li>
+  <li><a href="troubleshooting.html">第 13 章 — 故障排查</a>：迁移数据后的密钥错误。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="git.html"><span class="dir">上一章</span>Git 面板</a>
+<a class="next" href="recording.html"><span class="dir">下一章</span>会话录制与导出</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

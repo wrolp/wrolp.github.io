@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>远程文件编辑 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 5 章：远程文件编辑">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/editor.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 05 章</p>
+    <h1>远程文件编辑</h1>
+    <p class="lede">基于 Monaco 的编辑，复用同一会话；编码检测，以及二进制文件和图片的只读视图。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html" class="current">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 5 章</p>
+<h2 id="monaco">使用 Monaco 编辑</h2>
+<ul>
+  <li>编辑器是内嵌的 <strong>Monaco</strong> 编辑器。</li>
+  <li>它可以在分栏或浮动窗口中打开，并像其他面板一样按会话隔离。</li>
+  <li>文本编码使用 <code>encoding_rs</code> 自动检测 <strong>UTF-8 与 GBK</strong>。</li>
+  <li>可以从远程文件树打开编辑器，与终端标签并排。</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 保存行为（自动保存、原子写入、外部变更检测）、最大文件大小、
+  行尾符处理、备份文件和编辑器偏好设置，README、发布说明或配置文件中均未描述。
+</div>
+
+<h2 id="binary">二进制文件与图片</h2>
+<ul>
+  <li>二进制文件以<strong>十六进制转储</strong>打开。</li>
+  <li>图片按其 MIME 类型内联预览。</li>
+</ul>
+<p>这些视图偏向只读；文档没有描述编辑或保存二进制内容的能力。</p>
+
+<h2 id="languages">语言支持</h2>
+<p>Monaco 初始化与自定义语言定义位于 <code>src/editor/</code>，包括 shell 语法。README
+并未逐一列出所有支持的语言，请查阅该目录以确认你所运行构建中的确切集合。</p>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="sftp.html">第 4 章 — SFTP 文件传输</a>，了解上传、下载与传输队列。</li>
+  <li><a href="git.html">第 9 章 — Git 面板</a>，了解仓库级文件变更与差异。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="sftp.html"><span class="dir">上一章</span>SFTP 文件传输</a>
+<a class="next" href="tunnels.html"><span class="dir">下一章</span>SSH 隧道</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

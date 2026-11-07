@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>故障排查 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 13 章：故障排查">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/troubleshooting.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 13 章</p>
+    <h1>故障排查</h1>
+    <p class="lede">各种症状、其背后有文档记载的事实，以及源材料未覆盖之处。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html" class="current">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 13 章</p>
+<h2 id="table">常见情形</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>症状</th><th>已确认的行为</th><th>应检查的内容</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>标签页圆点为黄色</td>
+        <td><code>connection-suspect</code>：keepalive 报告异常</td>
+        <td>网络路径与 keepalive 间隔/重试设置；重新连接该标签页</td>
+      </tr>
+      <tr>
+        <td>标签页圆点为红色</td>
+        <td><code>connection-closed</code>：会话已结束</td>
+        <td>重新连接会复用该标签页；会分配新的 <code>session_id</code></td>
+      </tr>
+      <tr>
+        <td>本地未列出任何容器</td>
+        <td><code>probe_local_docker</code> 先尝试 <code>docker</code>，再尝试 <code>podman</code>，并将“未安装”与“守护进程未运行”区分开</td>
+        <td>在改动任何内容之前，先确认探测报告的是这两种状态中的哪一种</td>
+      </tr>
+      <tr>
+        <td>远程 Git 命令挂起</td>
+        <td>远程 Git 以 <code>GIT_TERMINAL_PROMPT=0</code> 运行，因此不可能出现交互式提示</td>
+        <td>确保非交互式 shell 已经能获得凭据</td>
+      </tr>
+      <tr>
+        <td>录制缺失</td>
+        <td>录制默认关闭；<code>WROLP_RECORDING=1</code> 可强制开启</td>
+        <td>检查设置与环境变量，然后在 <code>recordings/</code> 下查找</td>
+      </tr>
+      <tr>
+        <td>迁移数据后 AI 密钥失效</td>
+        <td><code>vault.key</code> 与机器绑定，只有显式迁移才会随之移动</td>
+        <td>带保险库密钥重新执行迁移，或重新输入 API 密钥</td>
+      </tr>
+      <tr>
+        <td>无法分配某个快捷键</td>
+        <td>Tab、Enter、Ctrl+C/V/X/Z/D/W 为保留键</td>
+        <td>选择其他组合</td>
+      </tr>
+      <tr>
+        <td>面板中 Git 状态未知</td>
+        <td>状态来自 porcelain v2，且 diff 上限为 2 MB</td>
+        <td>超大的变更集会被按设计截断</td>
+      </tr>
+      <tr>
+        <td>更新程序不工作</td>
+        <td>它使用 GitHub Release 端点，并且需要在 <code>tauri.conf.json</code> 中配置真实的 <code>pubkey</code></td>
+        <td>先配置密钥，再期待更新生效</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="platform">平台与打包问题</h2>
+<ul>
+  <li>没有 Linux 或 macOS 安装包；请按<a href="installation.html">第 1 章</a>从源码构建。</li>
+  <li>Linux 构建需要该章列出的 Debian/Ubuntu 软件包。</li>
+  <li>不存在 <code>.github/workflows/</code>，因此没有可确认的自动化构建可供与本地构建
+  对照。</li>
+</ul>
+
+<h2 id="database">数据库大小</h2>
+<p>录制以文件形式存放，SQLite 仅存储其索引，因此 <code>wrolp.db</code> 不应随
+录制长度增长。如果它因其他原因变大，设置会显示可回收空间并提供
+<strong>立即压缩</strong>（<code>VACUUM</code>）。</p>
+
+<h2 id="gaps">无法从文档中诊断的内容</h2>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong>源材料未描述日志文件位置、诊断包、
+  崩溃报告处理、安全模式开关或受支持的重置流程。这些内容被略去，而非猜测。
+</div>
+
+<h2 id="report">报告问题</h2>
+<p>仓库为缺陷报告与功能请求提供 issue 模板（<code>.github/ISSUE_TEMPLATE/</code>），
+并提供 pull request 模板。它<strong>没有 CONTRIBUTING.md</strong>、行为准则或路线图文档，因此除这些模板之外，
+没有文档记载的支持渠道。</p>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="connections.html">第 2 章 —— 第一个连接</a>：状态含义与重新连接。</li>
+  <li><a href="data.html">第 12 章 —— 数据位置、迁移与备份</a>：保险库与数据库的细节。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="data.html"><span class="dir">上一章</span>数据位置、迁移与备份</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

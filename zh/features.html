@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>功能特性 — Wrolp Terminal</title>
+<meta name="description" content="Wrolp Terminal 的功能清单：连接与终端、文件与编辑、Docker、Kubernetes/Helm、Git、AI 助手、会话录制与数据处理。">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="features.html" class="current">功能特性</a>
+      <a href="getting-started.html">快速开始</a>
+      <a href="docs/index.html">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../features.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">功能导览</p>
+    <h1>功能特性</h1>
+    <p class="lede">应用能做什么，分组方式与项目 README 一致。</p>
+  </div>
+</header>
+
+<div class="wrap page-body">
+  <main id="main">
+<div class="wrap page-body">
+<main id="main">
+  <p>这份功能清单遵循项目 README 中的功能列表。本页的锚点被首页卡片与用户手册链接引用。</p>
+<section id="connection-terminal">
+  <h2>连接与终端</h2>
+  <ul>
+    <li><strong>多标签 SSH 终端</strong>：由 xterm.js 渲染，支持密码与 SSH 密钥认证、<code>xterm-256color</code> PTY 与窗口尺寸同步。</li>
+    <li><strong>连接健康状态</strong>：可配置的 SSH keepalive（间隔加重试次数）；标签状态点由绿色变为黄色（<code>connection-suspect</code>），再变为红色（<code>connection-closed</code>）；“重新连接”按钮复用同一个标签实例，单调递增的 <code>session_id</code> 可防止过期的后台任务污染状态。</li>
+    <li><strong>Telnet</strong>：纯 TCP，内置 IAC 协商状态机（ECHO / SGA / TERMINAL-TYPE / NAWS）；可选自动登录，默认关闭（明文协议）。</li>
+    <li><strong>串口（COM）</strong>：枚举端口并显示带 VID:PID 的 USB 设备友好名称；可配置波特率、数据位、停止位、校验位与流控；包含<strong>波特率自动探测</strong>（逐个尝试各速率，并按“有多像终端文本”排序）。</li>
+    <li><strong>本地终端</strong>：将本地 shell 作为顶层标签或分栏面板打开，与远程标签并排使用。</li>
+    <li><strong>SSH 隧道</strong>：本地端口转发规则按连接保存，可在侧边栏新增、编辑、删除、启动与停止；后端通过 <code>tunnel-changed</code> 事件同步状态。</li>
+    <li><strong>网络扫描</strong>：扫描子网中开放 SSH/Telnet 端口的主机，并可直接从结果创建连接。</li>
+  </ul>
+</section>
+
+<section id="files-editing">
+  <h2>文件与编辑</h2>
+  <ul>
+    <li><strong>SFTP 文件管理</strong>：远程文件树，支持列目录 / 读取 / 写入 / 重命名 / 删除 / 创建目录、上传与下载；支持<strong>暂停与续传</strong>，并发出 <code>transfer-progress</code> 事件。</li>
+    <li><strong>传输队列</strong>：每个文件一行，显示已完成/总大小与实时速度；目录与拖放上传在 Rust 侧用 <code>walkdir</code> 一次性遍历，进度以 4 MiB 分块上报（单文件上传使用 64 KB 分块）；<strong>取消上传会清理它已创建的部分远程文件</strong>，已完成的文件会保留，原本已存在的目标文件不会被删除。</li>
+    <li><strong>远程编辑器</strong>：内嵌 Monaco 编辑，以分栏面板或浮动窗口呈现；自动识别 UTF-8 / GBK 编码（<code>encoding_rs</code>）。</li>
+    <li><strong>十六进制与图片查看</strong>：二进制文件以十六进制转储查看，图片按 MIME 类型内联预览。</li>
+    <li><strong>网络文件工具</strong>：内置 FTP 服务器（PASV/EPSV）、HTTP/HTTPS 文件服务器（一键生成自签名证书）、TFTP 服务器，以及 FTP 客户端（无 TLS / 显式 / 隐式）与 TFTP 客户端。</li>
+  </ul>
+</section>
+
+<section id="ops-panels">
+  <h2>运维面板</h2>
+  <ul>
+    <li><strong>Docker 与主机分析</strong>：同一命令入口支持两类主机（<code>DockerHostRef</code>）——SSH 会话跳板机上的容器（通过 exec 通道执行 <code>docker exec</code>），或本地守护进程（直接启动 CLI 以避免引号问题）；<code>probe_local_docker</code> 先尝试 <code>docker</code> 再尝试 <code>podman</code>，并区分“未安装”与“已安装但守护进程未运行”。功能包括容器列表（新建/删除/启动/停止）、一次性与流式日志、三层分析报告、容器文件浏览与进入容器 shell；另有 <code>analyze_host</code> 对服务器的操作系统/内核/架构/软件包/已安装工具进行只读分析，以及用于查询命令帮助的 <code>command_help</code>。</li>
+    <li><strong>Kubernetes 与 Helm</strong>：K8s 模式跟随当前聚焦的终端选择主机（SSH 跳板机或本地 kubeconfig）；context/namespace 选择器加搜索框，默认<strong>所有命名空间</strong>，命名空间标签按名称稳定着色。十种资源类型（pods/deployments/statefulsets/daemonsets/services/ingresses/jobs/cronjobs/configmaps/secrets）共用一套行模型；每行支持查看/编辑并应用 YAML、扩缩容、删除（应用内确认）、查看/流式日志（含 ANSI 颜色）、进入 Pod shell、浏览 Pod 文件与端口转发（规则可保存）；Helm 标签页支持 CLI 探测、列出 release、查看 values 与修订历史、回滚、卸载以及安装/升级。</li>
+    <li><strong>Git 面板</strong>：一次管理一个仓库，主机同样跟随聚焦的终端；所有操作都调用真实的 <code>git</code> CLI（远程通过 exec 通道执行 <code>env LC_ALL=C GIT_TERMINAL_PROMPT=0 … bash -lc</code>，本地则用 <code>HideConsole</code> 直接启动）。涵盖状态（porcelain v2）、逐行差异（2 MB 上限）、带 commit-graph 泳道的分页历史、分支与远程管理、暂存/取消暂存/丢弃、提交/修补（amend）、fetch/pull/push（pull 强制 <code>--ff-only</code>，强制推送只提供 <code>--force-with-lease</code> 且需要二次确认）、带操作中止的三方冲突视图、stash、blame、clone（带进度）、仓库扫描、<code>git init</code>，以及只写入 <code>.git/info/exclude</code> 的“本地忽略”。路径参数从不做 shell 拼接；后端会拒绝绝对路径、盘符、反斜杠与 <code>..</code>。</li>
+    <li><strong>会话录制</strong>：默认关闭；可在设置中启用，或用 <code>WROLP_RECORDING=1/0</code> 环境变量强制开启。事件按会话写入 <code>&lt;data dir&gt;/recordings/&lt;workspace&gt;/&lt;group&gt;/&lt;connection&gt;/&lt;timestamp&gt;_&lt;session8&gt;.jsonl</code>（NDJSON），每 5 秒及断开时刷盘；SQLite 只存索引（<code>events_file</code>、<code>event_count</code>），因此 <code>wrolp.db</code> 不会随录制增长。底部面板可浏览录制、在文件管理器中显示、导出为 asciinema v2（<code>.cast</code>）、回放与删除，并支持旧数据迁移与按目录重建索引。</li>
+    <li><strong>命令集</strong>：存储于 SQLite 的可复用命令组（可绑定到连接）。</li>
+  </ul>
+</section>
+
+<section id="ai-assistant">
+  <h2>AI 助手</h2>
+  <ul>
+    <li>两种模式：<strong>Chat</strong>（非流式 <code>ai_chat_sync</code>）与 <strong>Agent</strong>（流式加工具调用，通过 <code>run_agent_stream</code>）；Agent 可在已连接的服务器上调用工具。</li>
+    <li><strong>隔离的双重对话</strong>：检视器侧边栏中的 AI 是应用级对话（不属于任何终端，后端会拒绝它的所有 shell 工具）；绑定终端的 AI 停靠在每个面板内，可执行 <code>run_command</code>、读取文件以及“发送到终端”。</li>
+    <li><strong>多模态输入</strong>：消息可携带图片（后端以 <code>openai_content</code> 多段结构接收），图片也可粘贴，点击缩略图可打开大图。</li>
+    <li><strong>发送到终端</strong>：AI 代码块或选中文本按连接类型（SSH/本地 shell/串口/Telnet）注入目标面板；只插入、不执行，因此可在运行前检查。</li>
+    <li><strong>模板与重发</strong>：模板下拉框可插入提示词；任何历史消息都可编辑并重发；<code>cancel_ai_chat</code> 可中止正在进行的生成。</li>
+    <li><strong>多端点</strong>：可保存多个 <code>AiEndpointProfile</code>（各自拥有加密的 API key、URL、模型与 system prompt），并可从 <code>{endpoint}/v1/models</code> 拉取模型列表。</li>
+    <li><strong>安全性</strong>：API key 使用 AES-256-GCM 文件保险库加密（<code>vault.key</code> 是与机器绑定的文件）；不使用操作系统钥匙串。</li>
+  </ul>
+</section>
+
+<section id="interaction-data">
+  <h2>交互与数据</h2>
+  <ul>
+    <li><strong>分割树与浮动面板</strong>：终端区域是分割树布局，可水平或垂直分割，叶子节点承载终端、Docker 日志或编辑器；任何面板都可弹出为独立浮动窗口，每个会话打开的文件与日志彼此隔离。</li>
+    <li><strong>可迁移的数据目录</strong>：设置可将数据目录指向任意位置，同时迁移 <code>wrolp.db</code>、<code>recordings/</code>、<code>connections.json</code> 与窗口配置；该选择记录在默认位置的 <code>data_root.json</code> 中，并在下次启动时生效；目标为空时写入，非空时复用，已有数据永不覆盖。<code>vault.key</code> 也可选择一并迁移，使整个目录可携带。</li>
+    <li><strong>数据库维护</strong>：显示 <code>wrolp.db</code> 的当前大小与可回收空间，并提供“立即压缩”（<code>VACUUM</code>）操作。</li>
+    <li><strong>快捷键</strong>：所有快捷键集中在 <code>src/lib/keybindings.ts</code> 的同一张表中；设置中可为每一项重新绑定、单项重置或全部重置；保留键（Tab、Enter、Ctrl+C/V/X/Z/D/W）会被拒绝。</li>
+    <li><strong>其他</strong>：自定义标题栏、持久化窗口几何与透明度、单实例保护、自动更新器（GitHub Release 端点，需要在 <code>tauri.conf.json</code> 中提供真实的 <code>pubkey</code>），以及中英文界面（默认跟随系统语言）。</li>
+  </ul>
+</section>
+
+<section id="tech-stack">
+  <h2>技术栈</h2>
+  <p><strong>前端</strong>：React 19 + TypeScript + xterm.js 5.5（fit/serialize/webgl 附加组件）+ Monaco Editor + Vite 6 + SCSS。
+  依赖刻意保持精简；运行时依赖基本只有 Tauri API、xterm、Monaco、
+  react-markdown/remark-gfm、uuid 等。</p>
+
+  <p><strong>后端</strong>：Tauri 2 + Rust（tokio）。关键 crate：</p>
+  <ul>
+    <li><code>russh</code> 0.64 + <code>russh-sftp</code> 3（纯 Rust 异步 SSH / SFTP）</li>
+    <li><code>rusqlite</code> 0.31（内置 SQLite，WAL 模式）</li>
+    <li><code>portable-pty</code>、<code>serialport</code>（本地 PTY 与串口）</li>
+    <li><code>aes-gcm</code>、<code>rand</code>、<code>base64</code>（密钥保险库）</li>
+    <li><code>axum</code> + <code>tower-http</code> + <code>axum-server</code> + <code>rcgen</code>（内置 HTTP/HTTPS 文件服务器与自签名证书）</li>
+    <li><code>suppaftp</code>（FTP）、<code>reqwest</code>（AI 端点调用）、<code>encoding_rs</code>、<code>walkdir</code>、<code>chrono</code></li>
+    <li>Windows 专用：<code>windows</code> / <code>windows-core</code> / <code>webview2-com</code></li>
+  </ul>
+
+  <p><strong>IPC 与存储</strong>：Tauri <code>invoke</code> 命令是主要机制，终端输出
+  由前端轮询（README 将其解释为应对 Windows 后台任务的变通方案）。Tauri 事件
+  仅用于 UI 无法轮询的推送 —— <code>connection-closed</code>、<code>connection-suspect</code>、
+  <code>connection-ok</code>、<code>transfer-progress</code>、<code>tunnel-changed</code>、<code>ai-term-mark</code>、
+  <code>native-drag-drop</code>、<code>baud-detect-progress</code>。所有数据都存放在一个可迁移目录中：
+  <code>window.json</code>（窗口、录制与 keepalive 设置）、加密的 <code>connections.json</code>
+  （连接与工作区）、<code>wrolp.db</code>（会话索引、命令集、片段），以及
+  <code>recordings/</code>（NDJSON 录制）。</p>
+</section>
+</main>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

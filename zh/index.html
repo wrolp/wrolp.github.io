@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具</title>
+<meta name="description" content="Wrolp Terminal 是一个基于 Rust 的桌面 SSH 终端与服务器运维工具：多标签终端、SFTP、远程编辑、会话录制、Docker 与 Kubernetes 分析、Git 面板和 AI 助手。">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="current">首页</a>
+      <a href="features.html">功能特性</a>
+      <a href="getting-started.html">快速开始</a>
+      <a href="docs/index.html">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../index.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <img class="hero-logo" src="../assets/wrolp-logo.svg" alt="Wrolp Terminal 应用图标" width="88" height="88">
+    <p class="eyebrow">项目概览</p>
+    <h1>Wrolp Terminal</h1>
+    <p class="tagline">基于 Rust 的桌面 SSH 终端与服务器运维工具 —— 多标签终端、SFTP、远程编辑、会话录制、Docker 分析与 AI 助手。</p>
+    <p class="meta">
+      <span>v0.0.12</span>
+      <span>MIT 许可证</span>
+      <span>Windows 优先</span>
+    </p>
+    <div class="cta-row">
+      <a class="btn" href="getting-started.html">快速开始</a>
+      <a class="btn ghost" href="docs/index.html">阅读手册</a>
+      <a class="btn ghost" href="features.html">功能概览</a>
+    </div>
+  </div>
+</header>
+<div class="wrap page-body">
+<main id="main">
+
+<section id="what-it-is">
+  <h2>它是什么，解决什么问题</h2>
+  <p>Wrolp Terminal 是一个基于 Tauri 2 + React 19 + TypeScript 构建的桌面终端与服务器运维工具。
+  它把“连接服务器、传输文件、编辑文件、查看日志、管理容器、管理 K8s、管理 Git、向 AI 提问”
+  收进同一个应用窗口，替代原本需要在 SSH 客户端、SFTP 工具、编辑器、Docker 面板和 Git GUI 之间来回切换的工作流。</p>
+
+  <p>它与传统 SSH 客户端的核心差异：SSH 连接直接由 Rust 侧的纯 Rust 异步库 <code>russh</code> 实现
+  （不依赖外部 <code>ssh</code> 命令或 OpenSSH 二进制），因此终端、SFTP、隧道、Docker exec 和 kubectl exec
+  全部复用同一个会话通道。本地与远程文件浏览共用一套 <code>RemoteFs</code> 抽象，本地 shell 和远程主机
+  可以在同一个界面里并排使用。</p>
+</section>
+
+<section id="at-a-glance">
+  <h2>一览</h2>
+  <dl class="facts">
+    <div class="fact"><dt>代码仓库</dt><dd><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a></dd></div>
+    <div class="fact"><dt>当前版本</dt><dd>v0.0.12（2026-11-07 发布，非预发布版）</dd></div>
+    <div class="fact"><dt>许可证</dt><dd>MIT（Copyright (c) 2026 Wrolp）</dd></div>
+    <div class="fact"><dt>语言构成</dt><dd>TypeScript / Rust / JavaScript / SCSS / HTML</dd></div>
+    <div class="fact"><dt>仓库规模</dt><dd>约 8.2 MB，4 个 star，0 个 fork，0 个未关闭 issue</dd></div>
+    <div class="fact"><dt>平台</dt><dd>Windows 为主要目标（仅发布 MSI）；可在 Linux/macOS 上运行与构建</dd></div>
+  </dl>
+</section>
+
+<section id="capabilities">
+  <h2>核心能力</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>连接与终端</h3>
+      <p>由 xterm.js 渲染的多标签 SSH 终端，另有 Telnet、串口（COM）和本地 shell。SSH 基于 <code>russh</code>，而不是外部 OpenSSH 二进制。</p>
+      <a class="more" href="features.html#connection-terminal">了解连接功能 →</a>
+    </div>
+    <div class="card">
+      <h3>文件与编辑</h3>
+      <p>支持暂停与续传的 SFTP 浏览，按文件展示的传输队列，带 UTF-8/GBK 识别的 Monaco 编辑，以及十六进制或图片预览。</p>
+      <a class="more" href="features.html#files-editing">了解文件功能 →</a>
+    </div>
+    <div class="card">
+      <h3>服务器运维</h3>
+      <p>Docker 与 podman 主机、Kubernetes/Helm，以及由真实 <code>git</code> CLI 驱动的 Git 面板。Kubernetes 与 Git 面板会根据当前聚焦的终端选择主机。</p>
+      <a class="more" href="features.html#ops-panels">了解运维面板 →</a>
+    </div>
+    <div class="card">
+      <h3>AI 助手</h3>
+      <p>Chat 与 Agent 两种模式，应用级与分栏级相互隔离的会话，以及只插入不执行的“发送到终端”步骤，方便执行前检查。</p>
+      <a class="more" href="features.html#ai-assistant">了解 AI 助手 →</a>
+    </div>
+    <div class="card">
+      <h3>会话与数据</h3>
+      <p>带浮动面板的分割树、可导出为 asciinema 的 NDJSON 会话录制，以及包含加密连接信息的可迁移数据目录。</p>
+      <a class="more" href="features.html#interaction-data">了解会话与数据功能 →</a>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <h2>几条命令即可开始</h2>
+  <p>如果要在 Debian/Ubuntu 上构建，请先安装快速开始指南中列出的 Linux 系统包，
+  然后安装 Rust 与前端依赖：</p>
+<pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+yarn
+yarn tauri dev      # 完整栈；Tauri 会自动启动 Vite 开发服务器</code></pre>
+  <p><a href="getting-started.html">完整的安装、构建与发布说明 →</a></p>
+</section>
+
+<section id="manual-entry">
+  <h2>用户手册</h2>
+  <p>十三章内容覆盖从安装到故障排查的完整流程。所有陈述均来自仓库的 README、发布说明、配置文件与源码结构；
+  源材料未描述的界面细节会明确标注为未确认，而不是凭空编写。</p>
+  <div class="grid">
+    <div class="card">
+      <div class="chapter-no">第 1–3 章</div>
+      <h3>安装与连接</h3>
+      <p><a href="docs/installation.html">1. 安装与系统要求</a><br>
+      <a href="docs/connections.html">2. 第一个连接</a><br>
+      <a href="docs/sessions.html">3. 会话与多标签</a></p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 4–6 章</div>
+      <h3>文件与网络</h3>
+      <p><a href="docs/sftp.html">4. SFTP 文件传输</a><br>
+      <a href="docs/editor.html">5. 远程文件编辑</a><br>
+      <a href="docs/tunnels.html">6. SSH 隧道</a></p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 7–9 章</div>
+      <h3>服务器运维</h3>
+      <p><a href="docs/docker.html">7. Docker 与主机分析</a><br>
+      <a href="docs/kubernetes.html">8. Kubernetes 与 Helm</a><br>
+      <a href="docs/git.html">9. Git 面板</a></p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 10–12 章</div>
+      <h3>AI 与数据</h3>
+      <p><a href="docs/ai.html">10. AI 助手</a><br>
+      <a href="docs/recording.html">11. 会话录制与导出</a><br>
+      <a href="docs/data.html">12. 数据位置、迁移与备份</a></p>
+    </div>
+    <div class="card">
+      <div class="chapter-no">第 13 章</div>
+      <h3>故障排查</h3>
+      <p><a href="docs/troubleshooting.html">13. 故障排查</a></p>
+      <a class="more" href="docs/index.html">打开手册目录 →</a>
+    </div>
+  </div>
+</section>
+
+<section id="limitations">
+  <h2>已知限制与缺失信息</h2>
+  <ul>
+    <li><strong>发布包仅提供 MSI</strong>：<code>tauri.conf.json</code> 中的打包目标为 <code>["msi"]</code>，因此 Linux/macOS 用户必须从源码构建。</li>
+    <li><strong>README 描述的是代码当前状态，而不是路线图</strong>（原文为 “not a roadmap”），仓库中也没有路线图或规划文档。</li>
+    <li><strong>没有 CONTRIBUTING.md</strong>：只有 issue 模板（缺陷报告与功能请求）和 pull request 模板；实际约定以 README 中的说明为准。</li>
+    <li><strong>没有 CI 配置</strong>：文件树中不存在 <code>.github/workflows/</code>，因此无法确认存在自动化构建/测试流水线。</li>
+    <li>仓库规模较小、star 很少（4 个），也没有可参考的外部用户反馈。</li>
+  </ul>
+</section>
+
+</main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

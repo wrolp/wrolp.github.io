@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会话录制与导出 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 11 章：会话录制与导出">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/recording.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 11 章</p>
+    <h1>会话录制与导出</h1>
+    <p class="lede">可选开启的 NDJSON 录制、回放与 asciinema 导出，以及如何让数据库保持小巧。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html" class="current">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 11 章</p>
+<h2 id="enable">启用录制</h2>
+<p>录制<strong>默认关闭</strong>。可以在设置中启用，或用环境变量
+<code>WROLP_RECORDING=1</code> 强制开启（用 <code>0</code> 强制关闭）。</p>
+
+<h2 id="layout">事件写入位置</h2>
+<p>事件按会话写入 NDJSON：</p>
+<pre><code>&lt;data dir&gt;/recordings/&lt;workspace&gt;/&lt;group&gt;/&lt;connection&gt;/&lt;timestamp&gt;_&lt;session8&gt;.jsonl</code></pre>
+<ul>
+  <li>每行是一个 JSON 事件。</li>
+  <li>缓冲区每 5 秒刷写一次，会话断开时也会刷写。</li>
+  <li>SQLite 只保存索引 —— <code>events_file</code> 与 <code>event_count</code> —— 因此 <code>wrolp.db</code>
+  不会随录制长度成比例增长。</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong>事件 schema 的字段、输入与输出是否分别记录、大小上限、
+  保留规则与自动轮转，源材料均未说明。
+</div>
+
+<h2 id="panel">录制面板</h2>
+<p>底部面板提供以下操作：</p>
+<ul>
+  <li>浏览录制。</li>
+  <li>在文件管理器中显示录制文件。</li>
+  <li>导出为 asciinema v2（<code>.cast</code>）。</li>
+  <li>回放。</li>
+  <li>删除。</li>
+  <li>迁移旧版数据，并从目录重建索引。</li>
+</ul>
+
+<h2 id="privacy">处理录制文件</h2>
+<p>录制会捕获终端内容，因此应把 <code>recordings/</code> 目录视为敏感数据：它位于第 12 章所述的
+数据目录内，并随该目录一起迁移。</p>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="data.html">第 12 章 —— 数据位置、迁移与备份</a>。</li>
+  <li><a href="sessions.html">第 3 章 —— 会话与多标签</a>：会话标识（<code>session_id</code>）是文件名的一部分。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="ai.html"><span class="dir">上一章</span>AI 助手</a>
+<a class="next" href="data.html"><span class="dir">下一章</span>数据位置、迁移与备份</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

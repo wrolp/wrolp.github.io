@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一个连接 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 2 章：第一个连接">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/connections.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 02 章</p>
+    <h1>第一个连接</h1>
+    <p class="lede">SSH、Telnet、串口与本地会话 —— 应用支持哪些能力，以及文档没有说明什么。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html" class="current">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 2 章</p>
+<h2 id="create">创建连接</h2>
+<p>连接保存在 <code>connections.json</code> 中，该文件经过加密，同时存放工作区。应用
+以密码或 SSH 密钥认证打开 SSH 会话，并申请一个尺寸随窗口变化的 <code>xterm-256color</code> PTY。</p>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> README 没有记录创建连接的确切入口（菜单、
+  按钮名称或对话框字段名）。已确认的是：连接与工作区持久化在加密的
+  <code>connections.json</code> 中，SSH 支持密码和密钥认证。
+</div>
+<p>连接设置也被终端相关面板使用：Docker、Kubernetes 和 Git 会根据当前获得焦点的终端选择主机（详见第 7–9 章）。</p>
+
+<h2 id="ssh">SSH 会话</h2>
+<ul>
+  <li><strong>传输</strong>：在 Rust 侧用 <code>russh</code> 实现；不需要外部 <code>ssh</code> 命令或 OpenSSH 二进制。</li>
+  <li><strong>认证</strong>：密码或 SSH 密钥。</li>
+  <li><strong>终端</strong>：xterm.js 渲染，<code>xterm-256color</code> PTY，窗口尺寸同步。</li>
+  <li><strong>保活</strong>：可配置的间隔与重试次数。</li>
+  <li><strong>重连</strong>：重连操作复用同一个标签实例；单调递增的 <code>session_id</code> 可防止残留的后台任务污染新会话。</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 主机密钥校验或指纹提示、SSH agent 集成、键盘交互式
+  认证、在连接配置内串联跳板机，以及代理设置，源材料中均未描述。
+</div>
+
+<h2 id="health">连接健康状态</h2>
+<p>每个标签显示一个状态点，由三个后端事件驱动：</p>
+<ul>
+  <li><code>connection-ok</code> —— 已连接；状态点为绿色。</li>
+  <li><code>connection-suspect</code> —— 保活失败暗示存在问题；状态点变为黄色。</li>
+  <li><code>connection-closed</code> —— 会话已结束；状态点变为红色。</li>
+</ul>
+<p>请使用重连操作复用该标签，而不是打开新标签。</p>
+
+<h2 id="other-protocols">Telnet、串口与本地会话</h2>
+<ul>
+  <li><strong>Telnet</strong>：纯 TCP，内置 IAC 协商状态机（ECHO、SGA、TERMINAL-TYPE、NAWS）。
+  自动登录可选且默认关闭，因为该协议是明文传输。</li>
+  <li><strong>串口（COM）</strong>：端口枚举，带 USB 设备友好名称与 VID:PID，以及可配置的
+  波特率、数据位、停止位、校验位和流控。波特率自动检测会逐个尝试各速率，并按输出看起来像终端文本的程度对结果排序。</li>
+  <li><strong>本地终端</strong>：本地 shell 可以作为顶层标签打开，也可以作为分栏与远程标签并排。</li>
+</ul>
+
+<h2 id="scan">网络扫描</h2>
+<p>扫描会在子网中查找开放 SSH 或 Telnet 端口的主机。扫描结果可直接用于创建连接。</p>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 除“从结果创建连接”之外，扫描范围输入、超时、
+  并发数以及结果操作均未描述。
+</div>
+<div class="pager">
+<a class="prev" href="installation.html"><span class="dir">上一章</span>安装与系统要求</a>
+<a class="next" href="sessions.html"><span class="dir">下一章</span>会话与多标签</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

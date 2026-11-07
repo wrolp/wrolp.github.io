@@ -132,6 +132,12 @@ a:hover { text-decoration: underline; }
   border-bottom: 2px solid transparent;
 }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
+.nav-links a.lang {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 9px;
+}
+.nav-links a.lang:hover { border-color: var(--accent); color: var(--accent); }
 .nav-links a.current {
   color: var(--accent);
   border-bottom-color: var(--accent);
@@ -588,4 +594,28 @@ td code { white-space: nowrap; }
   .hero, .subhero { background: none; }
   .doc-layout, .layout { grid-template-columns: 1fr; }
   a { color: inherit; }
+}
+
+/* ---------- Chinese edition ---------- */
+/* Scoped to the Chinese pages so the English pages keep their current typography. */
+
+html[lang="zh-CN"] body {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC",
+    "Source Han Sans SC", ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.8;
+}
+
+html[lang="zh-CN"] h1,
+html[lang="zh-CN"] h2,
+html[lang="zh-CN"] h3,
+html[lang="zh-CN"] h4 { letter-spacing: 0; line-height: 1.35; }
+
+html[lang="zh-CN"] .eyebrow { letter-spacing: 0.12em; }
+
+html[lang="zh-CN"] code,
+html[lang="zh-CN"] pre,
+html[lang="zh-CN"] .tree { font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace; }
+
+@media (max-width: 720px) {
+  html[lang="zh-CN"] body { line-height: 1.78; }
 }

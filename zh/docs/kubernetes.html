@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kubernetes 与 Helm — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 8 章：Kubernetes 与 Helm">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/kubernetes.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 08 章</p>
+    <h1>Kubernetes 与 Helm</h1>
+    <p class="lede">上下文、命名空间与资源行，以及 Helm 标签页中的发行版管理。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html" class="current">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 8 章</p>
+<h2 id="host">你正在查看哪个集群</h2>
+<p>Kubernetes 模式跟随<strong>当前聚焦的终端</strong>来选择主机：可以是 SSH 跳板机，也可以是本地 kubeconfig。
+因此切换焦点就会切换集群上下文的来源，这也是面板与终端应当放在一起阅读的原因。</p>
+
+<h2 id="navigation">上下文与命名空间</h2>
+<ul>
+  <li>上下文与命名空间选择器，以及一个搜索框。</li>
+  <li>默认的命名空间筛选为<strong>所有命名空间</strong>。</li>
+  <li>命名空间标签按名称以稳定的映射着色，因此同一命名空间始终保持自己的颜色。</li>
+</ul>
+
+<h2 id="resources">资源类型</h2>
+<p>十种资源共用一个行模型：pods、deployments、statefulsets、daemonsets、services、ingresses、jobs、cronjobs、
+configmaps 和 secrets。</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>行操作</th><th>来源说明</th></tr></thead>
+    <tbody>
+      <tr><td>查看与编辑</td><td>编辑并应用 YAML</td></tr>
+      <tr><td>扩缩容</td><td>在共享行模型上可用</td></tr>
+      <tr><td>删除</td><td>需要应用内确认</td></tr>
+      <tr><td>日志</td><td>查看或流式输出，保留 ANSI 颜色</td></tr>
+      <tr><td>Pod 终端</td><td>进入 Pod 内的 shell</td></tr>
+      <tr><td>Pod 文件</td><td>浏览 Pod 内的文件</td></tr>
+      <tr><td>端口转发</td><td>规则可以保存</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="helm">Helm</h2>
+<ul>
+  <li>检测 Helm CLI。</li>
+  <li>列出 release，并查看 values 与修订历史。</li>
+  <li>回滚、卸载、安装和升级。</li>
+</ul>
+
+<div class="callout unconfirmed">
+  <strong>未确认。</strong>所需的 kubectl/Helm 版本、kubeconfig 路径如何选择、十种类型之外的自定义资源定义、
+  apply 是否使用服务器端 apply，以及安装/升级对话框的字段均未记录。文档也没有说明跳板机如何对 kubectl
+  进行认证。
+</div>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="sessions.html">第 3 章 — 会话与多标签</a>：焦点决定主机。</li>
+  <li><a href="tunnels.html">第 6 章 — SSH 隧道</a>：另一种端口转发机制。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="docker.html"><span class="dir">上一章</span>Docker 与主机分析</a>
+<a class="next" href="git.html"><span class="dir">下一章</span>Git 面板</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

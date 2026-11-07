@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker 与主机分析 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 7 章：Docker 与主机分析">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/docker.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 07 章</p>
+    <h1>Docker 与主机分析</h1>
+    <p class="lede">远程容器与本地守护进程共用一套命令入口，另有只读的主机检查。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html" class="current">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 7 章</p>
+<h2 id="hosts">两类主机</h2>
+<p>Docker 命令通过 <code>DockerHostRef</code> 定位，它可以指向：</p>
+<ul>
+  <li><strong>一个 SSH 会话跳板主机</strong> —— 通过在会话的 exec 通道上运行 <code>docker exec</code>
+  访问容器。</li>
+  <li><strong>本地守护进程</strong> —— 直接启动 CLI，从而避免引号转义问题。</li>
+</ul>
+<p>本地探测（<code>probe_local_docker</code>）先尝试 <code>docker</code>，再尝试 <code>podman</code>，并
+区分“未安装”与“已安装但守护进程未运行”。在诊断容器列表为空的原因时，这一区分很重要。</p>
+
+<h2 id="containers">容器操作</h2>
+<ul>
+  <li>列出容器，并创建、删除、启动和停止容器。</li>
+  <li>一次性日志与<strong>流式日志</strong>。</li>
+  <li>三层分析报告。</li>
+  <li>浏览容器内文件。</li>
+  <li>在容器内打开 shell。</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 三层分析的名称与内容在源材料中没有列举，所需的 Docker 权限、
+  镜像仓库访问权限，以及容器创建是否暴露全部运行时选项，同样未说明。
+</div>
+
+<h2 id="host-analysis">主机分析</h2>
+<p><code>analyze_host</code> 对服务器执行<strong>只读</strong>检查：操作系统、内核、架构、
+已安装的软件包与已安装的工具。<code>command_help</code> 用于查询命令帮助。</p>
+
+<h2 id="safety">只读操作与变更操作</h2>
+<p>只有分析命令被描述为只读。容器启动/停止/删除和 shell 访问属于变更
+操作；文档没有描述针对它们的确认步骤，这一点与 Kubernetes 资源删除不同，
+后者确实有应用内确认。</p>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 容器操作的审计日志、镜像管理、卷或网络管理、
+  compose 支持以及基于 Kubernetes 的 Docker 访问，均未记录。
+</div>
+
+<h2 id="related">相关章节</h2>
+<ul>
+  <li><a href="sessions.html">第 3 章 — 会话与多标签</a>：Docker 日志是面板内容类型之一。</li>
+  <li><a href="kubernetes.html">第 8 章 — Kubernetes 与 Helm</a>：同样的“主机跟随聚焦的终端”规则。</li>
+</ul>
+<div class="pager">
+<a class="prev" href="tunnels.html"><span class="dir">上一章</span>SSH 隧道</a>
+<a class="next" href="kubernetes.html"><span class="dir">下一章</span>Kubernetes 与 Helm</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

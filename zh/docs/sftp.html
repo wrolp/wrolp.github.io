@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SFTP 文件传输 — Wrolp Terminal 用户手册</title>
+<meta name="description" content="Wrolp Terminal 用户手册，第 4 章：SFTP 文件传输">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../../features.html">功能特性</a>
+      <a href="../../getting-started.html">快速开始</a>
+      <a href="index.html" class="current">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../../docs/sftp.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">第 04 章</p>
+    <h1>SFTP 文件传输</h1>
+    <p class="lede">远程文件浏览、传输队列、暂停与续传，以及取消时如何处理不完整文件。</p>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <nav class="doc-nav" aria-label="用户手册章节">
+    <p class="doc-nav-title">用户手册</p>
+<ol>
+  <li><a href="installation.html">安装与系统要求</a></li>
+  <li><a href="connections.html">第一个连接</a></li>
+  <li><a href="sessions.html">会话与多标签</a></li>
+  <li><a href="sftp.html" class="current">SFTP 文件传输</a></li>
+  <li><a href="editor.html">远程文件编辑</a></li>
+  <li><a href="tunnels.html">SSH 隧道</a></li>
+  <li><a href="docker.html">Docker 与主机分析</a></li>
+  <li><a href="kubernetes.html">Kubernetes 与 Helm</a></li>
+  <li><a href="git.html">Git 面板</a></li>
+  <li><a href="ai.html">AI 助手</a></li>
+  <li><a href="recording.html">会话录制与导出</a></li>
+  <li><a href="data.html">数据位置、迁移与备份</a></li>
+  <li><a href="troubleshooting.html">故障排查</a></li>
+</ol>
+  </nav>
+  <main id="main" class="doc-main">
+    <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 4 章</p>
+<h2 id="browse">远程文件浏览</h2>
+<ul>
+  <li>远程文件树，支持目录列出、读取、写入、重命名、删除和创建目录操作。</li>
+  <li>通过 SFTP（<code>russh-sftp</code>）上传和下载，复用与终端相同的 SSH 会话通道。</li>
+  <li>本地与远程浏览共用 <code>RemoteFs</code> 抽象，因此本地与远程面板行为一致。</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 权限或所有者编辑、符号链接处理、隐藏文件开关以及多选
+  手势，源材料中均未描述。
+</div>
+
+<h2 id="queue">传输队列</h2>
+<p>每个排队文件占一行，显示已完成字节数与总量，以及实时传输速度。</p>
+<ul>
+  <li>目录与拖放上传在 Rust 侧用 <code>walkdir</code> 一次性遍历。</li>
+  <li>进度以 4 MiB 分块上报；单文件上传使用 64 KB 分块。</li>
+  <li>进度通过 <code>transfer-progress</code> 事件送达。</li>
+</ul>
+
+<h2 id="pause">暂停、续传与取消</h2>
+<ul>
+  <li>传输支持<strong>暂停与续传</strong>。</li>
+  <li><strong>取消上传会清理该次上传在远端产生的部分文件。</strong></li>
+  <li>已经完成的文件保持原位。</li>
+  <li>上传前已存在的目标文件<strong>不会</strong>被删除。</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 续传能否在应用重启后继续、同时可运行多少个传输任务，
+  以及是否可以配置带宽限制，均未记录。
+</div>
+
+<h2 id="tools">内置网络文件工具</h2>
+<p>除 SFTP 之外，应用还自带可在同一窗口内运行的文件传输工具：</p>
+<ul>
+  <li><strong>FTP 服务器</strong>，支持 PASV 与 EPSV 模式。</li>
+  <li><strong>HTTP/HTTPS 文件服务器</strong>，可一键生成自签名证书。</li>
+  <li><strong>TFTP 服务器</strong>。</li>
+  <li><strong>FTP 客户端</strong>，支持无 TLS、显式 TLS 和隐式 TLS。</li>
+  <li><strong>TFTP 客户端</strong>。</li>
+</ul>
+<div class="callout unconfirmed">
+  <strong>未确认。</strong> 默认端口、绑定地址、FTP 服务器的认证方式，
+  以及 HTTPS 服务器的证书字段，源材料中均未说明。
+</div>
+<div class="pager">
+<a class="prev" href="sessions.html"><span class="dir">上一章</span>会话与多标签</a>
+<a class="next" href="editor.html"><span class="dir">下一章</span>远程文件编辑</a>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>

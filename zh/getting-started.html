@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>快速开始与下载 — Wrolp Terminal</title>
+<meta name="description" content="下载 Windows MSI、安装 Linux 构建依赖、以开发模式运行 Wrolp Terminal、构建发布包、运行测试并发布版本。">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
+<link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+
+<nav class="site-nav" aria-label="主导航">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="features.html">功能特性</a>
+      <a href="getting-started.html" class="current">快速开始</a>
+      <a href="docs/index.html">用户手册</a>
+      <a class="external" href="https://github.com/wrolp/wrolp">GitHub</a>
+      <a class="lang" hreflang="en" href="../getting-started.html">English</a>
+    </div>
+  </div>
+</nav>
+
+<header class="subhero">
+  <div class="wrap">
+    <p class="eyebrow">下载与安装</p>
+    <h1>快速开始</h1>
+    <p class="lede">安装或构建 Wrolp Terminal v0.0.12，以开发模式运行，并生成发布包。</p>
+  </div>
+</header>
+
+<div class="wrap page-body">
+  <main id="main">
+<div class="wrap page-body">
+<main id="main">
+
+<section id="download">
+  <h2>下载与支持的平台</h2>
+  <p>当前版本为 <strong>v0.0.12</strong>（2026-11-07 发布，非预发布版）。发布包
+  <strong>仅提供 MSI</strong>：<code>tauri.conf.json</code> 中的打包目标为 <code>["msi"]</code>。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>包</th><th>平台</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>MSI 安装程序</td><td>Windows（主要目标）</td><td>发布流程唯一发布的包</td></tr>
+        <tr><td>—</td><td>Linux / macOS</td><td>不发布安装程序；请从源码构建（见下文）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>安装包发布在仓库的 GitHub Releases 页面：
+  <a href="https://github.com/wrolp/wrolp/releases">github.com/wrolp/wrolp/releases</a>。</p>
+  <div class="callout">
+    <strong>版本说明。</strong> v0.0.12 被标记为正常发布版。仓库的 README 明确说明描述的是当前代码状态，
+    并且“不是路线图”；没有可供查阅的路线图文档。
+  </div>
+</section>
+
+<section id="requirements">
+  <h2>系统要求</h2>
+  <ul>
+    <li>Windows 是主要目标；项目也可以在 Linux 与 macOS 上运行和开发。</li>
+    <li>根据 README，macOS 与 Windows 不需要额外的系统依赖。</li>
+    <li>在 Debian/Ubuntu 上构建需要下列软件包。</li>
+    <li>需要 Rust（通过 <code>rustup</code> 安装），且仓库提交了 <code>yarn.lock</code>，因此推荐使用 yarn 作为包管理器。</li>
+  </ul>
+  <div class="callout unconfirmed">
+    <strong>未确认。</strong> 源材料未说明最低操作系统版本、所需的 Node.js 版本、
+    内存/磁盘要求，也没有说明 WebView2 运行时要求。因此这些数值被省略，而不是猜测。
+  </div>
+
+  <h3>Linux 构建依赖（Debian/Ubuntu）</h3>
+<pre><code>sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
+  libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev</code></pre>
+
+  <h3>Rust 与前端依赖</h3>
+<pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+yarn</code></pre>
+</section>
+
+<section id="run">
+  <h2>以开发模式运行</h2>
+<pre><code>yarn tauri dev      # 完整栈（Tauri 会自动启动 Vite 开发服务器）
+yarn dev            # 仅前端，用于纯 UI 调试（不涉及 Rust/SSH）</code></pre>
+  <p><code>yarn dev</code> 只运行 React 前端，因此在该模式下 SSH、SFTP 以及所有依赖 Rust 的面板都不可用。</p>
+</section>
+
+<section id="build">
+  <h2>构建</h2>
+<pre><code>yarn build:clean    # 先清理独立的 target 目录再构建
+yarn tauri build    # 增量开发构建</code></pre>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>命令</th><th>输出位置</th></tr></thead>
+      <tbody>
+        <tr><td><code>yarn build:clean</code></td><td><code>src-tauri/target-release/release/bundle/</code></td></tr>
+        <tr><td><code>yarn tauri build</code></td><td><code>src-tauri/target/</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="test">
+  <h2>测试</h2>
+<pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
+cd src-tauri &amp;&amp; cargo run --bin ssh_test   # 独立的 russh 连接探测
+npx playwright install &amp;&amp; yarn test:e2e    # Playwright 前端 E2E；后端通过 window.__TAURI_INTERNALS__ 打桩，因此无需构建 Rust</code></pre>
+  <p>Playwright 测试套件在 <code>e2e/ui/</code> 下包含约 100 个用例。仓库中不存在 <code>.github/workflows/</code>
+  目录，因此项目的自动化构建/测试流水线无法确认。</p>
+</section>
+
+<section id="publish">
+  <h2>发布版本</h2>
+<pre><code>gh auth login -h github.com
+yarn run publish    # 先构建，再上传到 GitHub Release；RELEASE_SKIP_CLEAN=1 会复用已有产物</code></pre>
+  <p>发布使用 GitHub CLI。应用中的更新器指向 GitHub Release 端点，并需要
+  <code>tauri.conf.json</code> 中真实的 <code>pubkey</code>；若缺少它，对于你自己的构建，
+  自动更新器不能被视为已配置。</p>
+</section>
+
+<section id="next">
+  <h2>后续步骤</h2>
+  <ul>
+    <li><a href="docs/installation.html">手册第 1 章 — 安装与系统要求</a></li>
+    <li><a href="docs/connections.html">手册第 2 章 — 第一个连接</a></li>
+    <li><a href="features.html">完整功能导览</a></li>
+  </ul>
+</section>
+
+</main>
+</div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+  </div>
+</footer>
+
+</body>
+</html>
