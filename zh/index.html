@@ -10,14 +10,14 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/wrolp-icon-32.png">
 <link rel="apple-touch-icon" href="../assets/wrolp-icon-128.png">
 </head>
-<body>
+<body class="home">
 <a class="skip-link" href="#main">跳到正文</a>
 
 <nav class="site-nav" aria-label="主导航">
   <div class="wrap nav-inner">
     <a class="brand" href="index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
     <div class="nav-links">
-      <a href="index.html" class="current">首页</a>
+      <a href="index.html" class="current" aria-current="page">首页</a>
       <a href="features.html">功能特性</a>
       <a href="getting-started.html">快速开始</a>
       <a href="docs/index.html">用户手册</a>
@@ -29,27 +29,52 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <img class="hero-logo" src="../assets/wrolp-logo.svg" alt="Wrolp Terminal 应用图标" width="88" height="88">
-    <p class="eyebrow">项目概览</p>
-    <h1>Wrolp Terminal</h1>
-    <p class="tagline">基于 Rust 的桌面 SSH 终端与服务器运维工具 —— 多标签终端、SFTP、远程编辑、会话录制、Docker 分析与 AI 助手。</p>
-    <p class="meta">
-      <span>v0.0.12</span>
-      <span>MIT 许可证</span>
-      <span>Windows 优先</span>
-    </p>
-    <div class="cta-row">
-      <a class="btn" href="getting-started.html">快速开始</a>
-      <a class="btn ghost" href="docs/index.html">阅读手册</a>
-      <a class="btn ghost" href="features.html">功能概览</a>
+    <div class="hero-copy">
+      <a class="release-badge" href="getting-started.html#download"><span class="status-dot" aria-hidden="true"></span><strong>v0.0.12</strong> 开源，让连接更简单 <span aria-hidden="true">↗</span></a>
+      <p class="eyebrow">WROLP TERMINAL / 为开发者而造</p>
+      <h1>连接服务器，<br><em>不止于终端。</em></h1>
+      <p class="tagline">从 SSH 连接到文件编辑，从容器管理到 AI 协作。<br>把日常运维收进一个工作空间，让你专注真正重要的事。</p>
+      <div class="cta-row">
+        <a class="btn" href="getting-started.html">开始使用 <span aria-hidden="true">↗</span></a>
+        <a class="btn ghost" href="features.html">探索全部功能 <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="meta"><span>Rust 驱动</span><span>MIT 开源</span><span>Windows 优先</span></p>
     </div>
+    <figure class="workspace-preview">
+      <div class="workspace-window" role="img" aria-label="工作流示意：在同一工作空间连接服务器、查看容器与管理文件，不是应用截图。">
+        <div class="window-topbar" aria-hidden="true"><div class="window-dots"><i></i><i></i><i></i></div><span>Wrolp Terminal — workspace</span><span>SSH</span></div>
+        <div class="window-body" aria-hidden="true">
+          <div class="workspace-sidebar">
+            <p class="sidebar-label">工作空间</p>
+            <div class="server-item active"><span class="status-dot"></span>production</div>
+            <div class="server-item"><span class="status-dot"></span>staging</div>
+            <div class="server-item"><span class="status-dot idle"></span>localhost</div>
+            <div class="sidebar-tools"><span>文件 / SFTP</span><span>Docker 容器</span><span>Git 仓库</span><span>AI 助手</span></div>
+          </div>
+          <div class="terminal-pane">
+            <div class="terminal-tabs"><span class="selected">production</span><span>本地终端</span></div>
+            <div class="terminal-content">
+              <p><span class="prompt">dev@production ~ $</span> uname -sr</p>
+              <p class="output">Linux 6.8.0-generic</p>
+              <p class="comment"># 一个工作空间，连接每一步</p>
+              <p><span class="prompt">dev@production ~ $</span> docker ps</p>
+              <div class="terminal-result"><span class="comment">NAME</span><span class="comment">STATUS</span><span>web-server</span><span class="running">Up 3 hours</span><span>api-service</span><span class="running">Up 3 hours</span><span>postgres</span><span class="running">Up 2 days</span></div>
+              <p><span class="prompt">dev@production ~ $</span> <span class="cursor"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="workspace-status" aria-hidden="true"><span>● 已连接 · SSH</span><span>UTF-8 / xterm-256color</span></div>
+      </div>
+      <figcaption>终端 · 文件 · 容器 · AI &nbsp; / &nbsp; 工作流示意，非应用截图</figcaption>
+    </figure>
   </div>
+  <div class="wrap stack-strip"><span class="stack-label">可靠技术，轻量体验</span><strong>Rust</strong><strong>Tauri 2</strong><strong>React 19</strong><strong>xterm.js</strong><strong>Monaco Editor</strong></div>
 </header>
 <div class="wrap page-body">
 <main id="main">
 
 <section id="what-it-is">
-  <h2>它是什么，解决什么问题</h2>
+  <h2>少一点切换，<br>多一份专注。</h2>
   <p>Wrolp Terminal 是一个基于 Tauri 2 + React 19 + TypeScript 构建的桌面终端与服务器运维工具。
   它把“连接服务器、传输文件、编辑文件、查看日志、管理容器、管理 K8s、管理 Git、向 AI 提问”
   收进同一个应用窗口，替代原本需要在 SSH 客户端、SFTP 工具、编辑器、Docker 面板和 Git GUI 之间来回切换的工作流。</p>
@@ -73,29 +98,35 @@
 </section>
 
 <section id="capabilities">
-  <h2>核心能力</h2>
+  <p class="eyebrow">不止连接，更是完整工作流</p>
+  <h2>常用的工具，在这里相遇。</h2>
   <div class="grid">
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></svg></span>
       <h3>连接与终端</h3>
       <p>由 xterm.js 渲染的多标签 SSH 终端，另有 Telnet、串口（COM）和本地 shell。SSH 基于 <code>russh</code>，而不是外部 OpenSSH 二进制。</p>
       <a class="more" href="features.html#connection-terminal">了解连接功能 →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7h18"/><path d="m10 12-3 3 3 3m4-6 3 3-3 3"/></svg></span>
       <h3>文件与编辑</h3>
       <p>支持暂停与续传的 SFTP 浏览，按文件展示的传输队列，带 UTF-8/GBK 识别的 Monaco 编辑，以及十六进制或图片预览。</p>
       <a class="more" href="features.html#files-editing">了解文件功能 →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M12 6h5m-5 11h5M8 10v4m8-4v4"/></svg></span>
       <h3>服务器运维</h3>
       <p>Docker 与 podman 主机、Kubernetes/Helm，以及由真实 <code>git</code> CLI 驱动的 Git 面板。Kubernetes 与 Git 面板会根据当前聚焦的终端选择主机。</p>
       <a class="more" href="features.html#ops-panels">了解运维面板 →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Zm7 0v4m-2-2h4"/></svg></span>
       <h3>AI 助手</h3>
       <p>Chat 与 Agent 两种模式，应用级与分栏级相互隔离的会话，以及只插入不执行的“发送到终端”步骤，方便执行前检查。</p>
       <a class="more" href="features.html#ai-assistant">了解 AI 助手 →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M12 9v11m4-6 3 2-3 2v-4Z"/></svg></span>
       <h3>会话与数据</h3>
       <p>带浮动面板的分割树、可导出为 asciinema 的 NDJSON 会话录制，以及包含加密连接信息的可迁移数据目录。</p>
       <a class="more" href="features.html#interaction-data">了解会话与数据功能 →</a>

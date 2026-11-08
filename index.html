@@ -10,14 +10,14 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/wrolp-icon-32.png">
 <link rel="apple-touch-icon" href="assets/wrolp-icon-128.png">
 </head>
-<body>
+<body class="home">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <nav class="site-nav" aria-label="Primary">
   <div class="wrap nav-inner">
     <a class="brand" href="index.html"><img class="brand-mark" src="assets/wrolp-logo.svg" alt="" width="22" height="22">Wrolp <span>Terminal</span></a>
     <div class="nav-links">
-      <a href="index.html" class="current">Home</a>
+      <a href="index.html" class="current" aria-current="page">Home</a>
       <a href="features.html">Features</a>
       <a href="getting-started.html">Get started</a>
       <a href="docs/index.html">User manual</a>
@@ -29,27 +29,52 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <img class="hero-logo" src="assets/wrolp-logo.svg" alt="Wrolp Terminal app icon" width="88" height="88">
-    <p class="eyebrow">Project overview</p>
-    <h1>Wrolp Terminal</h1>
-    <p class="tagline">A Rust-powered desktop SSH terminal and server-ops tool — multi-tab, SFTP, remote editor, session recording, Docker analysis &amp; AI assistant.</p>
-    <p class="meta">
-      <span>v0.0.12</span>
-      <span>MIT License</span>
-      <span>Windows first</span>
-    </p>
-    <div class="cta-row">
-      <a class="btn" href="getting-started.html">Get started</a>
-      <a class="btn ghost" href="docs/index.html">Read the manual</a>
-      <a class="btn ghost" href="features.html">Feature tour</a>
+    <div class="hero-copy">
+      <a class="release-badge" href="getting-started.html#download"><span class="status-dot" aria-hidden="true"></span><strong>v0.0.12</strong> Open source. Open possibilities. <span aria-hidden="true">↗</span></a>
+      <p class="eyebrow">WROLP TERMINAL / BUILT FOR DEVELOPERS</p>
+      <h1>Your servers.<br><em>One workspace.</em></h1>
+      <p class="tagline">From SSH connections to file editing, containers to AI. Bring your everyday server workflow together — and focus on what matters.</p>
+      <div class="cta-row">
+        <a class="btn" href="getting-started.html">Get started <span aria-hidden="true">↗</span></a>
+        <a class="btn ghost" href="features.html">Explore features <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="meta"><span>Powered by Rust</span><span>MIT licensed</span><span>Windows first</span></p>
     </div>
+    <figure class="workspace-preview">
+      <div class="workspace-window" role="img" aria-label="Workflow illustration: connect to servers, inspect containers and manage files in one workspace. Not an application screenshot.">
+        <div class="window-topbar" aria-hidden="true"><div class="window-dots"><i></i><i></i><i></i></div><span>Wrolp Terminal — workspace</span><span>SSH</span></div>
+        <div class="window-body" aria-hidden="true">
+          <div class="workspace-sidebar">
+            <p class="sidebar-label">WORKSPACE</p>
+            <div class="server-item active"><span class="status-dot"></span>production</div>
+            <div class="server-item"><span class="status-dot"></span>staging</div>
+            <div class="server-item"><span class="status-dot idle"></span>localhost</div>
+            <div class="sidebar-tools"><span>Files / SFTP</span><span>Docker</span><span>Git</span><span>AI assistant</span></div>
+          </div>
+          <div class="terminal-pane">
+            <div class="terminal-tabs"><span class="selected">production</span><span>local shell</span></div>
+            <div class="terminal-content">
+              <p><span class="prompt">dev@production ~ $</span> uname -sr</p>
+              <p class="output">Linux 6.8.0-generic</p>
+              <p class="comment"># One workspace. Every workflow.</p>
+              <p><span class="prompt">dev@production ~ $</span> docker ps</p>
+              <div class="terminal-result"><span class="comment">NAME</span><span class="comment">STATUS</span><span>web-server</span><span class="running">Up 3 hours</span><span>api-service</span><span class="running">Up 3 hours</span><span>postgres</span><span class="running">Up 2 days</span></div>
+              <p><span class="prompt">dev@production ~ $</span> <span class="cursor"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="workspace-status" aria-hidden="true"><span>● Connected · SSH</span><span>UTF-8 / xterm-256color</span></div>
+      </div>
+      <figcaption>Terminal · Files · Containers · AI &nbsp; / &nbsp; Workflow illustration, not a screenshot</figcaption>
+    </figure>
   </div>
+  <div class="wrap stack-strip"><span class="stack-label">A solid foundation</span><strong>Rust</strong><strong>Tauri 2</strong><strong>React 19</strong><strong>xterm.js</strong><strong>Monaco Editor</strong></div>
 </header>
 <div class="wrap page-body">
 <main id="main">
 
 <section id="what-it-is">
-  <h2>What it is and the problem it solves</h2>
+  <h2>Less switching.<br>More doing.</h2>
   <p>Wrolp Terminal is a desktop terminal and server-operations tool built on Tauri 2 + React 19 + TypeScript.
   It brings “connect to servers, transfer files, edit files, read logs, manage containers, manage K8s, manage Git,
   ask an AI” into a single application window, replacing a workflow that otherwise bounces between an SSH client,
@@ -75,29 +100,35 @@
 </section>
 
 <section id="capabilities">
-  <h2>Core capabilities</h2>
+  <p class="eyebrow">EVERY TOOL. ONE WORKFLOW.</p>
+  <h2>Everything you need, together.</h2>
   <div class="grid">
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></svg></span>
       <h3>Connection &amp; terminal</h3>
       <p>Multi-tab SSH terminals rendered with xterm.js, plus Telnet, serial (COM) and local shells. SSH runs on <code>russh</code>, not an external OpenSSH binary.</p>
       <a class="more" href="features.html#connection-terminal">Explore connection features →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7h18"/><path d="m10 12-3 3 3 3m4-6 3 3-3 3"/></svg></span>
       <h3>Files &amp; editing</h3>
       <p>SFTP browsing with pause/resume and a per-file transfer queue, Monaco editing with UTF-8/GBK detection, and hex or image previews.</p>
       <a class="more" href="features.html#files-editing">Explore file features →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M12 6h5m-5 11h5M8 10v4m8-4v4"/></svg></span>
       <h3>Server operations</h3>
       <p>Docker and podman hosts, Kubernetes/Helm, and a Git panel backed by the real <code>git</code> CLI. The Kubernetes and Git panels choose their host from the terminal you have focused.</p>
       <a class="more" href="features.html#ops-panels">Explore ops panels →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Zm7 0v4m-2-2h4"/></svg></span>
       <h3>AI assistant</h3>
       <p>Chat and Agent modes, isolated application-level and per-pane conversations, and an insert-only “send to terminal” step so you review before running.</p>
       <a class="more" href="features.html#ai-assistant">Explore the AI assistant →</a>
     </div>
     <div class="card">
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M12 9v11m4-6 3 2-3 2v-4Z"/></svg></span>
       <h3>Sessions &amp; data</h3>
       <p>Split trees with floating panes, NDJSON session recording with asciinema export, and a relocatable data directory that includes your encrypted connections.</p>
       <a class="more" href="features.html#interaction-data">Explore session &amp; data features →</a>
