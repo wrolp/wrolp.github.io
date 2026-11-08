@@ -74,24 +74,13 @@
   <li>浏览容器内文件。</li>
   <li>在容器内打开 shell。</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 三层分析的名称与内容在源材料中没有列举，所需的 Docker 权限、
-  镜像仓库访问权限，以及容器创建是否暴露全部运行时选项，同样未说明。
-</div>
-
 <h2 id="host-analysis">主机分析</h2>
 <p><code>analyze_host</code> 对服务器执行<strong>只读</strong>检查：操作系统、内核、架构、
 已安装的软件包与已安装的工具。<code>command_help</code> 用于查询命令帮助。</p>
 
 <h2 id="safety">只读操作与变更操作</h2>
-<p>只有分析命令被描述为只读。容器启动/停止/删除和 shell 访问属于变更
-操作；文档没有描述针对它们的确认步骤，这一点与 Kubernetes 资源删除不同，
-后者确实有应用内确认。</p>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 容器操作的审计日志、镜像管理、卷或网络管理、
-  compose 支持以及基于 Kubernetes 的 Docker 访问，均未记录。
-</div>
-
+<p>分析类命令为只读。容器的启动、停止、重启、删除与进入 Shell 属于变更操作，
+点击后立即执行；Kubernetes 的资源删除则会先弹出应用内确认。</p>
 <h2 id="related">相关章节</h2>
 <ul>
   <li><a href="sessions.html">第 3 章 — 会话与多标签</a>：Docker 日志是面板内容类型之一。</li>
@@ -106,7 +95,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

@@ -69,21 +69,34 @@ can be reconnected without spawning a second session.</p>
   into another's.</li>
   <li>A local shell and remote shells can sit side by side because both use the same <code>RemoteFs</code> abstraction.</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The exact commands or drag targets for splitting a pane, and whether layout is restored
-  across restarts, are not described in the source material. Window geometry and opacity are persisted, but that does not
-  by itself confirm tab or split layout persistence.
-</div>
-
 <h2 id="keybindings">Keybindings</h2>
 <p>All shortcuts live in a single table in <code>src/lib/keybindings.ts</code>. Settings allow rebinding an individual
-entry, resetting one entry, or resetting everything.</p>
-<p>Reserved keys cannot be bound: <strong>Tab, Enter, Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, Ctrl+D, Ctrl+W</strong>.</p>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The README does not list the default shortcut assignments, so no default key table is
-  reproduced here. Read them from the table in <code>src/lib/keybindings.ts</code> for the exact build you are running.
+entry, resetting one entry, or resetting everything. Combos match exactly — <code>Ctrl+B</code> does not fire on
+<code>Ctrl+Alt+B</code> — and <code>Ctrl</code> maps to <code>Cmd</code> on macOS.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Action</th><th>Default</th></tr></thead>
+    <tbody>
+      <tr><td>Command palette</td><td><code>Ctrl+K</code></td></tr>
+      <tr><td>Show or hide the sidebar</td><td><code>Ctrl+B</code></td></tr>
+      <tr><td>Move the sidebar to the other side</td><td><code>Ctrl+Alt+B</code></td></tr>
+      <tr><td>Show or hide the bottom panel</td><td><code>Ctrl+J</code></td></tr>
+      <tr><td>Move the panel between bottom and right</td><td><code>Ctrl+Alt+J</code></td></tr>
+      <tr><td>Show or hide the inspector</td><td><code>Ctrl+Alt+I</code></td></tr>
+      <tr><td>Split the terminal</td><td><code>Ctrl+\</code></td></tr>
+      <tr><td>Command snippets list</td><td><code>Ctrl+Shift+P</code></td></tr>
+      <tr><td>Command history</td><td><code>Ctrl+Shift+H</code></td></tr>
+      <tr><td>Dual-pane file view</td><td><code>Ctrl+Shift+F</code></td></tr>
+      <tr><td>Command completion list</td><td><code>Alt+/</code></td></tr>
+      <tr><td>Scroll back / forward one page</td><td><code>Shift+PgUp</code> / <code>Shift+PgDn</code></td></tr>
+      <tr><td>Jump to the oldest output / back to the prompt</td><td><code>Shift+Home</code> / <code>Shift+End</code></td></tr>
+      <tr><td>Save file</td><td><code>Ctrl+S</code></td></tr>
+      <tr><td>Close a pop-up</td><td><code>Esc</code></td></tr>
+    </tbody>
+  </table>
 </div>
-
+<p>Reserved keys cannot be bound: <strong>Tab, Enter, Space, Backspace, Delete</strong>, plus
+<strong>Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, Ctrl+D, Ctrl+W, Alt+Tab, Ctrl+Shift+Esc</strong>.</p>
 <h2 id="window">Window and application behaviour</h2>
 <ul>
   <li>Custom title bar.</li>
@@ -93,8 +106,8 @@ entry, resetting one entry, or resetting everything.</p>
 </ul>
 
 <h2 id="updater">Updating</h2>
-<p>The application includes an auto-updater that points at a GitHub Release endpoint. It requires a real
-<code>pubkey</code> to be configured in <code>tauri.conf.json</code>; without that key your own builds are not updatable.</p>
+<p>The application checks for updates through <code>latest.json</code> on GitHub Releases, verifies installers with
+the <code>pubkey</code> in <code>tauri.conf.json</code>, and installs them in passive mode.</p>
 <div class="pager">
 <a class="prev" href="connections.html"><span class="dir">Previous</span>Your first connection</a>
 <a class="next" href="sftp.html"><span class="dir">Next</span>SFTP file transfers</a>
@@ -104,7 +117,7 @@ entry, resetting one entry, or resetting everything.</p>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

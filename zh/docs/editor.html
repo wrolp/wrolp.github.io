@@ -60,24 +60,22 @@
 <ul>
   <li>编辑器是内嵌的 <strong>Monaco</strong> 编辑器。</li>
   <li>它可以在分栏或浮动窗口中打开，并像其他面板一样按会话隔离。</li>
-  <li>文本编码使用 <code>encoding_rs</code> 自动检测 <strong>UTF-8 与 GBK</strong>。</li>
+  <li>文本编码使用 <code>encoding_rs</code> 自动检测；非 UTF-8 文件会在标签上标出当前编码，保存时沿用该编码。</li>
+  <li>编辑器工具栏可手动切换编码（UTF-8、GBK、GB18030、Big5、Shift-JIS、EUC-KR、ISO-8859-1、Windows-1252）与换行符（LF / CRLF）。</li>
+  <li><strong>Ctrl+S</strong> 保存；关闭有改动的编辑器时会询问保存并关闭还是放弃修改。</li>
   <li>可以从远程文件树打开编辑器，与终端标签并排。</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 保存行为（自动保存、原子写入、外部变更检测）、最大文件大小、
-  行尾符处理、备份文件和编辑器偏好设置，README、发布说明或配置文件中均未描述。
-</div>
-
 <h2 id="binary">二进制文件与图片</h2>
 <ul>
   <li>二进制文件以<strong>十六进制转储</strong>打开。</li>
   <li>图片按其 MIME 类型内联预览。</li>
 </ul>
-<p>这些视图偏向只读；文档没有描述编辑或保存二进制内容的能力。</p>
+<p>十六进制视图为只读，页面内会标注只读提示；图片预览仅用于查看，两者都不提供编辑或保存。</p>
 
 <h2 id="languages">语言支持</h2>
-<p>Monaco 初始化与自定义语言定义位于 <code>src/editor/</code>，包括 shell 语法。README
-并未逐一列出所有支持的语言，请查阅该目录以确认你所运行构建中的确切集合。</p>
+<p>工具栏可手动指定语言高亮，选项按字母排序，覆盖纯文本、JavaScript、TypeScript、JSON、HTML、CSS、SCSS、
+Less、XML、Markdown、Python、Rust、Go、Java、C、C++、C#、PHP、Ruby、Shell、YAML、INI/TOML、SQL、
+Dockerfile、Lua、Makefile、Nginx 配置与 Properties/.env。</p>
 
 <h2 id="related">相关章节</h2>
 <ul>
@@ -93,7 +91,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

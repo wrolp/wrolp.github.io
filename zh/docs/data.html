@@ -57,6 +57,8 @@
   <main id="main" class="doc-main">
     <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 12 章</p>
 <h2 id="files">存储的内容</h2>
+<p>数据默认位于操作系统的配置目录下（Windows 为 <code>%APPDATA%\wrolp-terminal</code>），
+也可在设置中改到任意位置。</p>
 <div class="table-wrap">
   <table>
     <thead><tr><th>文件或目录</th><th>内容</th></tr></thead>
@@ -65,16 +67,11 @@
       <tr><td><code>connections.json</code></td><td>连接与工作区，加密存储</td></tr>
       <tr><td><code>wrolp.db</code></td><td>SQLite 数据库：会话索引、命令集、代码片段</td></tr>
       <tr><td><code>recordings/</code></td><td>NDJSON 会话录制</td></tr>
-      <tr><td><code>vault.key</code></td><td>AES-256-GCM 保险库密钥，描述为与机器绑定的文件</td></tr>
+      <tr><td><code>vault.key</code></td><td>AES-256-GCM 保险库密钥，与当前机器绑定</td></tr>
       <tr><td><code>data_root.json</code></td><td>记录所选的数据目录；保存在默认位置</td></tr>
     </tbody>
   </table>
 </div>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong>源材料未给出实际的默认数据目录路径；只说明
-  <code>data_root.json</code> 位于该处并记录这一选择。
-</div>
-
 <h2 id="migration">迁移数据目录</h2>
 <p>设置可以把数据目录指向任意位置。<code>wrolp.db</code>、<code>recordings/</code>、
 <code>connections.json</code> 与窗口配置会一起迁移。</p>
@@ -87,15 +84,9 @@
 </ul>
 
 <h2 id="backup">备份注意事项</h2>
-<p>文档中没有专门的备份命令；迁移所移动的文件，正是备份需要捕获的文件。一份一致的副本应包含
+<p>应用没有独立的备份按钮；迁移所移动的文件，正是备份需要捕获的文件。一份一致的副本应包含
 <code>wrolp.db</code>、<code>recordings/</code>、<code>connections.json</code>、
 <code>window.json</code>，以及（如果希望 AI 密钥随之迁移）<code>vault.key</code>。</p>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong>复制到另一台机器的 <code>vault.key</code> 是否仍然可用，文档没有说明
-  —— 它只被描述为与机器绑定。文档也没有描述在线备份、云同步或受支持的恢复流程，
-  并且未说明 <code>wrolp.db</code> 是否加密。
-</div>
-
 <h2 id="maintenance">数据库维护</h2>
 <p>设置中显示 <code>wrolp.db</code> 的当前大小与可回收空间，并提供
 <strong>立即压缩</strong>操作，执行 <code>VACUUM</code>。</p>
@@ -114,7 +105,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

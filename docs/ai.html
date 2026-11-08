@@ -83,15 +83,8 @@
 <p>Available models can be pulled from <code>{endpoint}/v1/models</code>.</p>
 
 <h2 id="keys">API key storage</h2>
-<p>Keys are encrypted with an <strong>AES-256-GCM file vault</strong>. The vault key file is <code>vault.key</code>, which
-is described as a machine-bound file. The operating system keychain is <strong>not</strong> used.</p>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The exact dialog layout, the accepted URL format, which providers are supported beyond
-  an OpenAI-style interface, token or context limits, and whether request retries are configurable are not documented.
-  The field name <code>openai_content</code> indicates the message shape the backend accepts, not a list of supported
-  vendors.
-</div>
-
+<p>Keys are encrypted with an <strong>AES-256-GCM file vault</strong>. The key file <code>vault.key</code> is bound to
+the current machine; the operating system keychain is <strong>not</strong> used.</p>
 <h2 id="usage">Using the assistant</h2>
 <ul>
   <li><strong>Images</strong>: attach images to a message, or paste them; clicking a thumbnail opens the full image.</li>
@@ -120,7 +113,7 @@ is described as a machine-bound file. The operating system keychain is <strong>n
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

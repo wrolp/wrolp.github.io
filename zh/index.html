@@ -89,10 +89,9 @@
   <h2>一览</h2>
   <dl class="facts">
     <div class="fact"><dt>代码仓库</dt><dd><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a></dd></div>
-    <div class="fact"><dt>当前版本</dt><dd>v0.0.12（2026-11-07 发布，非预发布版）</dd></div>
+    <div class="fact"><dt>当前版本</dt><dd>v0.0.12（2026-11-07 发布）</dd></div>
     <div class="fact"><dt>许可证</dt><dd>MIT（Copyright (c) 2026 Wrolp）</dd></div>
-    <div class="fact"><dt>语言构成</dt><dd>TypeScript / Rust / JavaScript / SCSS / HTML</dd></div>
-    <div class="fact"><dt>仓库规模</dt><dd>约 8.2 MB，4 个 star，0 个 fork，0 个未关闭 issue</dd></div>
+    <div class="fact"><dt>技术栈</dt><dd>Tauri 2 / React 19 / TypeScript / Rust</dd></div>
     <div class="fact"><dt>平台</dt><dd>Windows 为主要目标（仅发布 MSI）；可在 Linux/macOS 上运行与构建</dd></div>
   </dl>
 </section>
@@ -141,13 +140,12 @@
 <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 yarn
 yarn tauri dev      # 完整栈；Tauri 会自动启动 Vite 开发服务器</code></pre>
-  <p><a href="getting-started.html">完整的安装、构建与发布说明 →</a></p>
+  <p><a href="getting-started.html">完整的安装、构建与发布流程 →</a></p>
 </section>
 
 <section id="manual-entry">
   <h2>用户手册</h2>
-  <p>十三章内容覆盖从安装到故障排查的完整流程。所有陈述均来自仓库的 README、发布说明、配置文件与源码结构；
-  源材料未描述的界面细节会明确标注为未确认，而不是凭空编写。</p>
+  <p>十三章覆盖从安装到故障排查的完整流程：连接与终端、文件与编辑、运维面板、AI 助手、录制与数据迁移。</p>
   <div class="grid">
     <div class="card">
       <div class="chapter-no">第 1–3 章</div>
@@ -187,13 +185,13 @@ yarn tauri dev      # 完整栈；Tauri 会自动启动 Vite 开发服务器</co
 </section>
 
 <section id="limitations">
-  <h2>已知限制与缺失信息</h2>
+  <h2>使用前需要知道</h2>
   <ul>
-    <li><strong>发布包仅提供 MSI</strong>：<code>tauri.conf.json</code> 中的打包目标为 <code>["msi"]</code>，因此 Linux/macOS 用户必须从源码构建。</li>
-    <li><strong>README 描述的是代码当前状态，而不是路线图</strong>（原文为 “not a roadmap”），仓库中也没有路线图或规划文档。</li>
-    <li><strong>没有 CONTRIBUTING.md</strong>：只有 issue 模板（缺陷报告与功能请求）和 pull request 模板；实际约定以 README 中的说明为准。</li>
-    <li><strong>没有 CI 配置</strong>：文件树中不存在 <code>.github/workflows/</code>，因此无法确认存在自动化构建/测试流水线。</li>
-    <li>仓库规模较小、star 很少（4 个），也没有可参考的外部用户反馈。</li>
+    <li><strong>发布包仅提供 Windows MSI</strong>：<code>tauri.conf.json</code> 的打包目标为 <code>["msi"]</code>，Linux/macOS 用户需从源码构建。</li>
+    <li><strong>隧道为本地端口转发</strong>：在本机监听端口，经 SSH 会话转发到远端目标主机。</li>
+    <li><strong>会话录制默认关闭</strong>：开启后按键与命令写入本机 SQLite，不向远端上传。</li>
+    <li><strong>数据目录可迁移</strong>：<code>vault.key</code> 是解密连接配置与 AI 密钥的关键，迁移或备份时需一并保管。</li>
+    <li><strong>运维面板依赖远端工具</strong>：Docker 面板要求主机装有 Docker 或 podman；Kubernetes 与 Git 面板通过当前终端的会话执行 <code>kubectl</code>、<code>helm</code> 与 <code>git</code>。</li>
   </ul>
 </section>
 
@@ -202,7 +200,7 @@ yarn tauri dev      # 完整栈；Tauri 会自动启动 Vite 开发服务器</co
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

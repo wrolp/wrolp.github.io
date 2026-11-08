@@ -40,7 +40,7 @@
 
 <section id="download">
   <h2>Download and supported platforms</h2>
-  <p>The current release is <strong>v0.0.12</strong> (released 2026-11-07, not a pre-release). Release packages are
+  <p>The current release is <strong>v0.0.12</strong> (released 2026-11-07). Release packages are
   <strong>MSI only</strong>: the bundle target in <code>tauri.conf.json</code> is <code>["msi"]</code>.</p>
   <div class="table-wrap">
     <table>
@@ -51,27 +51,18 @@
       </tbody>
     </table>
   </div>
-  <p>Installers are published on the repository's GitHub Releases page:
+  <p>Installers are published on the GitHub Releases page:
   <a href="https://github.com/wrolp/wrolp/releases">github.com/wrolp/wrolp/releases</a>.</p>
-  <div class="callout">
-    <strong>Version notes.</strong> v0.0.12 is marked as a normal release. The repository's README explicitly describes
-    the current code state and is “not a roadmap”; there is no roadmap document to consult.
-  </div>
 </section>
 
 <section id="requirements">
   <h2>System requirements</h2>
   <ul>
     <li>Windows is the primary target; the project can also run and be developed on Linux and macOS.</li>
-    <li>No extra system dependencies are needed on macOS and Windows according to the README.</li>
+    <li>No extra system dependencies are needed on macOS and Windows.</li>
     <li>Building on Debian/Ubuntu requires the packages listed below.</li>
-    <li>Rust is required (installed through <code>rustup</code>), and the repository commits a <code>yarn.lock</code>, so yarn is the recommended package manager.</li>
+    <li>Rust is required (installed through <code>rustup</code>); frontend dependencies are installed with yarn.</li>
   </ul>
-  <div class="callout unconfirmed">
-    <strong>Not confirmed.</strong> The source material does not state minimum OS versions, a required Node.js version,
-    RAM/disk requirements, or a WebView2 runtime requirement. Those values are therefore omitted rather than guessed.
-  </div>
-
   <h3>Linux build dependencies (Debian/Ubuntu)</h3>
 <pre><code>sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
   libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev</code></pre>
@@ -109,17 +100,16 @@ yarn tauri build    # incremental development build</code></pre>
 <pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
 cd src-tauri &amp;&amp; cargo run --bin ssh_test   # a standalone russh connectivity probe
 npx playwright install &amp;&amp; yarn test:e2e    # Playwright frontend E2E; the backend is stubbed via window.__TAURI_INTERNALS__, so no Rust build is needed</code></pre>
-  <p>The Playwright suite contains about 100 specs under <code>e2e/ui/</code>. There is no <code>.github/workflows/</code>
-  directory in the repository, so the project's automated build/test pipeline cannot be confirmed.</p>
+  <p>The Playwright suite contains about 100 specs under <code>e2e/ui/</code>; the backend is stubbed through
+  <code>window.__TAURI_INTERNALS__</code>, so no Rust build is needed to run it.</p>
 </section>
 
 <section id="publish">
   <h2>Publish a release</h2>
 <pre><code>gh auth login -h github.com
 yarn run publish    # build first, then upload to a GitHub Release; RELEASE_SKIP_CLEAN=1 reuses existing artifacts</code></pre>
-  <p>Publishing uses the GitHub CLI. The updater in the application points at a GitHub Release endpoint and requires a
-  real <code>pubkey</code> in <code>tauri.conf.json</code>; without it the auto-updater cannot be considered configured
-  for your own builds.</p>
+  <p>Publishing uses the GitHub CLI. The updater points at a GitHub Release endpoint and verifies packages against the
+  <code>pubkey</code> configured in <code>tauri.conf.json</code>, so set a real key before publishing.</p>
 </section>
 
 <section id="next">
@@ -136,7 +126,7 @@ yarn run publish    # build first, then upload to a GitHub Release; RELEASE_SKIP
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

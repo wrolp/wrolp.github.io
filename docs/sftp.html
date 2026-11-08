@@ -62,11 +62,6 @@
   <li>Upload and download over SFTP (<code>russh-sftp</code>), reusing the same SSH session channel as the terminal.</li>
   <li>Local and remote browsing share the <code>RemoteFs</code> abstraction, so local and remote panels behave alike.</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> Permission or ownership editing, symlink handling, hidden-file toggles and multi-select
-  gestures are not described in the source material.
-</div>
-
 <h2 id="queue">Transfer queue</h2>
 <p>Every queued file is its own row, showing completed bytes against the total and the live transfer speed.</p>
 <ul>
@@ -82,11 +77,6 @@
   <li>Files that already completed stay in place.</li>
   <li>Target files that existed before the upload are <strong>not</strong> deleted.</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> Whether resume survives an application restart, how many transfers may run concurrently,
-  and whether bandwidth limits can be configured are not documented.
-</div>
-
 <h2 id="tools">Built-in network file tools</h2>
 <p>Besides SFTP, the application ships file-transfer tools that run from the same window:</p>
 <ul>
@@ -96,10 +86,6 @@
   <li><strong>FTP client</strong> supporting no TLS, explicit TLS and implicit TLS.</li>
   <li><strong>TFTP client</strong>.</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> Default ports, bind addresses, authentication for the FTP server and certificate fields
-  for the HTTPS server are not stated in the source material.
-</div>
 <div class="pager">
 <a class="prev" href="sessions.html"><span class="dir">Previous</span>Sessions &amp; tabs</a>
 <a class="next" href="editor.html"><span class="dir">Next</span>Remote file editing</a>
@@ -109,7 +95,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

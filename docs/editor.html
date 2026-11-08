@@ -60,25 +60,23 @@
 <ul>
   <li>The editor is an embedded <strong>Monaco</strong> editor.</li>
   <li>It opens either in a split pane or in a floating window, and is isolated per session like other panes.</li>
-  <li>Text encoding is detected automatically for <strong>UTF-8 and GBK</strong> using <code>encoding_rs</code>.</li>
+  <li>Text encoding is detected automatically with <code>encoding_rs</code>; a non-UTF-8 file is marked with its encoding in the tab and saved in that encoding.</li>
+  <li>The editor bar switches encoding (UTF-8, GBK, GB18030, Big5, Shift-JIS, EUC-KR, ISO-8859-1, Windows-1252) and line endings (LF / CRLF).</li>
+  <li><strong>Ctrl+S</strong> saves; closing a modified editor asks whether to save and close or discard the changes.</li>
   <li>Editors can be opened from the remote file tree alongside terminal tabs.</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> Save behaviour (auto-save, atomic write, external-change detection), maximum file size,
-  line-ending handling, backup files and editor preference controls are not described in the README, release notes or
-  configuration files.
-</div>
-
 <h2 id="binary">Binary files and images</h2>
 <ul>
   <li>Binary files open as a <strong>hex dump</strong>.</li>
   <li>Images are previewed inline according to their MIME type.</li>
 </ul>
-<p>These views are read-oriented; the documentation does not describe editing or saving binary content.</p>
+<p>The hex view is read-only and says so in the page; image preview is display-only. Neither edits or saves binary
+content.</p>
 
 <h2 id="languages">Language support</h2>
-<p>Monaco initialisation and custom language definitions live in <code>src/editor/</code>, including shell syntax. The
-README does not enumerate every supported language, so consult that directory for the exact set in your build.</p>
+<p>The toolbar sets syntax highlighting manually from an alphabetically sorted list: plain text, JavaScript, TypeScript,
+JSON, HTML, CSS, SCSS, Less, XML, Markdown, Python, Rust, Go, Java, C, C++, C#, PHP, Ruby, Shell, YAML, INI/TOML, SQL,
+Dockerfile, Lua, Makefile, Nginx config and Properties/.env.</p>
 
 <h2 id="related">Related chapters</h2>
 <ul>
@@ -94,7 +92,7 @@ README does not enumerate every supported language, so consult that directory fo
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

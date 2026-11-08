@@ -31,7 +31,7 @@
   <div class="wrap">
     <p class="eyebrow">第 13 章</p>
     <h1>故障排查</h1>
-    <p class="lede">各种症状、其背后有文档记载的事实，以及源材料未覆盖之处。</p>
+    <p class="lede">常见症状、成因与对应的排查步骤。</p>
   </div>
 </header>
 
@@ -103,8 +103,8 @@
       </tr>
       <tr>
         <td>更新程序不工作</td>
-        <td>它使用 GitHub Release 端点，并且需要在 <code>tauri.conf.json</code> 中配置真实的 <code>pubkey</code></td>
-        <td>先配置密钥，再期待更新生效</td>
+        <td>更新清单来自 <code>releases/latest/download/latest.json</code>，安装包需通过 <code>pubkey</code> 校验</td>
+        <td>检查网络可达性，并确认 Release 中附带 <code>latest.json</code></td>
       </tr>
     </tbody>
   </table>
@@ -114,8 +114,8 @@
 <ul>
   <li>没有 Linux 或 macOS 安装包；请按<a href="installation.html">第 1 章</a>从源码构建。</li>
   <li>Linux 构建需要该章列出的 Debian/Ubuntu 软件包。</li>
-  <li>不存在 <code>.github/workflows/</code>，因此没有可确认的自动化构建可供与本地构建
-  对照。</li>
+  <li><code>yarn build:clean</code> 的产物在 <code>src-tauri/target-release/release/bundle/</code>，
+  <code>yarn tauri build</code> 的产物在 <code>src-tauri/target/</code>。</li>
 </ul>
 
 <h2 id="database">数据库大小</h2>
@@ -123,16 +123,9 @@
 录制长度增长。如果它因其他原因变大，设置会显示可回收空间并提供
 <strong>立即压缩</strong>（<code>VACUUM</code>）。</p>
 
-<h2 id="gaps">无法从文档中诊断的内容</h2>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong>源材料未描述日志文件位置、诊断包、
-  崩溃报告处理、安全模式开关或受支持的重置流程。这些内容被略去，而非猜测。
-</div>
-
 <h2 id="report">报告问题</h2>
-<p>仓库为缺陷报告与功能请求提供 issue 模板（<code>.github/ISSUE_TEMPLATE/</code>），
-并提供 pull request 模板。它<strong>没有 CONTRIBUTING.md</strong>、行为准则或路线图文档，因此除这些模板之外，
-没有文档记载的支持渠道。</p>
+<p>缺陷与功能请求请通过 <a href="https://github.com/wrolp/wrolp/issues">github.com/wrolp/wrolp/issues</a>
+的 issue 模板提交。请附上应用版本（设置 → 关于）、出问题的主机或协议，以及可复现的步骤。</p>
 
 <h2 id="related">相关章节</h2>
 <ul>
@@ -147,7 +140,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

@@ -82,14 +82,8 @@
 <p>可用模型可以从 <code>{endpoint}/v1/models</code> 拉取。</p>
 
 <h2 id="keys">API 密钥存储</h2>
-<p>密钥使用 <strong>AES-256-GCM 文件保险库</strong>加密。保险库密钥文件为 <code>vault.key</code>，被描述为与
-机器绑定的文件。<strong>不</strong>使用操作系统钥匙串。</p>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong>确切的对话框布局、可接受的 URL 格式、OpenAI 风格接口之外还支持哪些提供商、令牌或
-  上下文限制，以及请求重试是否可配置，均未记录。字段名 <code>openai_content</code> 表明后端接受的消息形状，
-  而不是受支持厂商的列表。
-</div>
-
+<p>密钥使用 <strong>AES-256-GCM 文件保险库</strong>加密。密钥文件 <code>vault.key</code> 与当前机器绑定，
+<strong>不</strong>使用操作系统钥匙串。</p>
 <h2 id="usage">使用助手</h2>
 <ul>
   <li><strong>图片</strong>：将图片附加到消息，或直接粘贴；点击缩略图可打开完整图片。</li>
@@ -118,7 +112,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

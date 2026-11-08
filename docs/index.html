@@ -31,7 +31,7 @@
   <div class="wrap">
     <p class="eyebrow">Documentation</p>
     <h1>User manual</h1>
-    <p class="lede">Thirteen chapters, from installation to troubleshooting, with every unconfirmed interface detail marked as such.</p>
+    <p class="lede">Thirteen chapters, from installation to troubleshooting, covering connections, files, operations, AI and data.</p>
   </div>
 </header>
 
@@ -55,14 +55,13 @@
 </ol>
   </nav>
   <main id="main" class="doc-main">
-    <p>This manual documents Wrolp Terminal v0.0.12 as described by the repository's README, release notes,
-<code>package.json</code>, <code>src-tauri/Cargo.toml</code>, configuration files and source layout (retrieved 2026-11-07).</p>
+    <p>This manual covers Wrolp Terminal v0.0.12, chapter by chapter: installation, connections and session layout,
+files, operations panels, the AI assistant and data management.</p>
 
 <div class="callout">
-  <strong>How to read it.</strong> Each chapter separates what the source material confirms from what it does not.
-  Where a dialog, menu path, field name, default value or screenshot is not documented, the chapter says so explicitly
-  under “Not confirmed” instead of inventing a procedure. No screenshots are reproduced because none are available in
-  the source material.
+  <strong>How to read it.</strong> Each chapter starts with the entry point and the steps, then explains interface
+  behaviour, defaults and limits. Commands, paths and field names use a monospace font so you can match them to the
+  application.
 </div>
 
 <h2 id="chapters">Chapters</h2>
@@ -130,7 +129,7 @@
     <div class="card">
       <div class="chapter-no">CHAPTER 13</div>
       <h3><a href="troubleshooting.html">Troubleshooting</a></h3>
-      <p>Symptoms and the documented facts that explain or bound them.</p>
+      <p>Common symptoms, their causes and the steps that resolve them.</p>
     </div>
 </div>
 
@@ -143,14 +142,13 @@
   <li><strong>When something breaks</strong>: jump to 13; each symptom links back to the relevant chapter.</li>
 </ul>
 
-<h2 id="coverage">Coverage and source limits</h2>
+<h2 id="coverage">Things to know</h2>
 <ul>
-  <li><strong>Release packages are MSI only</strong>; Linux/macOS must build from source.</li>
-  <li><strong>No CONTRIBUTING.md, code of conduct or development-process document</strong> exists. The repository provides issue templates (bug report and feature request) and a pull request template.</li>
-  <li><strong>No roadmap document</strong>: the README states that it describes the current code, not future plans.</li>
-  <li><strong>No CI configuration</strong> (<code>.github/workflows/</code> is absent), so automated checks cannot be confirmed.</li>
-  <li>UI entry points and parameter defaults that are not present in the README, release notes, configuration or source
-  layout remain marked as unconfirmed in the relevant chapter.</li>
+  <li><strong>Release packages are Windows MSI only</strong>; Linux and macOS build from source.</li>
+  <li><strong>Connection profiles and AI keys are encrypted</strong>; decryption depends on <code>vault.key</code> in the data directory, so back it up with the rest.</li>
+  <li><strong>Session recording is off by default</strong>; once enabled, events are written to the local SQLite database and never uploaded.</li>
+  <li><strong>Tunnels are local port forwards</strong>: a listening port on your machine relays traffic through the SSH session to a remote target.</li>
+  <li>Docker, Kubernetes and Git panels run their commands <strong>on the host of the focused terminal</strong>.</li>
 </ul>
 
 <p>Prefer a guided tour of the features first? Return to the <a href="../features.html">feature overview</a>, or go
@@ -160,7 +158,7 @@ straight to <a href="../getting-started.html">getting started</a>.</p>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

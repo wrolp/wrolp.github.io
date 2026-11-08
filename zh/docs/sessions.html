@@ -69,21 +69,33 @@
   渗透到另一个连接中。</li>
   <li>本地 shell 与远程 shell 可以并排使用，因为两者都使用同一套 <code>RemoteFs</code> 抽象。</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 分割面板的确切命令或拖拽目标，以及布局是否在重启后恢复，
-  源材料中均未描述。窗口几何尺寸与不透明度会被持久化，但这本身并不
-  能确认标签或分割布局的持久化。
-</div>
-
 <h2 id="keybindings">快捷键</h2>
-<p>所有快捷键都集中在 <code>src/lib/keybindings.ts</code> 的一张表中。设置中允许重新绑定单个
-条目、重置单个条目，或重置全部。</p>
-<p>保留键不可绑定：<strong>Tab、Enter、Ctrl+C、Ctrl+V、Ctrl+X、Ctrl+Z、Ctrl+D、Ctrl+W</strong>。</p>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> README 没有列出默认快捷键分配，因此这里不复制默认键位表。
-  请从你正在运行的构建中读取 <code>src/lib/keybindings.ts</code> 里的表以获得准确内容。
+<p>所有快捷键都集中在 <code>src/lib/keybindings.ts</code> 的一张表中，设置里可逐项重新绑定、重置单项或全部重置。
+组合键按精确匹配生效，例如 <code>Ctrl+B</code> 不会在 <code>Ctrl+Alt+B</code> 上触发。macOS 上 <code>Ctrl</code> 对应 <code>Cmd</code>。</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>操作</th><th>默认快捷键</th></tr></thead>
+    <tbody>
+      <tr><td>命令面板</td><td><code>Ctrl+K</code></td></tr>
+      <tr><td>显示或隐藏侧栏</td><td><code>Ctrl+B</code></td></tr>
+      <tr><td>把侧栏换到另一边</td><td><code>Ctrl+Alt+B</code></td></tr>
+      <tr><td>显示或隐藏下栏</td><td><code>Ctrl+J</code></td></tr>
+      <tr><td>在下栏与右栏之间切换面板位置</td><td><code>Ctrl+Alt+J</code></td></tr>
+      <tr><td>显示或隐藏检视器</td><td><code>Ctrl+Alt+I</code></td></tr>
+      <tr><td>分屏终端</td><td><code>Ctrl+\</code></td></tr>
+      <tr><td>命令片段列表</td><td><code>Ctrl+Shift+P</code></td></tr>
+      <tr><td>命令历史</td><td><code>Ctrl+Shift+H</code></td></tr>
+      <tr><td>双栏文件视图</td><td><code>Ctrl+Shift+F</code></td></tr>
+      <tr><td>命令补全列表</td><td><code>Alt+/</code></td></tr>
+      <tr><td>向上 / 向下翻一页</td><td><code>Shift+PgUp</code> / <code>Shift+PgDn</code></td></tr>
+      <tr><td>跳到最早的输出 / 跳回提示符</td><td><code>Shift+Home</code> / <code>Shift+End</code></td></tr>
+      <tr><td>保存文件</td><td><code>Ctrl+S</code></td></tr>
+      <tr><td>关闭浮层</td><td><code>Esc</code></td></tr>
+    </tbody>
+  </table>
 </div>
-
+<p>保留键不可绑定：<strong>Tab、Enter、Space、Backspace、Delete</strong>，以及
+<strong>Ctrl+C、Ctrl+V、Ctrl+X、Ctrl+Z、Ctrl+D、Ctrl+W、Alt+Tab、Ctrl+Shift+Esc</strong>。</p>
 <h2 id="window">窗口与应用行为</h2>
 <ul>
   <li>自定义标题栏。</li>
@@ -93,8 +105,8 @@
 </ul>
 
 <h2 id="updater">更新</h2>
-<p>应用包含一个自动更新器，指向 GitHub Release 端点。它要求
-在 <code>tauri.conf.json</code> 中配置真实的 <code>pubkey</code>；缺少该密钥时，你自己构建的版本无法更新。</p>
+<p>应用内置自动更新器：从 GitHub Release 的 <code>latest.json</code> 检查更新，
+用 <code>tauri.conf.json</code> 中的 <code>pubkey</code> 校验安装包，并以 passive 模式启动安装。</p>
 <div class="pager">
 <a class="prev" href="connections.html"><span class="dir">上一章</span>第一个连接</a>
 <a class="next" href="sftp.html"><span class="dir">下一章</span>SFTP 文件传输</a>
@@ -104,7 +116,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

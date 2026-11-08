@@ -631,12 +631,6 @@ pre code {
 .callout ul { margin-bottom: 0; }
 .callout li { font-size: 14px; }
 
-.callout.unconfirmed {
-  border-color: var(--warn-border);
-  background: var(--warn-soft);
-}
-.callout.unconfirmed strong { color: var(--warn); }
-
 /* ---------- tables ---------- */
 
 .table-wrap {

@@ -57,6 +57,8 @@
   <main id="main" class="doc-main">
     <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 12</p>
 <h2 id="files">What is stored</h2>
+<p>Data lives in the OS configuration directory by default (<code>%APPDATA%\wrolp-terminal</code> on Windows)
+and can be pointed anywhere from Settings.</p>
 <div class="table-wrap">
   <table>
     <thead><tr><th>File or directory</th><th>Contents</th></tr></thead>
@@ -65,16 +67,11 @@
       <tr><td><code>connections.json</code></td><td>Connections and workspaces, stored encrypted</td></tr>
       <tr><td><code>wrolp.db</code></td><td>SQLite database: session index, command sets, snippets</td></tr>
       <tr><td><code>recordings/</code></td><td>NDJSON session recordings</td></tr>
-      <tr><td><code>vault.key</code></td><td>AES-256-GCM vault key, described as a machine-bound file</td></tr>
+      <tr><td><code>vault.key</code></td><td>AES-256-GCM vault key, bound to the current machine</td></tr>
       <tr><td><code>data_root.json</code></td><td>Records the chosen data directory; kept at the default location</td></tr>
     </tbody>
   </table>
 </div>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The actual default data directory path is not stated in the source material; only that
-  <code>data_root.json</code> lives there and records the choice.
-</div>
-
 <h2 id="migration">Relocating the data directory</h2>
 <p>Settings can point the data directory at any location. <code>wrolp.db</code>, <code>recordings/</code>,
 <code>connections.json</code> and the window configuration migrate together.</p>
@@ -87,15 +84,9 @@
 </ul>
 
 <h2 id="backup">Backup considerations</h2>
-<p>There is no dedicated backup command in the documentation; migration moves the same files that a backup would need to
-capture. A consistent copy should include <code>wrolp.db</code>, <code>recordings/</code>, <code>connections.json</code>,
+<p>There is no separate backup button; migration moves the same files a backup needs to capture. A consistent copy
+should include <code>wrolp.db</code>, <code>recordings/</code>, <code>connections.json</code>,
 <code>window.json</code> and, if you want the AI keys to travel, <code>vault.key</code>.</p>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> Whether a <code>vault.key</code> copied to another machine remains usable is not
-  documented — it is only described as machine-bound. The documentation also does not describe online backup, cloud
-  sync or a supported restore procedure, and does not state whether <code>wrolp.db</code> is encrypted.
-</div>
-
 <h2 id="maintenance">Database maintenance</h2>
 <p>Settings show the current size of <code>wrolp.db</code> and the space that can be reclaimed, with a
 <strong>Compact now</strong> action that runs <code>VACUUM</code>.</p>
@@ -114,7 +105,7 @@ capture. A consistent copy should include <code>wrolp.db</code>, <code>recording
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

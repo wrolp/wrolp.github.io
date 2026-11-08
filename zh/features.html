@@ -31,13 +31,13 @@
   <div class="wrap">
     <p class="eyebrow">功能导览</p>
     <h1>功能特性</h1>
-    <p class="lede">应用能做什么，分组方式与项目 README 一致。</p>
+    <p class="lede">应用能做什么：按使用场景分组的功能清单。</p>
   </div>
 </header>
 
 <div class="wrap page-body">
   <main id="main">
-  <p>这份功能清单遵循项目 README 中的功能列表。本页的锚点被首页卡片与用户手册链接引用。</p>
+  <p>下面按使用场景分组列出已实现的能力，每一项都对应应用中的实际操作入口。</p>
 <section id="connection-terminal">
   <h2>连接与终端</h2>
   <ul>
@@ -93,7 +93,7 @@
     <li><strong>可迁移的数据目录</strong>：设置可将数据目录指向任意位置，同时迁移 <code>wrolp.db</code>、<code>recordings/</code>、<code>connections.json</code> 与窗口配置；该选择记录在默认位置的 <code>data_root.json</code> 中，并在下次启动时生效；目标为空时写入，非空时复用，已有数据永不覆盖。<code>vault.key</code> 也可选择一并迁移，使整个目录可携带。</li>
     <li><strong>数据库维护</strong>：显示 <code>wrolp.db</code> 的当前大小与可回收空间，并提供“立即压缩”（<code>VACUUM</code>）操作。</li>
     <li><strong>快捷键</strong>：所有快捷键集中在 <code>src/lib/keybindings.ts</code> 的同一张表中；设置中可为每一项重新绑定、单项重置或全部重置；保留键（Tab、Enter、Ctrl+C/V/X/Z/D/W）会被拒绝。</li>
-    <li><strong>其他</strong>：自定义标题栏、持久化窗口几何与透明度、单实例保护、自动更新器（GitHub Release 端点，需要在 <code>tauri.conf.json</code> 中提供真实的 <code>pubkey</code>），以及中英文界面（默认跟随系统语言）。</li>
+    <li><strong>其他</strong>：自定义标题栏、持久化窗口几何与透明度、单实例保护、自动更新器（从 GitHub Release 的 <code>latest.json</code> 检查更新，用 <code>pubkey</code> 校验安装包，以 passive 模式安装），以及中英文界面（默认跟随系统语言）。</li>
   </ul>
 </section>
 
@@ -115,7 +115,7 @@
   </ul>
 
   <p><strong>IPC 与存储</strong>：Tauri <code>invoke</code> 命令是主要机制，终端输出
-  由前端轮询（README 将其解释为应对 Windows 后台任务的变通方案）。Tauri 事件
+  由前端轮询（用于规避 Windows 后台任务的限制）。Tauri 事件
   仅用于 UI 无法轮询的推送 —— <code>connection-closed</code>、<code>connection-suspect</code>、
   <code>connection-ok</code>、<code>transfer-progress</code>、<code>tunnel-changed</code>、<code>ai-term-mark</code>、
   <code>native-drag-drop</code>、<code>baud-detect-progress</code>。所有数据都存放在一个可迁移目录中：
@@ -128,7 +128,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

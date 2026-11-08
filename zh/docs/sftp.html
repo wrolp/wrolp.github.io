@@ -62,11 +62,6 @@
   <li>通过 SFTP（<code>russh-sftp</code>）上传和下载，复用与终端相同的 SSH 会话通道。</li>
   <li>本地与远程浏览共用 <code>RemoteFs</code> 抽象，因此本地与远程面板行为一致。</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 权限或所有者编辑、符号链接处理、隐藏文件开关以及多选
-  手势，源材料中均未描述。
-</div>
-
 <h2 id="queue">传输队列</h2>
 <p>每个排队文件占一行，显示已完成字节数与总量，以及实时传输速度。</p>
 <ul>
@@ -82,11 +77,6 @@
   <li>已经完成的文件保持原位。</li>
   <li>上传前已存在的目标文件<strong>不会</strong>被删除。</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 续传能否在应用重启后继续、同时可运行多少个传输任务，
-  以及是否可以配置带宽限制，均未记录。
-</div>
-
 <h2 id="tools">内置网络文件工具</h2>
 <p>除 SFTP 之外，应用还自带可在同一窗口内运行的文件传输工具：</p>
 <ul>
@@ -96,10 +86,6 @@
   <li><strong>FTP 客户端</strong>，支持无 TLS、显式 TLS 和隐式 TLS。</li>
   <li><strong>TFTP 客户端</strong>。</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 默认端口、绑定地址、FTP 服务器的认证方式，
-  以及 HTTPS 服务器的证书字段，源材料中均未说明。
-</div>
 <div class="pager">
 <a class="prev" href="sessions.html"><span class="dir">上一章</span>会话与多标签</a>
 <a class="next" href="editor.html"><span class="dir">下一章</span>远程文件编辑</a>
@@ -109,7 +95,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

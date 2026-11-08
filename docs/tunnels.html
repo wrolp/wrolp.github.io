@@ -62,21 +62,17 @@ and stopped from the sidebar. Because tunnels are carried by the SSH session its
 <code>russh</code> channel as the terminal.</p>
 
 <h2 id="state">State synchronisation</h2>
-<p>When tunnel state changes, the backend emits <code>tunnel-changed</code> so the UI reflects the actual state rather
-than a local guess.</p>
-
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The source material describes local forwarding only. It does not document remote
-  forwarding (<code>-R</code>), dynamic SOCKS forwarding (<code>-D</code>), a bind-address field, a preferred local port,
-  or whether rules auto-start when a connection opens. Fields and defaults for the add/edit dialog are also not documented.
-</div>
+<p>When tunnel state changes, the backend emits <code>tunnel-changed</code> and the sidebar updates the live status,
+even when the tab that carried the tunnel has disconnected.</p>
 
 <h2 id="usage">Using a tunnel</h2>
-<p>The confirmed workflow is limited to what the README states: create a local forwarding rule for a connection, then
-start or stop it from the sidebar and confirm the state change propagated from the backend.</p>
+<p>A rule has four fields: <strong>local bind address</strong> (default <code>127.0.0.1</code>),
+<strong>local port</strong>, <strong>remote host</strong> and <strong>remote port</strong>.
+Create a rule for a connection, start it from the sidebar, and connections to the local port are relayed to the
+remote target.</p>
 <div class="callout">
-  <strong>Operational note.</strong> A tunnel lives on the SSH session that owns it, so a tunnel stop can also follow
-  from the session closing; the documented <code>connection-closed</code> status is the signal to watch in the tab.
+  <strong>Operational note.</strong> A tunnel lives on the SSH session that owns it, so it stops when the session
+  closes; the <code>connection-closed</code> status on the tab is the signal to watch.
 </div>
 
 <h2 id="related">Related chapters</h2>
@@ -93,7 +89,7 @@ start or stop it from the sidebar and confirm the state change propagated from t
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

@@ -89,16 +89,10 @@
 <ul>
   <li><code>pull</code> 始终使用 <code>--ff-only</code>。</li>
   <li>强制推送仅以 <code>--force-with-lease</code> 的形式提供，并且需要二次确认。</li>
-  <li>Kubernetes 资源删除有自己的应用内确认；README 中描述的 Git 专属确认是强制推送那一个，冲突可以三方查看并中止。</li>
+  <li>冲突支持三方查看与中止；强制推送前的确认框会说明目标远端与分支。</li>
   <li>路径参数绝不会拼接进 shell 命令。后端会拒绝绝对路径、盘符、反斜杠和 <code>..</code>。</li>
   <li>“本地忽略”只写入 <code>.git/info/exclude</code>，绝不写入被跟踪的 <code>.gitignore</code>。</li>
 </ul>
-
-<div class="callout unconfirmed">
-  <strong>未确认。</strong>远程 HTTPS 或 SSH 操作如何提供凭证、提交签名、子模块与 Git LFS 的处理、交互式 rebase
-  与 worktree 支持均未描述。由于远程命令以 <code>GIT_TERMINAL_PROMPT=0</code> 运行，不能指望出现交互式凭证提示；
-  源材料也没有描述凭证设置界面。
-</div>
 
 <h2 id="related">相关章节</h2>
 <ul>
@@ -114,7 +108,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

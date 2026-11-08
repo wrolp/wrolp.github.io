@@ -2,22 +2,14 @@
 
 A Rust-powered desktop SSH terminal and server-ops tool — multi-tab, SFTP, remote editor, session recording, Docker analysis & AI assistant.
 
-> **Source.** Everything below comes from the GitHub repository [wrolp/wrolp](https://github.com/wrolp/wrolp): its README, RELEASE_NOTES, `package.json`, `src-tauri/Cargo.toml`, file tree and repository metadata, retrieved on 2026-11-07. Only information actually found there is included; nothing has been inferred or added.
-
 ## At a glance
 
 | Item | Value |
 | --- | --- |
 | Repository | https://github.com/wrolp/wrolp |
-| Description | A Rust-powered desktop SSH terminal and server-ops tool — multi-tab, SFTP, remote editor, session recording, Docker analysis & AI assistant |
-| Primary language | TypeScript (largest share of code), followed by Rust (about 1.2 MB of source) |
-| Languages | TypeScript / Rust / JavaScript / SCSS / HTML |
+| Current version | v0.0.12 (released 2026-11-07) |
+| Stack | Tauri 2 / React 19 / TypeScript / Rust |
 | License | MIT (Copyright (c) 2026 Wrolp) |
-| Current version | v0.0.12 (released 2026-11-07, not a pre-release) |
-| Repository created | 2026-06-28 |
-| Default branch | main |
-| Repository size | About 8.2 MB, 4 stars, 0 forks, 0 open issues |
-| Topics | react, rust, terminal, typescript, tauri, ai-assistant, docker, sftp, ssh-client, xterm, server-ops |
 | Platforms | Windows is the primary target (release packages are MSI only); it can run and be developed on Linux/macOS |
 
 ## What it is and the problem it solves
@@ -28,7 +20,7 @@ Its key difference from conventional SSH clients: SSH connections are implemente
 
 ## Core features
 
-The list below is organised from the functional inventory in the README.
+The list below groups the implemented capabilities by workflow.
 
 ### Connection and terminal
 
@@ -88,7 +80,7 @@ The list below is organised from the functional inventory in the README.
 - `suppaftp` (FTP), `reqwest` (AI endpoint calls), `encoding_rs`, `walkdir`, `chrono`
 - Windows-specific: `windows` / `windows-core` / `webview2-com`
 
-**IPC and storage**: Tauri `invoke` commands are the primary mechanism, and terminal output is polled from the frontend (the README explains this as a workaround for Windows background tasks). Tauri events are used only for pushes the UI cannot poll — `connection-closed`, `connection-suspect`, `connection-ok`, `transfer-progress`, `tunnel-changed`, `ai-term-mark`, `native-drag-drop`, `baud-detect-progress`. All data lives in one relocatable directory: `window.json` (window, recording and keepalive settings), the encrypted `connections.json` (connections and workspaces), `wrolp.db` (session index, command sets, snippets), and `recordings/` (NDJSON recordings).
+**IPC and storage**: Tauri `invoke` commands are the primary mechanism, and terminal output is polled from the frontend (a workaround for Windows background-task limits). Tauri events are used only for pushes the UI cannot poll — `connection-closed`, `connection-suspect`, `connection-ok`, `transfer-progress`, `tunnel-changed`, `ai-term-mark`, `native-drag-drop`, `baud-detect-progress`. All data lives in one relocatable directory: `window.json` (window, recording and keepalive settings), the encrypted `connections.json` (connections and workspaces), `wrolp.db` (session index, command sets, snippets), and `recordings/` (NDJSON recordings).
 
 ## Getting started
 
@@ -99,7 +91,7 @@ sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
   libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev
 ```
 
-Install Rust and the frontend dependencies (the repository commits a `yarn.lock`, so yarn is recommended):
+Install Rust and the frontend dependencies with yarn:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -169,10 +161,16 @@ npx playwright install && yarn test:e2e    # Playwright frontend E2E; the backen
 - Scenarios that need session recording and replay for auditing or post-mortems (NDJSON on disk, exportable to asciinema).
 - Cases where application data (including encrypted connection configuration) must be kept in a custom or portable directory.
 
-## Known limitations and missing information
+## Before you start
 
-- **Release packages are MSI only** (the bundle target in `tauri.conf.json` is `["msi"]`); no installers are provided for other platforms, so Linux/macOS users must build from source.
-- **The README explicitly states** that it describes the current state of the code rather than a roadmap ("not a roadmap"), and the repository contains no roadmap or planning document.
-- **How to contribute**: the repository only has `.github/ISSUE_TEMPLATE/` (bug_report, feature_request) and `pull_request_template.md`. There is **no CONTRIBUTING.md**, and no code of conduct or development-process document; the only practical guidance is the code conventions mentioned in the README (Rust side uses `#[serde(rename_all = "camelCase")]` to match the frontend's camelCase types, Prettier rules apply, and a new command must be registered in `generate_handler!` in `lib.rs` and given a frontend wrapper in `src/commands.ts`).
-- **CI configuration is missing**: there is no `.github/workflows/` in the file tree, so it cannot be confirmed whether an automated build/test pipeline exists.
-- The repository is small and has very few stars (4), and no external user feedback is available for reference.
+- **Release packages are MSI only** (the bundle target in `tauri.conf.json` is `["msi"]`); Linux and macOS users build from source.
+- **Tunnels are local port forwards**: a listening port on your machine relays traffic through the SSH session to a remote target.
+- **Session recording is off by default**: once enabled, keystrokes and commands go to the local SQLite database and are never uploaded.
+- **The data directory is relocatable**, but `vault.key` decrypts connection profiles and AI keys, so keep it with any backup or migration.
+- **Operations panels need remote tools**: the Docker panel requires Docker or podman on the host, and the Kubernetes and Git panels run `kubectl`, `helm` and `git` through the focused terminal's session.
+
+## Contributing
+
+- Rust commands register in `generate_handler!` inside `lib.rs` and get a frontend wrapper in `src/commands.ts`.
+- Rust structs use `#[serde(rename_all = "camelCase")]` so their JSON matches the TypeScript types.
+- Formatting follows Prettier; run `yarn lint` and `yarn test:e2e` before opening a pull request.

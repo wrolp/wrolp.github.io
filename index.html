@@ -91,10 +91,9 @@
   <h2>At a glance</h2>
   <dl class="facts">
     <div class="fact"><dt>Repository</dt><dd><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a></dd></div>
-    <div class="fact"><dt>Current version</dt><dd>v0.0.12 (released 2026-11-07, not a pre-release)</dd></div>
+    <div class="fact"><dt>Current version</dt><dd>v0.0.12 (released 2026-11-07)</dd></div>
     <div class="fact"><dt>License</dt><dd>MIT (Copyright (c) 2026 Wrolp)</dd></div>
-    <div class="fact"><dt>Languages</dt><dd>TypeScript / Rust / JavaScript / SCSS / HTML</dd></div>
-    <div class="fact"><dt>Repository size</dt><dd>About 8.2 MB, 4 stars, 0 forks, 0 open issues</dd></div>
+    <div class="fact"><dt>Stack</dt><dd>Tauri 2 / React 19 / TypeScript / Rust</dd></div>
     <div class="fact"><dt>Platforms</dt><dd>Windows primary target (MSI release only); runs and builds on Linux/macOS</dd></div>
   </dl>
 </section>
@@ -148,9 +147,8 @@ yarn tauri dev      # full stack; Tauri starts the Vite dev server automatically
 
 <section id="manual-entry">
   <h2>User manual</h2>
-  <p>Thirteen chapters cover installation through troubleshooting. Every statement is taken from the repository's
-  README, release notes, configuration files and source layout; interface details that the source material does not
-  describe are explicitly marked as unconfirmed instead of being invented.</p>
+  <p>Thirteen chapters cover installation through troubleshooting: connections and terminals, files and editing,
+  operations panels, the AI assistant, recording and data migration.</p>
   <div class="grid">
     <div class="card">
       <div class="chapter-no">CHAPTERS 1–3</div>
@@ -190,13 +188,13 @@ yarn tauri dev      # full stack; Tauri starts the Vite dev server automatically
 </section>
 
 <section id="limitations">
-  <h2>Known limitations and missing information</h2>
+  <h2>Before you start</h2>
   <ul>
-    <li><strong>Release packages are MSI only</strong>: the bundle target in <code>tauri.conf.json</code> is <code>["msi"]</code>, so Linux/macOS users must build from source.</li>
-    <li><strong>The README describes the current state of the code, not a roadmap</strong> (“not a roadmap”), and the repository contains no roadmap or planning document.</li>
-    <li><strong>No CONTRIBUTING.md</strong>: only issue templates and a pull request template exist; the practical conventions are those noted in the README.</li>
-    <li><strong>No CI configuration</strong>: there is no <code>.github/workflows/</code> in the file tree, so an automated build/test pipeline cannot be confirmed.</li>
-    <li>The repository is small with very few stars (4), and no external user feedback is available.</li>
+    <li><strong>Release packages are Windows MSI only</strong>: the bundle target in <code>tauri.conf.json</code> is <code>["msi"]</code>, so Linux and macOS users build from source.</li>
+    <li><strong>Tunnels are local port forwards</strong>: a listening port on your machine relays traffic through the SSH session to a remote target.</li>
+    <li><strong>Session recording is off by default</strong>: once enabled, keystrokes and commands go to the local SQLite database, never to a remote host.</li>
+    <li><strong>The data directory is relocatable</strong>: <code>vault.key</code> decrypts connection profiles and AI keys, so keep it with any backup or migration.</li>
+    <li><strong>Operations panels depend on remote tools</strong>: the Docker panel needs Docker or podman on the host; the Kubernetes and Git panels run <code>kubectl</code>, <code>helm</code> and <code>git</code> through the focused terminal's session.</li>
   </ul>
 </section>
 
@@ -205,7 +203,7 @@ yarn tauri dev      # full stack; Tauri starts the Vite dev server automatically
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

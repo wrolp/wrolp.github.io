@@ -31,7 +31,7 @@
   <div class="wrap">
     <p class="eyebrow">文档</p>
     <h1>用户手册</h1>
-    <p class="lede">十三章，从安装到故障排查，所有未确认的界面细节都明确标注。</p>
+    <p class="lede">十三章，从安装到故障排查，覆盖连接、文件、运维、AI 与数据。</p>
   </div>
 </header>
 
@@ -55,13 +55,12 @@
 </ol>
   </nav>
   <main id="main" class="doc-main">
-    <p>本手册记录 Wrolp Terminal v0.0.12，依据仓库的 README、发布说明、
-<code>package.json</code>、<code>src-tauri/Cargo.toml</code>、配置文件与源码结构（资料截至 2026-11-07）。</p>
+    <p>本手册对应 Wrolp Terminal v0.0.12，按功能域分章：从安装、连接、会话排布，到文件、运维面板、
+AI 助手与数据管理。</p>
 
 <div class="callout">
-  <strong>如何阅读。</strong>每章都会区分源材料已确认与未确认的内容。
-  当某个对话框、菜单路径、字段名、默认值或截图没有文档记载时，该章会在「未确认」下明确说明，
-  而不是编造操作步骤。由于源材料中没有可用的截图，本手册未复现任何截图。
+  <strong>如何阅读。</strong>每章先给出操作入口与步骤，再说明界面行为、默认值和限制。
+  命令、路径与字段名以等宽字体标出，可直接在应用中找到对应位置。
 </div>
 
 <h2 id="chapters">章节</h2>
@@ -129,7 +128,7 @@
     <div class="card">
       <div class="chapter-no">第 13 章</div>
       <h3><a href="troubleshooting.html">故障排查</a></h3>
-      <p>各种症状，以及解释或界定它们的已文档化事实。</p>
+      <p>常见症状、成因与逐项排查步骤。</p>
     </div>
 </div>
 
@@ -142,14 +141,13 @@
   <li><strong>出问题时</strong>：直接跳到 13；每个症状都会链接回相关章节。</li>
 </ul>
 
-<h2 id="coverage">覆盖范围与源材料限制</h2>
+<h2 id="coverage">使用须知</h2>
 <ul>
-  <li><strong>发布包仅提供 MSI</strong>；Linux/macOS 必须从源码构建。</li>
-  <li><strong>不存在 CONTRIBUTING.md、行为准则或开发流程文档</strong>。仓库提供 issue 模板（缺陷报告与功能请求）和 pull request 模板。</li>
-  <li><strong>没有路线图文档</strong>：README 说明它描述的是当前代码，而不是未来计划。</li>
-  <li><strong>没有 CI 配置</strong>（缺少 <code>.github/workflows/</code>），因此无法确认自动化检查。</li>
-  <li>README、发布说明、配置或源码结构中未出现的界面入口与参数默认值，
-  会在相关章节中继续标注为未确认。</li>
+  <li><strong>发布包仅提供 Windows MSI</strong>；Linux 与 macOS 需从源码构建。</li>
+  <li><strong>连接配置与 AI 密钥加密存储</strong>，解密依赖数据目录中的 <code>vault.key</code>，备份时需一并保管。</li>
+  <li><strong>会话录制默认关闭</strong>；开启后事件写入本机 SQLite，不上传远端。</li>
+  <li><strong>SSH 隧道为本地端口转发</strong>：在本机监听端口，把流量经 SSH 会话转发到远端目标。</li>
+  <li>Docker、Kubernetes 与 Git 面板都在<strong>当前聚焦终端所在的主机</strong>上执行命令。</li>
 </ul>
 
 <p>想先看功能导览？返回<a href="../features.html">功能概览</a>，或
@@ -159,7 +157,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

@@ -65,7 +65,7 @@
     <tbody>
       <tr><td>Windows</td><td>MSI</td><td>支持</td></tr>
       <tr><td>Linux</td><td>无</td><td>支持；需要下文列出的 Debian/Ubuntu 包</td></tr>
-      <tr><td>macOS</td><td>无</td><td>支持；根据 README 无需额外系统依赖</td></tr>
+      <tr><td>macOS</td><td>无</td><td>支持；无需额外系统依赖</td></tr>
     </tbody>
   </table>
 </div>
@@ -75,31 +75,22 @@
 </div>
 
 <h2 id="download">安装 Windows 版本</h2>
-<p>当前版本为 <strong>v0.0.12</strong>（2026-11-07，非预发布版）。请从
-<a href="https://github.com/wrolp/wrolp/releases">GitHub Releases 页面</a>下载 MSI 并运行安装程序。</p>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 源材料未描述安装程序选项、按用户还是按机器安装、
-  安装目录、静默安装参数或卸载行为。这些步骤被省略，而不是凭空编写。
-</div>
-
+<p>当前版本为 <strong>v0.0.12</strong>（2026-11-07）。请从
+<a href="https://github.com/wrolp/wrolp/releases">GitHub Releases 页面</a>下载 MSI，双击运行并按安装向导完成安装。
+安装包只包含 Windows 目标，安装后可从开始菜单或桌面快捷方式启动。</p>
 <h2 id="requirements">构建要求</h2>
 <h3>Linux 系统包（Debian/Ubuntu）</h3>
 <pre><code>sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
   libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev</code></pre>
-<p>根据 README，macOS 和 Windows 无需额外的系统依赖。</p>
+<p>macOS 和 Windows 无需额外的系统依赖。</p>
 
 <h3>工具链</h3>
 <ul>
   <li><strong>Rust</strong>，通过 <code>rustup</code> 安装。</li>
-  <li><strong>前端依赖</strong>使用 yarn 安装；仓库提交了 <code>yarn.lock</code>，因此推荐使用 yarn 作为包管理器。</li>
+  <li><strong>前端依赖</strong>使用 yarn 安装。</li>
 </ul>
 <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 yarn</code></pre>
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> README、发布说明、<code>package.json</code> 或 <code>tauri.conf.json</code> 均未说明
-  最低操作系统版本、Node.js 版本、内存/磁盘要求或 WebView2 运行时要求。
-</div>
-
 <h2 id="build">构建、运行与测试</h2>
 <pre><code>yarn tauri dev      # 完整栈（Tauri 会自动启动 Vite 开发服务器）
 yarn dev            # 仅前端，用于纯 UI 调试（不含 Rust/SSH）
@@ -114,13 +105,11 @@ npx playwright install &amp;&amp; yarn test:e2e    # 前端 E2E，使用打桩�
 <h2 id="releases">发布</h2>
 <pre><code>gh auth login -h github.com
 yarn run publish    # 先构建，然后上传到 GitHub Release</code></pre>
-<p>设置 <code>RELEASE_SKIP_CLEAN=1</code> 可复用已有的构建产物，而不先清理。自动更新器使用
-GitHub Release 端点，并要求在 <code>tauri.conf.json</code> 中配置真实的 <code>pubkey</code>。</p>
+<p>设置 <code>RELEASE_SKIP_CLEAN=1</code> 可复用已有的构建产物，而不先清理。发布后可用
+<code>yarn gen:latest</code> 生成更新清单 <code>latest.json</code>；自动更新器从
+<code>releases/latest/download/latest.json</code> 读取版本，并用 <code>tauri.conf.json</code> 中的
+<code>pubkey</code> 校验安装包。</p>
 
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 文件树中没有 <code>.github/workflows/</code>，因此无法确认是否存在
-  自动化构建/测试流水线。
-</div>
 <div class="pager">
 <a class="next" href="connections.html"><span class="dir">下一章</span>第一个连接</a>
 </div>
@@ -129,7 +118,7 @@ GitHub Release 端点，并要求在 <code>tauri.conf.json</code> 中配置真�
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

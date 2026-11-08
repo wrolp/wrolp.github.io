@@ -89,19 +89,11 @@ repositories run through the SSH exec channel, local ones are spawned directly o
 <ul>
   <li><code>pull</code> always uses <code>--ff-only</code>.</li>
   <li>Force push is only offered as <code>--force-with-lease</code> and requires a second confirmation.</li>
-  <li>Kubernetes resource deletion has its own in-app confirmation; the Git-specific confirmation described in the
-  README is the force-push one, and conflicts can be viewed three-way and aborted.</li>
+  <li>Conflicts can be viewed three-way and aborted; the force-push confirmation names the target remote and branch.</li>
   <li>Path arguments are never concatenated into a shell command. The backend rejects absolute paths, drive letters,
   backslashes and <code>..</code>.</li>
   <li>“Local ignore” writes only to <code>.git/info/exclude</code>, never to a tracked <code>.gitignore</code>.</li>
 </ul>
-
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> How credentials are supplied for remote HTTPS or SSH operations, commit signing,
-  submodule and Git LFS handling, interactive rebase and worktree support are not described. Because remote commands run
-  with <code>GIT_TERMINAL_PROMPT=0</code>, no interactive credential prompt can be expected; the source material does not
-  describe a credential setup screen.
-</div>
 
 <h2 id="related">Related chapters</h2>
 <ul>
@@ -117,7 +109,7 @@ repositories run through the SSH exec channel, local ones are spawned directly o
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

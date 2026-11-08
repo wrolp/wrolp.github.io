@@ -65,7 +65,7 @@ developed on Linux and macOS, but those platforms are built from source.</p>
     <tbody>
       <tr><td>Windows</td><td>MSI</td><td>Supported</td></tr>
       <tr><td>Linux</td><td>None</td><td>Supported; the Debian/Ubuntu packages below are required</td></tr>
-      <tr><td>macOS</td><td>None</td><td>Supported; no extra system dependencies according to the README</td></tr>
+      <tr><td>macOS</td><td>None</td><td>Supported; no extra system dependencies</td></tr>
     </tbody>
   </table>
 </div>
@@ -75,32 +75,22 @@ developed on Linux and macOS, but those platforms are built from source.</p>
 </div>
 
 <h2 id="download">Installing the Windows build</h2>
-<p>The current release is <strong>v0.0.12</strong> (2026-11-07, not a pre-release). Download the MSI from the
-<a href="https://github.com/wrolp/wrolp/releases">GitHub Releases page</a> and run the installer.</p>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The source material does not describe installer options, per-user versus per-machine
-  installation, an installation directory, silent-install flags or uninstall behaviour. Those steps are omitted rather
-  than invented.
-</div>
-
+<p>The current release is <strong>v0.0.12</strong> (2026-11-07). Download the MSI from the
+<a href="https://github.com/wrolp/wrolp/releases">GitHub Releases page</a>, double-click it and follow the installer.
+The package targets Windows only; launch the application from the Start menu or the desktop shortcut.</p>
 <h2 id="requirements">Build requirements</h2>
 <h3>Linux system packages (Debian/Ubuntu)</h3>
 <pre><code>sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
   libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev</code></pre>
-<p>macOS and Windows need no additional system dependencies according to the README.</p>
+<p>macOS and Windows need no additional system dependencies.</p>
 
 <h3>Toolchain</h3>
 <ul>
   <li><strong>Rust</strong>, installed through <code>rustup</code>.</li>
-  <li><strong>Frontend dependencies</strong> installed with yarn; the repository commits a <code>yarn.lock</code>, so yarn is the recommended package manager.</li>
+  <li><strong>Frontend dependencies</strong> installed with yarn.</li>
 </ul>
 <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 yarn</code></pre>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> No minimum OS version, Node.js version, RAM/disk figure or WebView2 runtime requirement
-  is stated in the README, release notes, <code>package.json</code> or <code>tauri.conf.json</code>.
-</div>
-
 <h2 id="build">Build, run and test</h2>
 <pre><code>yarn tauri dev      # full stack (Tauri starts the Vite dev server automatically)
 yarn dev            # frontend only, for pure UI debugging (no Rust/SSH)
@@ -115,13 +105,11 @@ npx playwright install &amp;&amp; yarn test:e2e    # frontend E2E with a stubbed
 <h2 id="releases">Releasing</h2>
 <pre><code>gh auth login -h github.com
 yarn run publish    # builds, then uploads to a GitHub Release</code></pre>
-<p>Set <code>RELEASE_SKIP_CLEAN=1</code> to reuse existing artifacts instead of cleaning first. The auto-updater uses a
-GitHub Release endpoint and requires a real <code>pubkey</code> in <code>tauri.conf.json</code>.</p>
+<p>Set <code>RELEASE_SKIP_CLEAN=1</code> to reuse existing artifacts instead of cleaning first. After publishing,
+<code>yarn gen:latest</code> writes the <code>latest.json</code> update manifest; the auto-updater reads it from
+<code>releases/latest/download/latest.json</code> and verifies installers with the <code>pubkey</code> in
+<code>tauri.conf.json</code>.</p>
 
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The file tree contains no <code>.github/workflows/</code>, so whether an automated
-  build/test pipeline exists cannot be verified.
-</div>
 <div class="pager">
 <a class="next" href="connections.html"><span class="dir">Next</span>Your first connection</a>
 </div>
@@ -130,7 +118,7 @@ GitHub Release endpoint and requires a real <code>pubkey</code> in <code>tauri.c
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

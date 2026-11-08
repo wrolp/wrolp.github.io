@@ -40,7 +40,7 @@
 
 <section id="download">
   <h2>下载与支持的平台</h2>
-  <p>当前版本为 <strong>v0.0.12</strong>（2026-11-07 发布，非预发布版）。发布包
+  <p>当前版本为 <strong>v0.0.12</strong>（2026-11-07 发布）。发布包
   <strong>仅提供 MSI</strong>：<code>tauri.conf.json</code> 中的打包目标为 <code>["msi"]</code>。</p>
   <div class="table-wrap">
     <table>
@@ -51,27 +51,18 @@
       </tbody>
     </table>
   </div>
-  <p>安装包发布在仓库的 GitHub Releases 页面：
+  <p>安装包发布在 GitHub Releases 页面：
   <a href="https://github.com/wrolp/wrolp/releases">github.com/wrolp/wrolp/releases</a>。</p>
-  <div class="callout">
-    <strong>版本说明。</strong> v0.0.12 被标记为正常发布版。仓库的 README 明确说明描述的是当前代码状态，
-    并且“不是路线图”；没有可供查阅的路线图文档。
-  </div>
 </section>
 
 <section id="requirements">
   <h2>系统要求</h2>
   <ul>
     <li>Windows 是主要目标；项目也可以在 Linux 与 macOS 上运行和开发。</li>
-    <li>根据 README，macOS 与 Windows 不需要额外的系统依赖。</li>
+    <li>macOS 与 Windows 不需要额外的系统依赖。</li>
     <li>在 Debian/Ubuntu 上构建需要下列软件包。</li>
-    <li>需要 Rust（通过 <code>rustup</code> 安装），且仓库提交了 <code>yarn.lock</code>，因此推荐使用 yarn 作为包管理器。</li>
+    <li>需要 Rust（通过 <code>rustup</code> 安装），前端依赖使用 yarn 安装。</li>
   </ul>
-  <div class="callout unconfirmed">
-    <strong>未确认。</strong> 源材料未说明最低操作系统版本、所需的 Node.js 版本、
-    内存/磁盘要求，也没有说明 WebView2 运行时要求。因此这些数值被省略，而不是猜测。
-  </div>
-
   <h3>Linux 构建依赖（Debian/Ubuntu）</h3>
 <pre><code>sudo apt-get install -y pkg-config libdbus-1-dev libssl-dev libgtk-3-dev \
   libjavascriptcoregtk-4.1-dev libsoup-3.0-dev libwebkit2gtk-4.1-dev</code></pre>
@@ -108,17 +99,16 @@ yarn tauri build    # 增量开发构建</code></pre>
 <pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
 cd src-tauri &amp;&amp; cargo run --bin ssh_test   # 独立的 russh 连接探测
 npx playwright install &amp;&amp; yarn test:e2e    # Playwright 前端 E2E；后端通过 window.__TAURI_INTERNALS__ 打桩，因此无需构建 Rust</code></pre>
-  <p>Playwright 测试套件在 <code>e2e/ui/</code> 下包含约 100 个用例。仓库中不存在 <code>.github/workflows/</code>
-  目录，因此项目的自动化构建/测试流水线无法确认。</p>
+  <p>Playwright 测试套件在 <code>e2e/ui/</code> 下包含约 100 个用例；后端通过
+  <code>window.__TAURI_INTERNALS__</code> 打桩，因此无需构建 Rust 即可运行。</p>
 </section>
 
 <section id="publish">
   <h2>发布版本</h2>
 <pre><code>gh auth login -h github.com
 yarn run publish    # 先构建，再上传到 GitHub Release；RELEASE_SKIP_CLEAN=1 会复用已有产物</code></pre>
-  <p>发布使用 GitHub CLI。应用中的更新器指向 GitHub Release 端点，并需要
-  <code>tauri.conf.json</code> 中真实的 <code>pubkey</code>；若缺少它，对于你自己的构建，
-  自动更新器不能被视为已配置。</p>
+  <p>发布使用 GitHub CLI。应用中的更新器指向 GitHub Release 端点，发布前需在
+  <code>tauri.conf.json</code> 中配置真实的 <code>pubkey</code>，以便校验更新包。</p>
 </section>
 
 <section id="next">
@@ -135,7 +125,7 @@ yarn run publish    # 先构建，再上传到 GitHub Release；RELEASE_SKIP_CLE
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

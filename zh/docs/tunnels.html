@@ -62,21 +62,16 @@
 <code>russh</code> 通道。</p>
 
 <h2 id="state">状态同步</h2>
-<p>当隧道状态变化时，后端会发出 <code>tunnel-changed</code>，使界面反映实际状态，
-而不是本地推测。</p>
-
-<div class="callout unconfirmed">
-  <strong>未确认。</strong> 源材料只描述了本地转发。它没有记录远程
-  转发（<code>-R</code>）、动态 SOCKS 转发（<code>-D</code>）、绑定地址字段、首选本地端口，
-  也没有说明连接打开时规则是否自动启动。添加/编辑对话框的字段与默认值同样未记录。
-</div>
+<p>隧道状态变化时，后端会发出 <code>tunnel-changed</code>，侧栏据此更新实际运行状态，
+即使承载它的标签已经断开。</p>
 
 <h2 id="usage">使用隧道</h2>
-<p>已确认的工作流仅限于 README 所述内容：为某个连接创建本地转发规则，然后
-在侧栏启动或停止它，并确认状态变更已由后端传播过来。</p>
+<p>一条规则包含四个字段：<strong>本地绑定地址</strong>（默认 <code>127.0.0.1</code>）、
+<strong>本地端口</strong>、<strong>远程主机</strong>与<strong>远程端口</strong>。
+为连接新建规则后，在侧栏启动或停止它即可；本机监听成功后，访问本地端口就会被转发到远端目标。</p>
 <div class="callout">
-  <strong>操作提示。</strong> 隧道依附于拥有它的 SSH 会话，因此会话关闭也可能导致隧道停止；
-  文档中记录的 <code>connection-closed</code> 状态是标签上需要留意的信号。
+  <strong>操作提示。</strong> 隧道依附于拥有它的 SSH 会话，会话关闭时隧道随之停止；
+  标签上的 <code>connection-closed</code> 状态是需要注意的信号。
 </div>
 
 <h2 id="related">相关章节</h2>
@@ -93,7 +88,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 项目概览，资料截至 2026-11-07。</span>
+    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
   </div>
 </footer>

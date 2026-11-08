@@ -31,7 +31,7 @@
   <div class="wrap">
     <p class="eyebrow">Chapter 13</p>
     <h1>Troubleshooting</h1>
-    <p class="lede">Symptoms, the documented facts behind them, and where the source material stops short.</p>
+    <p class="lede">Common symptoms, their causes and the steps that resolve them.</p>
   </div>
 </header>
 
@@ -103,8 +103,8 @@
       </tr>
       <tr>
         <td>Updater does not work</td>
-        <td>It uses a GitHub Release endpoint and needs a real <code>pubkey</code> in <code>tauri.conf.json</code></td>
-        <td>Configure the key before expecting updates</td>
+        <td>The manifest comes from <code>releases/latest/download/latest.json</code> and installers are verified with <code>pubkey</code></td>
+        <td>Check network access and that the release includes <code>latest.json</code></td>
       </tr>
     </tbody>
   </table>
@@ -114,8 +114,8 @@
 <ul>
   <li>There is no Linux or macOS installer; build from source following <a href="installation.html">chapter 1</a>.</li>
   <li>Linux builds require the Debian/Ubuntu packages listed in that chapter.</li>
-  <li>No <code>.github/workflows/</code> exists, so there is no confirmed automated build to compare your local build
-  against.</li>
+  <li>Build output goes to <code>src-tauri/target-release/release/bundle/</code> after <code>yarn build:clean</code>,
+  and to <code>src-tauri/target/</code> after <code>yarn tauri build</code>.</li>
 </ul>
 
 <h2 id="database">Database size</h2>
@@ -123,16 +123,10 @@
 recording length. If it has grown for other reasons, settings show the reclaimable space and offer
 <strong>Compact now</strong> (<code>VACUUM</code>).</p>
 
-<h2 id="gaps">What cannot be diagnosed from the documentation</h2>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The source material does not describe log file locations, a diagnostics bundle,
-  crash-report handling, a safe-mode flag or a supported reset procedure. Those items are omitted rather than guessed.
-</div>
-
 <h2 id="report">Reporting a problem</h2>
-<p>The repository provides issue templates for bug reports and feature requests (<code>.github/ISSUE_TEMPLATE/</code>)
-and a pull request template. It has <strong>no CONTRIBUTING.md</strong>, code of conduct or roadmap document, so there is
-no documented support channel beyond those templates.</p>
+<p>Report bugs and feature requests through the issue templates on
+<a href="https://github.com/wrolp/wrolp/issues">github.com/wrolp/wrolp/issues</a>. Include the application version
+(Settings → About), the affected host or protocol, and the exact steps that reproduce the problem.</p>
 
 <h2 id="related">Related chapters</h2>
 <ul>
@@ -147,7 +141,7 @@ no documented support channel beyond those templates.</p>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

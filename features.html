@@ -31,14 +31,14 @@
   <div class="wrap">
     <p class="eyebrow">Feature tour</p>
     <h1>Features</h1>
-    <p class="lede">What the application does, grouped the way the project README groups it.</p>
+    <p class="lede">What the application does, grouped by the way you use it.</p>
   </div>
 </header>
 
 <div class="wrap page-body">
   <main id="main">
-  <p>This feature inventory follows the functional list in the project README. Anchors on this page are linked from
-  the homepage cards and the user manual.</p>
+  <p>The list below groups the implemented capabilities by workflow; each item maps to an actual entry point in the
+  application.</p>
 <section id="connection-terminal">
   <h2>Connection and terminal</h2>
   <ul>
@@ -94,7 +94,7 @@
     <li><strong>Relocatable data directory</strong>: settings can point the data directory at any location, migrating <code>wrolp.db</code>, <code>recordings/</code>, <code>connections.json</code> and the window configuration together; the choice is recorded in <code>data_root.json</code> at the default location and takes effect on the next start; an empty target is copied into, a non-empty one is reused, and existing data is never overwritten. <code>vault.key</code> can optionally be migrated too, making the whole directory portable.</li>
     <li><strong>Database maintenance</strong>: shows the current size of <code>wrolp.db</code> and the space that can be reclaimed, with a “Compact now” (<code>VACUUM</code>) action.</li>
     <li><strong>Keybindings</strong>: all shortcuts live in a single table in <code>src/lib/keybindings.ts</code>; settings allow rebinding each entry, resetting a single one, or resetting everything; reserved keys (Tab, Enter, Ctrl+C/V/X/Z/D/W) are refused.</li>
-    <li><strong>Other</strong>: custom title bar, persisted window geometry and opacity, single-instance protection, an auto-updater (GitHub Release endpoint, which requires a real <code>pubkey</code> in <code>tauri.conf.json</code>), and a Chinese/English UI (following the system language by default).</li>
+    <li><strong>Other</strong>: custom title bar, persisted window geometry and opacity, single-instance protection, an auto-updater (checks <code>latest.json</code> on GitHub Releases, verifies installers with <code>pubkey</code>, installs in passive mode), and a Chinese/English UI (following the system language by default).</li>
   </ul>
 </section>
 
@@ -116,7 +116,7 @@
   </ul>
 
   <p><strong>IPC and storage</strong>: Tauri <code>invoke</code> commands are the primary mechanism, and terminal output
-  is polled from the frontend (the README explains this as a workaround for Windows background tasks). Tauri events
+  is polled from the frontend (a workaround for Windows background-task limits). Tauri events
   are used only for pushes the UI cannot poll — <code>connection-closed</code>, <code>connection-suspect</code>,
   <code>connection-ok</code>, <code>transfer-progress</code>, <code>tunnel-changed</code>, <code>ai-term-mark</code>,
   <code>native-drag-drop</code>, <code>baud-detect-progress</code>. All data lives in one relocatable directory:
@@ -129,7 +129,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>

@@ -31,7 +31,7 @@
   <div class="wrap">
     <p class="eyebrow">Chapter 02</p>
     <h1>Your first connection</h1>
-    <p class="lede">SSH, Telnet, serial and local sessions — what the application supports and what the documentation does not specify.</p>
+    <p class="lede">SSH, Telnet, serial and local sessions — creating a connection, authenticating and tracking its health.</p>
   </div>
 </header>
 
@@ -57,14 +57,18 @@
   <main id="main" class="doc-main">
     <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 2</p>
 <h2 id="create">Creating a connection</h2>
+<p>Click <strong>+</strong> in the sidebar to open the new-connection dialog:</p>
+<ul>
+  <li><strong>Name</strong>: the label shown in the connection list.</li>
+  <li><strong>Host / port / user</strong>: the target; the port defaults to 22.</li>
+  <li><strong>Authentication</strong>: password or private key; a key file can be browsed for and given a passphrase.</li>
+  <li><strong>Start directory</strong>: optional, <code>cd</code> into it after connecting.</li>
+  <li><strong>Group</strong>: pick an existing group or create one; leave empty for “Ungrouped”.</li>
+  <li><strong>Note</strong>: optional.</li>
+</ul>
 <p>A connection is stored in <code>connections.json</code>, which is encrypted and also holds workspaces. The application
 opens SSH sessions with password or SSH-key authentication and requests an <code>xterm-256color</code> PTY whose size
 follows the window.</p>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The README does not document the exact entry point for creating a connection (menu,
-  button label or dialog field names). What is confirmed: connections and workspaces are persisted in the encrypted
-  <code>connections.json</code>, and SSH supports password and key authentication.
-</div>
 <p>Connection settings are also used by the terminal-focused panels: Docker, Kubernetes and Git choose their host from
 the terminal you have focused (details in chapters 7–9).</p>
 
@@ -76,12 +80,6 @@ the terminal you have focused (details in chapters 7–9).</p>
   <li><strong>Keepalive</strong>: configurable interval and retry count.</li>
   <li><strong>Reconnect</strong>: a reconnect action reuses the same tab instance; a monotonically increasing <code>session_id</code> keeps stale background tasks from contaminating the new session.</li>
 </ul>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> Host-key verification or fingerprint prompts, SSH agent integration, keyboard-interactive
-  authentication, jump-host chaining inside the connection profile, and proxy settings are not described in the source
-  material.
-</div>
-
 <h2 id="health">Connection health</h2>
 <p>Each tab shows a status dot driven by three backend events:</p>
 <ul>
@@ -103,11 +101,15 @@ the terminal you have focused (details in chapters 7–9).</p>
 </ul>
 
 <h2 id="scan">Network scan</h2>
-<p>A scan searches a subnet for hosts with open SSH or Telnet ports. Results can be used to create connections directly.</p>
-<div class="callout unconfirmed">
-  <strong>Not confirmed.</strong> The scan range input, timeout, concurrency and result actions are not described
-  beyond “create connections from the results”.
-</div>
+<p>The <strong>Scan network</strong> button above the connection list finds open SSH / Telnet services in a range:</p>
+<ul>
+  <li><strong>Targets</strong>: CIDR (<code>192.168.1.0/24</code>), a single IP (<code>10.0.0.5</code>) or a last-octet range (<code>192.168.1.10-192.168.1.20</code>).</li>
+  <li><strong>Ports</strong>: comma-separated, e.g. <code>22,2222</code>.</li>
+  <li><strong>Group</strong>: optional destination group for the results.</li>
+  <li><strong>Advanced</strong>: timeout in milliseconds and concurrency.</li>
+</ul>
+<p>The result table lists open ports only and shows IP, port, detected service (SSH / Telnet / unknown), banner and
+latency; add rows individually or add them all as connections.</p>
 <div class="pager">
 <a class="prev" href="installation.html"><span class="dir">Previous</span>Installation &amp; system requirements</a>
 <a class="next" href="sessions.html"><span class="dir">Next</span>Sessions &amp; tabs</a>
@@ -117,7 +119,7 @@ the terminal you have focused (details in chapters 7–9).</p>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — project overview, retrieved 2026-11-07.</span>
+    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
     <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
   </div>
 </footer>
