@@ -66,6 +66,11 @@
   <li><strong>分组</strong>：选择已有分组或新建分组，留空归入「未分组」。</li>
   <li><strong>备注</strong>：可选。</li>
 </ul>
+
+<figure class="doc-figure">
+  <img src="../../assets/screenshots/connection-filled.png" alt="新建 SSH 连接表单：主机 172.31.15.48、名称 Ubuntu Server、用户名 root 与已掩码的密码" width="2880" height="1800" loading="lazy" />
+  <figcaption>新建连接表单：主机、用户名、分组、启动目录与认证方式。</figcaption>
+</figure>
 <p>连接与工作区一起加密保存在 <code>connections.json</code> 中。应用以密码或 SSH 密钥认证打开 SSH 会话，
 并申请一个尺寸随窗口变化的 <code>xterm-256color</code> PTY。</p>
 <p>连接设置也被终端相关面板使用：Docker、Kubernetes 和 Git 会根据当前获得焦点的终端选择主机（详见第 7–9 章）。</p>

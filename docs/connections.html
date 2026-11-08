@@ -66,6 +66,11 @@
   <li><strong>Group</strong>: pick an existing group or create one; leave empty for “Ungrouped”.</li>
   <li><strong>Note</strong>: optional.</li>
 </ul>
+
+<figure class="doc-figure">
+  <img src="../assets/screenshots/connection-filled.png" alt="New SSH connection dialog filled with host 172.31.15.48, name Ubuntu Server, user root and a masked password" width="2880" height="1800" loading="lazy" />
+  <figcaption>The new-connection form with password authentication, a startup directory and group selection.</figcaption>
+</figure>
 <p>A connection is stored in <code>connections.json</code>, which is encrypted and also holds workspaces. The application
 opens SSH sessions with password or SSH-key authentication and requests an <code>xterm-256color</code> PTY whose size
 follows the window.</p>
