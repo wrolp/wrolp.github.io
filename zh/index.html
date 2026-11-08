@@ -31,7 +31,6 @@
   <div class="wrap hero-inner">
     <div class="hero-copy">
       <a class="release-badge" href="getting-started.html#download"><span class="status-dot" aria-hidden="true"></span><strong>v0.0.12</strong> 开源，让连接更简单 <span aria-hidden="true">↗</span></a>
-      <p class="eyebrow">WROLP TERMINAL / 为开发者而造</p>
       <h1>连接服务器，<br><em>不止于终端。</em></h1>
       <p class="tagline">从 SSH 连接到文件编辑，从容器管理到 AI 协作。<br>把日常运维收进一个工作空间，让你专注真正重要的事。</p>
       <div class="cta-row">
@@ -40,32 +39,9 @@
       </div>
       <p class="meta"><span>Rust 驱动</span><span>MIT 开源</span><span>Windows 优先</span></p>
     </div>
-    <figure class="workspace-preview">
-      <div class="workspace-window" role="img" aria-label="工作流示意：在同一工作空间连接服务器、查看容器与管理文件，不是应用截图。">
-        <div class="window-topbar" aria-hidden="true"><div class="window-dots"><i></i><i></i><i></i></div><span>Wrolp Terminal — workspace</span><span>SSH</span></div>
-        <div class="window-body" aria-hidden="true">
-          <div class="workspace-sidebar">
-            <p class="sidebar-label">工作空间</p>
-            <div class="server-item active"><span class="status-dot"></span>production</div>
-            <div class="server-item"><span class="status-dot"></span>staging</div>
-            <div class="server-item"><span class="status-dot idle"></span>localhost</div>
-            <div class="sidebar-tools"><span>文件 / SFTP</span><span>Docker 容器</span><span>Git 仓库</span><span>AI 助手</span></div>
-          </div>
-          <div class="terminal-pane">
-            <div class="terminal-tabs"><span class="selected">production</span><span>本地终端</span></div>
-            <div class="terminal-content">
-              <p><span class="prompt">dev@production ~ $</span> uname -sr</p>
-              <p class="output">Linux 6.8.0-generic</p>
-              <p class="comment"># 一个工作空间，连接每一步</p>
-              <p><span class="prompt">dev@production ~ $</span> docker ps</p>
-              <div class="terminal-result"><span class="comment">NAME</span><span class="comment">STATUS</span><span>web-server</span><span class="running">Up 3 hours</span><span>api-service</span><span class="running">Up 3 hours</span><span>postgres</span><span class="running">Up 2 days</span></div>
-              <p><span class="prompt">dev@production ~ $</span> <span class="cursor"></span></p>
-            </div>
-          </div>
-        </div>
-        <div class="workspace-status" aria-hidden="true"><span>● 已连接 · SSH</span><span>UTF-8 / xterm-256color</span></div>
-      </div>
-      <figcaption>终端 · 文件 · 容器 · AI &nbsp; / &nbsp; 工作流示意，非应用截图</figcaption>
+    <figure class="hero-figure">
+      <span class="shot"><img src="../assets/screenshots/home.png" alt="Wrolp Terminal 首页：连接列表、最近主机与工具入口" width="2880" height="1800" fetchpriority="high"></span>
+      <figcaption class="figure-caption">首页：连接列表、最近主机与常用工具都在同一窗口内。</figcaption>
     </figure>
   </div>
   <div class="wrap stack-strip"><span class="stack-label">可靠技术，轻量体验</span><strong>Rust</strong><strong>Tauri 2</strong><strong>React 19</strong><strong>xterm.js</strong><strong>Monaco Editor</strong></div>
@@ -200,8 +176,31 @@ yarn tauri dev      # 完整栈；Tauri 会自动启动 Vite 开发服务器</co
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — 桌面 SSH 终端与服务器运维工具。</span>
-    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT 许可证</span>
+    <div class="footer-brand">
+      <a class="brand" href="index.html"><img class="brand-mark" src="../assets/wrolp-logo.svg" alt="" width="30" height="30">Wrolp <span>Terminal</span></a>
+      <p class="footer-tagline">桌面 SSH 终端与服务器运维工具：终端、文件、容器、Kubernetes、Git 与 AI 收在同一个窗口。</p>
+      <p class="footer-copy">MIT © 2026 wrolp</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h2 class="footer-heading">产品</h2>
+        <a href="features.html">功能特性</a>
+        <a href="getting-started.html#download">下载</a>
+        <a href="https://github.com/wrolp/wrolp/releases">发布版本</a>
+      </div>
+      <div class="footer-col">
+        <h2 class="footer-heading">资源</h2>
+        <a href="docs/index.html">用户手册</a>
+        <a href="https://github.com/wrolp/wrolp/blob/main/LICENSE">MIT 许可证</a>
+        <a href="https://github.com/wrolp/wrolp/issues">问题反馈</a>
+      </div>
+      <div class="footer-col">
+        <h2 class="footer-heading">源码</h2>
+        <a href="https://github.com/wrolp/wrolp">GitHub</a>
+        <a href="https://github.com/wrolp/wrolp/releases">下载</a>
+        <a href="https://github.com/wrolp/wrolp.github.io">站点源码</a>
+      </div>
+    </div>
   </div>
 </footer>
 

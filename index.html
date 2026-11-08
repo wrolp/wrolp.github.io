@@ -31,7 +31,6 @@
   <div class="wrap hero-inner">
     <div class="hero-copy">
       <a class="release-badge" href="getting-started.html#download"><span class="status-dot" aria-hidden="true"></span><strong>v0.0.12</strong> Open source. Open possibilities. <span aria-hidden="true">↗</span></a>
-      <p class="eyebrow">WROLP TERMINAL / BUILT FOR DEVELOPERS</p>
       <h1>Your servers.<br><em>One workspace.</em></h1>
       <p class="tagline">From SSH connections to file editing, containers to AI. Bring your everyday server workflow together — and focus on what matters.</p>
       <div class="cta-row">
@@ -40,32 +39,9 @@
       </div>
       <p class="meta"><span>Powered by Rust</span><span>MIT licensed</span><span>Windows first</span></p>
     </div>
-    <figure class="workspace-preview">
-      <div class="workspace-window" role="img" aria-label="Workflow illustration: connect to servers, inspect containers and manage files in one workspace. Not an application screenshot.">
-        <div class="window-topbar" aria-hidden="true"><div class="window-dots"><i></i><i></i><i></i></div><span>Wrolp Terminal — workspace</span><span>SSH</span></div>
-        <div class="window-body" aria-hidden="true">
-          <div class="workspace-sidebar">
-            <p class="sidebar-label">WORKSPACE</p>
-            <div class="server-item active"><span class="status-dot"></span>production</div>
-            <div class="server-item"><span class="status-dot"></span>staging</div>
-            <div class="server-item"><span class="status-dot idle"></span>localhost</div>
-            <div class="sidebar-tools"><span>Files / SFTP</span><span>Docker</span><span>Git</span><span>AI assistant</span></div>
-          </div>
-          <div class="terminal-pane">
-            <div class="terminal-tabs"><span class="selected">production</span><span>local shell</span></div>
-            <div class="terminal-content">
-              <p><span class="prompt">dev@production ~ $</span> uname -sr</p>
-              <p class="output">Linux 6.8.0-generic</p>
-              <p class="comment"># One workspace. Every workflow.</p>
-              <p><span class="prompt">dev@production ~ $</span> docker ps</p>
-              <div class="terminal-result"><span class="comment">NAME</span><span class="comment">STATUS</span><span>web-server</span><span class="running">Up 3 hours</span><span>api-service</span><span class="running">Up 3 hours</span><span>postgres</span><span class="running">Up 2 days</span></div>
-              <p><span class="prompt">dev@production ~ $</span> <span class="cursor"></span></p>
-            </div>
-          </div>
-        </div>
-        <div class="workspace-status" aria-hidden="true"><span>● Connected · SSH</span><span>UTF-8 / xterm-256color</span></div>
-      </div>
-      <figcaption>Terminal · Files · Containers · AI &nbsp; / &nbsp; Workflow illustration, not a screenshot</figcaption>
+    <figure class="hero-figure">
+      <span class="shot"><img src="assets/screenshots/home.png" alt="Wrolp Terminal Home tab: connection list, recent hosts and tool cards" width="2880" height="1800" fetchpriority="high"></span>
+      <figcaption class="figure-caption">The Home tab: saved connections, recent hosts and the main tools in one window.</figcaption>
     </figure>
   </div>
   <div class="wrap stack-strip"><span class="stack-label">A solid foundation</span><strong>Rust</strong><strong>Tauri 2</strong><strong>React 19</strong><strong>xterm.js</strong><strong>Monaco Editor</strong></div>
@@ -203,8 +179,31 @@ yarn tauri dev      # full stack; Tauri starts the Vite dev server automatically
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>Wrolp Terminal — desktop SSH terminal and server-ops tool.</span>
-    <span><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · MIT License</span>
+    <div class="footer-brand">
+      <a class="brand" href="index.html"><img class="brand-mark" src="assets/wrolp-logo.svg" alt="" width="30" height="30">Wrolp <span>Terminal</span></a>
+      <p class="footer-tagline">Desktop SSH terminal and server-ops tool: terminal, files, containers, Kubernetes, Git and AI in one window.</p>
+      <p class="footer-copy">MIT © 2026 wrolp</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h2 class="footer-heading">Product</h2>
+        <a href="features.html">Features</a>
+        <a href="getting-started.html#download">Download</a>
+        <a href="https://github.com/wrolp/wrolp/releases">Releases</a>
+      </div>
+      <div class="footer-col">
+        <h2 class="footer-heading">Resources</h2>
+        <a href="docs/index.html">User manual</a>
+        <a href="https://github.com/wrolp/wrolp/blob/main/LICENSE">MIT license</a>
+        <a href="https://github.com/wrolp/wrolp/issues">Issues</a>
+      </div>
+      <div class="footer-col">
+        <h2 class="footer-heading">Source</h2>
+        <a href="https://github.com/wrolp/wrolp">GitHub</a>
+        <a href="https://github.com/wrolp/wrolp/releases">Downloads</a>
+        <a href="https://github.com/wrolp/wrolp.github.io">Site source</a>
+      </div>
+    </div>
   </div>
 </footer>
 
