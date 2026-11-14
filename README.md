@@ -7,6 +7,8 @@ A Rust-powered desktop SSH terminal and server-ops tool — multi-tab, SFTP, rem
 | Item | Value |
 | --- | --- |
 | Repository | https://github.com/wrolp/wrolp |
+| Mirror | https://gitee.com/wrolp/wrolp |
+| Mirrored releases | https://gitee.com/wrolp/wrolp/releases |
 | Current version | v0.0.12 (released 2026-11-07) |
 | Stack | Tauri 2 / React 19 / TypeScript / Rust |
 | License | MIT (Copyright (c) 2026 Wrolp) |
