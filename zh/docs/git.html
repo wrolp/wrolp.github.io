@@ -70,7 +70,8 @@
 <ul>
   <li>来自 porcelain v2 的<strong>状态</strong>。</li>
   <li>上限为 2 MB 的<strong>逐行 diff</strong>。</li>
-  <li>带 commit-graph 泳道的<strong>分页历史</strong>。</li>
+  <li>带彩色提交图泳道的<strong>分页历史</strong>；分支 / 标签同样着色，历史从 100 条分页加载到 1000 条，另有
+  “全部加载”与浮层滚动条。</li>
   <li><strong>Blame</strong>。</li>
   <li><strong>冲突三方视图</strong>，并支持中止操作。</li>
 </ul>
@@ -79,11 +80,11 @@
 <ul>
   <li>分支与远程管理。</li>
   <li>暂存、取消暂存与丢弃。</li>
-  <li>提交与 amend。</li>
+  <li>提交与 amend；AI 可根据已暂存的 diff 起草 Conventional Commits 提交信息并填入提交框，不按 Commit 就不会提交。</li>
   <li><code>fetch</code>、<code>pull</code> 和 <code>push</code>。</li>
   <li>Stash。</li>
-  <li>带进度的 <code>clone</code>。</li>
-  <li>仓库扫描与 <code>git init</code>。</li>
+  <li>带进度的 <code>clone</code>；目标目录跟随 URL 的仓库名，取消时只清理它自己创建的目录。</li>
+  <li>仓库扫描（会进入点目录）与 <code>git init</code>。</li>
 </ul>
 
 <h2 id="safeguards">内置保护措施</h2>
@@ -93,6 +94,7 @@
   <li>冲突支持三方查看与中止；强制推送前的确认框会说明目标远端与分支。</li>
   <li>路径参数绝不会拼接进 shell 命令。后端会拒绝绝对路径、盘符、反斜杠和 <code>..</code>。</li>
   <li>“本地忽略”只写入 <code>.git/info/exclude</code>，绝不写入被跟踪的 <code>.gitignore</code>。</li>
+  <li>菜单中的破坏性操作以红色呈现。</li>
 </ul>
 
 <h2 id="related">相关章节</h2>

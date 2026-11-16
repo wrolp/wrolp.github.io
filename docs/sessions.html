@@ -66,14 +66,26 @@ can be reconnected without spawning a second session.</p>
   <figcaption>An SSH session running on Ubuntu 24.04, with connection state, fingerprint and terminal size in the status bar.</figcaption>
 </figure>
 
-<h2 id="split-tree">Split trees and floating panes</h2>
+<h2 id="split-tree">Split trees and OS-window panes</h2>
 <ul>
   <li>The terminal area is a <strong>split-tree layout</strong>: panes can be split horizontally or vertically, and leaf
   nodes hold a terminal, Docker logs or the editor.</li>
-  <li>Any pane can be <strong>popped out into its own floating window</strong>.</li>
+  <li>Any pane can be <strong>popped out into a real OS window</strong>: the float is an undecorated window with the
+  app's titlebar, carrying the pane's screen and tab context. Docking back keeps the scrollback, and the float window
+  carries that pane's recording, reconnect and session-bound AI column.</li>
+  <li>A window that takes a live pane <strong>attaches to the session</strong> instead of reconnecting, so the shell you
+  are working in is not replaced.</li>
   <li>Open files and logs are <strong>isolated per session</strong>, so one connection's editor or log view does not leak
   into another's.</li>
   <li>A local shell and remote shells can sit side by side because both use the same <code>RemoteFs</code> abstraction.</li>
+</ul>
+<h2 id="minimal">Minimal mode</h2>
+<p><code>Ctrl+Shift+Z</code> or the titlebar button enters minimal mode: the titlebar, activity rail, sidebar, tab bar,
+bottom panel, inspector and status bar are unmounted and the window belongs to the terminal. The saved layout is
+untouched, so leaving minimal mode restores the previous arrangement.</p>
+<ul>
+  <li>A hover-only strip along the top carries the drag surface, the window controls and the exit button.</li>
+  <li>The setting <code>ui.minimalFullscreen</code> can also take the OS fullscreen.</li>
 </ul>
 <h2 id="keybindings">Keybindings</h2>
 <p>All shortcuts live in a single table in <code>src/lib/keybindings.ts</code>. Settings allow rebinding an individual
@@ -89,6 +101,7 @@ entry, resetting one entry, or resetting everything. Combos match exactly — <c
       <tr><td>Show or hide the bottom panel</td><td><code>Ctrl+J</code></td></tr>
       <tr><td>Move the panel between bottom and right</td><td><code>Ctrl+Alt+J</code></td></tr>
       <tr><td>Show or hide the inspector</td><td><code>Ctrl+Alt+I</code></td></tr>
+      <tr><td>Enter or leave minimal mode</td><td><code>Ctrl+Shift+Z</code></td></tr>
       <tr><td>Split the terminal</td><td><code>Ctrl+\</code></td></tr>
       <tr><td>Command snippets list</td><td><code>Ctrl+Shift+P</code></td></tr>
       <tr><td>Command history</td><td><code>Ctrl+Shift+H</code></td></tr>
@@ -107,6 +120,9 @@ entry, resetting one entry, or resetting everything. Combos match exactly — <c
 <ul>
   <li>Custom title bar.</li>
   <li>Window geometry and opacity are persisted between runs.</li>
+  <li>Terminal fonts: family, size, line height and cursor shape, with a live preview; the Nerd Font stays in the fallback chain.</li>
+  <li>The bottom drawer can be hidden from the status bar; with it hidden, <code>Ctrl+J</code> opens it expanded.</li>
+  <li>Select lists and tooltips are drawn in-app and follow the theme; destructive menu actions are red.</li>
   <li>Single-instance protection: launching the application again does not create a second instance.</li>
   <li>Chinese and English interface strings; the language follows the system language by default.</li>
 </ul>

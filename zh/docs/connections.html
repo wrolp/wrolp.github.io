@@ -58,7 +58,7 @@
   <main id="main" class="doc-main">
     <p class="breadcrumb"><a href="index.html">用户手册</a><span class="sep">/</span>第 2 章</p>
 <h2 id="create">创建连接</h2>
-<p>点击侧栏的 <strong>+</strong> 打开新建连接对话框，填写以下内容：</p>
+<p>点击侧栏的 <strong>+</strong> 打开新建连接对话框；编辑窗口可拖动，并位于命令列表之上。填写以下内容：</p>
 <ul>
   <li><strong>名称</strong>：显示在连接列表中的标签。</li>
   <li><strong>主机 / 端口 / 用户名</strong>：连接目标，端口默认 22。</li>
@@ -83,6 +83,7 @@
   <li><strong>终端</strong>：xterm.js 渲染，<code>xterm-256color</code> PTY，窗口尺寸同步。</li>
   <li><strong>保活</strong>：可配置的间隔与重试次数。</li>
   <li><strong>重连</strong>：重连操作复用同一个标签实例；单调递增的 <code>session_id</code> 可防止残留的后台任务污染新会话。</li>
+  <li><strong>提示符</strong>：提示符按渲染后的整行读取，因此 zsh + powerlevel10k 与中文提示符下的 <code>ls</code> 链接、命令历史与 <code>cd</code> 追踪都能正常工作；starship 的装饰不再被当成工作目录。</li>
 </ul>
 <h2 id="health">连接健康状态</h2>
 <p>每个标签显示一个状态点，由三个后端事件驱动：</p>
@@ -99,11 +100,19 @@
   自动登录可选且默认关闭，因为该协议是明文传输。</li>
   <li><strong>串口（COM）</strong>：端口枚举，带 USB 设备友好名称与 VID:PID，以及可配置的
   波特率、数据位、停止位、校验位和流控。波特率自动检测会逐个尝试各速率，并按输出看起来像终端文本的程度对结果排序。</li>
-  <li><strong>本地终端</strong>：本地 shell 可以作为顶层标签打开，也可以作为分栏与远程标签并排。</li>
+  <li><strong>本地终端</strong>：本地 shell 可以作为顶层标签打开，也可以作为分栏与远程标签并排；它归属创建它的工作区。</li>
+</ul>
+
+<h2 id="recent">最近记录与整理</h2>
+<ul>
+  <li>最近记录可以<strong>单独移除</strong>，而不删除已保存的连接。</li>
+  <li>分组重命名改用应用内弹窗；空名被拒，<code>Esc</code> 关闭。</li>
+  <li>各分组的折叠状态在重启后保留。</li>
 </ul>
 
 <h2 id="scan">网络扫描</h2>
-<p>侧栏连接列表上方的<strong>扫描网络</strong>按钮打开扫描对话框，用于发现网段内开放的 SSH / Telnet 服务：</p>
+<p>侧栏连接列表上方的<strong>扫描网络</strong>按钮——或标题栏的雷达按钮——打开扫描对话框，用于发现网段内开放的
+SSH / Telnet 服务。主机面板沿用同一扫描图标：</p>
 <ul>
   <li><strong>扫描目标</strong>：CIDR（<code>192.168.1.0/24</code>）、单个 IP（<code>10.0.0.5</code>）或末段区间（<code>192.168.1.10-192.168.1.20</code>）。</li>
   <li><strong>端口</strong>：逗号分隔，如 <code>22,2222</code>。</li>

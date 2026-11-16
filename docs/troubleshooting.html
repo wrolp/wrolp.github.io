@@ -83,6 +83,26 @@
         <td>Ensure credentials are already available to the non-interactive shell</td>
       </tr>
       <tr>
+        <td>zsh / powerlevel10k prompt loses colours, links or history</td>
+        <td>v0.0.13 reads the prompt as a rendered row and repaints the row p10k draws without SGR</td>
+        <td>Update to v0.0.13; older builds cannot follow zsh’s right prompt reliably</td>
+      </tr>
+      <tr>
+        <td>A CJK prompt loses its <code>#</code> or the first keystroke erases it</td>
+        <td>v0.0.13 measures the input line in buffer cells rather than characters</td>
+        <td>Update to v0.0.13</td>
+      </tr>
+      <tr>
+        <td>starship shows <code>[Docker]/name</code> for <code>ls</code> links</td>
+        <td>v0.0.13 no longer treats a starship decoration as the working directory</td>
+        <td>Update to v0.0.13; <code>ls</code> links then resolve against the real cwd</td>
+      </tr>
+      <tr>
+        <td>A local container shell lists the host's drives</td>
+        <td>v0.0.13 seeds the inner container cwd and prefetches its directory map</td>
+        <td>Update to v0.0.13; a failed <code>cd</code> keeps the previous container directory</td>
+      </tr>
+      <tr>
         <td>Recordings are missing</td>
         <td>Recording is off by default; <code>WROLP_RECORDING=1</code> forces it on</td>
         <td>Check the setting and the environment variable, then look under <code>recordings/</code></td>
@@ -117,6 +137,8 @@
   <li>Linux builds require the Debian/Ubuntu packages listed in that chapter.</li>
   <li>Build output goes to <code>src-tauri/target-release/release/bundle/</code> after <code>yarn build:clean</code>,
   and to <code>src-tauri/target/</code> after <code>yarn tauri build</code>.</li>
+  <li>Release bundles build in their own target directory, so a clean is not blocked by rust-analyzer holding files
+  open; after a build the release target keeps only <code>release/</code>.</li>
 </ul>
 
 <h2 id="database">Database size</h2>

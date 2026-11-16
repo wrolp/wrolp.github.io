@@ -76,8 +76,8 @@ developed on Linux and macOS, but those platforms are built from source.</p>
 </div>
 
 <h2 id="download">Installing the Windows build</h2>
-<p>The current release is <strong>v0.0.12</strong> (2026-11-07). Download the MSI directly
-(<a href="https://github.com/wrolp/wrolp/releases/download/v0.0.12/wrolp-terminal_0.0.12_x64.msi">wrolp-terminal_0.0.12_x64.msi</a>)
+<p>The current release is <strong>v0.0.13</strong> (2026-11-16). Download the MSI directly
+(<a href="https://github.com/wrolp/wrolp/releases/download/v0.0.13/wrolp-terminal_0.0.13_x64.msi">wrolp-terminal_0.0.13_x64.msi</a>)
 or from the <a href="https://github.com/wrolp/wrolp/releases">GitHub Releases page</a> (mirror:
 <a href="https://gitee.com/wrolp/wrolp/releases">Gitee Releases</a>), double-click it and follow the installer.
 The package targets Windows only; launch the application from the Start menu or the desktop shortcut.</p>
@@ -99,10 +99,12 @@ yarn</code></pre>
 yarn dev            # frontend only, for pure UI debugging (no Rust/SSH)
 yarn build:clean    # release build in src-tauri/target-release/release/bundle/
 yarn tauri build    # incremental build in src-tauri/target/</code></pre>
+<p>Release bundles build in their own target directory, so a clean is not blocked by rust-analyzer holding files
+open; after a build the release target keeps only <code>release/</code>.</p>
 <pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
 cd src-tauri &amp;&amp; cargo run --bin ssh_test   # standalone russh connectivity probe
 npx playwright install &amp;&amp; yarn test:e2e    # frontend E2E with a stubbed Tauri IPC</code></pre>
-<p>The E2E suite lives under <code>e2e/ui/</code> and contains about 100 specs. Because the backend is stubbed through
+<p>The E2E suite lives under <code>e2e/ui/</code> and contains over 130 spec files. Because the backend is stubbed through
 <code>window.__TAURI_INTERNALS__</code>, the Playwright run does not need a Rust build.</p>
 
 <h2 id="releases">Releasing</h2>

@@ -66,6 +66,7 @@
   <li>上下文与命名空间选择器，以及一个搜索框。</li>
   <li>默认的命名空间筛选为<strong>所有命名空间</strong>。</li>
   <li>命名空间标签按名称以稳定的映射着色，因此同一命名空间始终保持自己的颜色。</li>
+  <li>空命名空间校验后仍保留已保存的上下文 / 命名空间范围。</li>
 </ul>
 
 <h2 id="resources">资源类型</h2>
@@ -79,7 +80,7 @@ configmaps 和 secrets。</p>
       <tr><td>扩缩容</td><td>在共享行模型上可用</td></tr>
       <tr><td>删除</td><td>需要应用内确认</td></tr>
       <tr><td>日志</td><td>查看或流式输出，保留 ANSI 颜色</td></tr>
-      <tr><td>Pod 终端</td><td>进入 Pod 内的 shell</td></tr>
+      <tr><td>Pod 终端</td><td>进入 Pod 内的 shell；本机 exec shell 浏览的是容器文件系统（见第 7 章）</td></tr>
       <tr><td>Pod 文件</td><td>浏览 Pod 内的文件</td></tr>
       <tr><td>端口转发</td><td>规则可以保存</td></tr>
     </tbody>

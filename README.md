@@ -9,7 +9,7 @@ A Rust-powered desktop SSH terminal and server-ops tool — multi-tab, SFTP, rem
 | Repository | https://github.com/wrolp/wrolp |
 | Mirror | https://gitee.com/wrolp/wrolp |
 | Mirrored releases | https://gitee.com/wrolp/wrolp/releases |
-| Current version | v0.0.12 (released 2026-11-07) |
+| Current version | v0.0.13 (released 2026-11-16) |
 | Stack | Tauri 2 / React 19 / TypeScript / Rust |
 | License | MIT (Copyright (c) 2026 Wrolp) |
 | Platforms | Windows is the primary target (release packages are MSI only); it can run and be developed on Linux/macOS |
@@ -30,7 +30,10 @@ The list below groups the implemented capabilities by workflow.
 - **Connection health**: configurable SSH keepalive (interval plus retry count); the tab status dot goes from green to yellow (`connection-suspect`) and then red (`connection-closed`); a "Reconnect" button reuses the same tab instance, and a monotonically increasing `session_id` prevents stale background tasks from polluting state.
 - **Telnet**: plain TCP with a built-in IAC negotiation state machine (ECHO / SGA / TERMINAL-TYPE / NAWS); optional auto-login, off by default (plain-text protocol).
 - **Serial (COM)**: enumerates ports and shows USB device friendly names with VID:PID; configurable baud rate, data bits, stop bits, parity and flow control; includes **baud-rate auto-detection** (trying each rate in turn and ranking them by "how much it looks like terminal text").
-- **Local terminal**: opens the local shell as a top-level tab or a split pane, side by side with remote tabs.
+- **Local terminal**: opens the local shell as a top-level tab or a split pane, side by side with remote tabs; it belongs to the workspace that created it, and each group's collapsed state persists across restarts.
+- **Prompt-aware terminal**: prompts are read as rendered rows, so zsh + powerlevel10k and CJK prompts keep `ls` links, command history and `cd` tracking; starship decorations are not taken for a working directory, and emoji use Unicode 11 widths.
+- **Terminal appearance**: font family (the Nerd Font stays in the fallback chain), size, line height and cursor shape, with a live preview.
+- **`cat` highlighting**: command output is coloured from its content as well as its file name; an unknown name falls back to the editor's language table, and `ssh_config` has its own tokenizer.
 - **SSH tunnels**: local port-forwarding rules saved per connection, which can be added, edited, deleted, started and stopped from the sidebar; the backend syncs state through the `tunnel-changed` event.
 - **Network scan**: scans a subnet for hosts with open SSH/Telnet ports and can create connections directly from the results.
 
@@ -39,16 +42,19 @@ The list below groups the implemented capabilities by workflow.
 - **SFTP file management**: remote file tree, listing directories / read / write / rename / delete / create directory, upload and download; supports **pause and resume**, with `transfer-progress` events.
 - **Transfer queue**: one row per file showing completed/total size and live speed; directories and drag-and-drop uploads are walked once on the Rust side with `walkdir`, with progress reported in 4 MiB chunks (single-file uploads use 64 KB chunks); **cancelling an upload cleans up the partial remote files it created**, completed files are kept, and target files that already existed are not deleted.
 - **Remote editor**: embedded Monaco editing, presented in a split pane or a floating window; UTF-8 / GBK encoding auto-detection (`encoding_rs`).
+- **Editor languages**: content-based detection (shebang, Vim/Emacs modeline, first-line markup) when the name says nothing, plus name-table coverage for systemd units, shell rc files, `.env.*` and `ssh_config`; an SSH Config grammar and Ctrl+/ line comments in nginx / properties / sshconfig / Makefile / Dockerfile.
+- **HTML preview**: HTML files open in a sandboxed iframe, so their scripts cannot reach the application.
+- **Sudo and other-user saves**: stage the bytes over SFTP and write with `sudo -S cp` on an exec channel (password only over stdin, temp file removed), or save as another verified user; a failed save stays in a banner so typed text is not lost.
 - **Hex and image viewing**: binary files are viewed as a hex dump, and images are previewed inline by MIME type.
 - **Network file tools**: a built-in FTP server (PASV/EPSV), an HTTP/HTTPS file server (one-click generation of a self-signed certificate), a TFTP server, plus an FTP client (no TLS / explicit / implicit) and a TFTP client.
 
 ### Operations panels
 
-- **Docker and host analysis**: one command surface supports two kinds of host (`DockerHostRef`) — containers on an SSH session jump host (running `docker exec` over the exec channel), or the local daemon (spawning the CLI directly to avoid quoting issues); `probe_local_docker` tries `docker` and then `podman`, and distinguishes "not installed" from "installed but the daemon is not running". Features include a container list with create/delete/start/stop, one-shot and streaming logs, a three-layer analysis report, container file browsing and entering a container shell; there is also `analyze_host`, a read-only analysis of the server's OS/kernel/architecture/packages/installed tools, and `command_help` for looking up command help.
+- **Docker and host analysis**: one command surface supports two kinds of host (`DockerHostRef`) — containers on an SSH session jump host (running `docker exec` over the exec channel), or the local daemon (spawning the CLI directly to avoid quoting issues); `probe_local_docker` tries `docker` and then `podman`, and distinguishes "not installed" from "installed but the daemon is not running". Features include a container list with create/delete/start/stop, one-shot and streaming logs, a three-layer analysis report, container file browsing and entering a container shell; a local `docker exec` / `kubectl exec` shell browses the container's filesystem, with the inner cwd detected after the shell opens and its directory map prefetched so a bare `ls` is coloured. There is also `analyze_host`, a read-only analysis of the server's OS/kernel/architecture/packages/installed tools, and `command_help` for looking up command help.
 - **Kubernetes and Helm**: K8s mode follows the currently focused terminal to choose the host (an SSH jump host or the local kubeconfig); context/namespace selectors plus a search box, defaulting to **All namespaces**, with namespace labels stably colored by name. Ten resource kinds (pods/deployments/statefulsets/daemonsets/services/ingresses/jobs/cronjobs/configmaps/secrets) share one row model; each row supports viewing/editing and applying YAML, scaling, deleting (with an in-app confirmation), viewing/streaming logs (with ANSI colors), entering a Pod shell, browsing Pod files and port forwarding (rules can be saved); the Helm tab supports CLI detection, listing releases, viewing values and revision history, rollback, uninstall, and install/upgrade.
-- **Git panel**: manages one repository at a time, with the host likewise following the focused terminal; everything calls the real `git` CLI (remote via the exec channel with `env LC_ALL=C GIT_TERMINAL_PROMPT=0 … bash -lc`, local spawned directly with `HideConsole`). It covers status (porcelain v2), line-by-line diff (2 MB cap), paginated history with commit-graph lanes, branch and remote management, stage/unstage/discard, commit/amend, fetch/pull/push (pull forces `--ff-only`, and force push only offers `--force-with-lease` and requires a second confirmation), a three-way conflict view with operation abort, stash, blame, clone (with progress), repository scanning, `git init`, and a "local ignore" that writes only to `.git/info/exclude`. Path arguments are never shell-concatenated; the backend rejects absolute paths, drive letters, backslashes and `..`.
-- **Session recording**: off by default; it can be enabled in settings or forced with the `WROLP_RECORDING=1/0` environment variable. Events are written per session to `<data dir>/recordings/<workspace>/<group>/<connection>/<timestamp>_<session8>.jsonl` (NDJSON), flushed every 5 seconds and on disconnect; SQLite stores only the index (`events_file`, `event_count`), so `wrolp.db` does not grow with recordings. A bottom panel lets you browse recordings, reveal them in the file manager, export to asciinema v2 (`.cast`), replay and delete, and it supports legacy-data migration and index rebuilding by directory.
-- **Command sets**: reusable command groups stored in SQLite (bindable to connections).
+- **Git panel**: manages one repository at a time, with the host likewise following the focused terminal; everything calls the real `git` CLI (remote via the exec channel with `env LC_ALL=C GIT_TERMINAL_PROMPT=0 … bash -lc`, local spawned directly with `HideConsole`). It covers status (porcelain v2), line-by-line diff (2 MB cap), paginated history with commit-graph lanes, branch and remote management, stage/unstage/discard, commit/amend, fetch/pull/push (pull forces `--ff-only`, and force push only offers `--force-with-lease` and requires a second confirmation), a three-way conflict view with operation abort, stash, blame, clone (with progress), repository scanning, `git init`, and a "local ignore" that writes only to `.git/info/exclude`. An AI can draft a Conventional Commits message from the staged diff (nothing commits until Commit is pressed); clone destinations follow the URL's repository name, show git's progress, can be cancelled and clean up only the tree they created; the commit graph and branch/tag labels are coloured, history pages from 100 to 1000 with a Load all action, and repository scanning walks dot-directories. Path arguments are never shell-concatenated; the backend rejects absolute paths, drive letters, backslashes and `..`.
+- **Session recording**: off by default; it can be enabled in settings or forced with the `WROLP_RECORDING=1/0` environment variable. Events are written per session to `<data dir>/recordings/<workspace>/<group>/<connection>/<timestamp>_<session8>.jsonl` (NDJSON), flushed every 5 seconds and on disconnect; SQLite stores only the index (`events_file`, `event_count`), so `wrolp.db` does not grow with recordings. A bottom panel (Recordings) lets you browse recordings, reveal them in the file manager, export to asciinema v2 (`.cast`), replay and delete, and it supports legacy-data migration and index rebuilding by directory.
+- **Command sets**: reusable command groups stored in SQLite (bindable to connections), sorted by Manual / Name / Recent with a reset; snippets drag-reorder inside the connection view, each group header carries a “+” already scoped to that group, and the command field explains the `${name}` placeholder.
 
 ### AI assistant
 
@@ -62,7 +68,10 @@ The list below groups the implemented capabilities by workflow.
 
 ### Interaction and data
 
-- **Split trees and floating panes**: the terminal area is a split-tree layout that splits horizontally or vertically, with leaf nodes holding a terminal, Docker logs or the editor; any pane can pop out into its own floating window, and each session's open files and logs are isolated from the others.
+- **Split trees and OS-window panes**: the terminal area is a split-tree layout that splits horizontally or vertically, with leaf nodes holding a terminal, Docker logs or the editor; a pane can pop out into a real undecorated OS window that carries its screen and tab context, docking back keeps the scrollback, and the float window brings that pane's recording, reconnect and session-bound AI column with it. A window that takes a live pane attaches to the session instead of reconnecting; each session's open files and logs stay isolated.
+- **Minimal mode**: Ctrl+Shift+Z (or the titlebar button) unmounts the titlebar, rail, sidebar, tab bar, panels, inspector and status bar so the window belongs to the terminal; the saved layout returns on exit, and `ui.minimalFullscreen` can take OS fullscreen.
+- **Themed controls**: select lists and tooltips are drawn in-app instead of by the OS; long lists use the shared scrollbar thumb, tooltips follow the theme, nested titles never double up, and a menu always paints above its row. Destructive menu actions are red.
+- **Status bar and drawer**: the bottom drawer can be hidden from the status bar; with it hidden, Ctrl+J opens it expanded.
 - **Relocatable data directory**: settings can point the data directory at any location, migrating `wrolp.db`, `recordings/`, `connections.json` and the window configuration together; the choice is recorded in `data_root.json` at the default location and takes effect on the next start; an empty target is copied into, a non-empty one is reused, and existing data is never overwritten. `vault.key` can optionally be migrated too, making the whole directory portable.
 - **Database maintenance**: shows the current size of `wrolp.db` and the space that can be reclaimed, with a "Compact now" (`VACUUM`) action.
 - **Keybindings**: all shortcuts live in a single table in `src/lib/keybindings.ts`; settings allow rebinding each entry, resetting a single one, or resetting everything; reserved keys (Tab, Enter, Ctrl+C/V/X/Z/D/W) are refused.
@@ -114,6 +123,9 @@ yarn build:clean    # build after clearing the separate target directory; output
 yarn tauri build    # incremental development build; output in src-tauri/target/
 ```
 
+Release bundles build in their own target directory, so a clean is not blocked by rust-analyzer holding files open;
+after a build the release target keeps only `release/`.
+
 Publish:
 
 ```bash
@@ -148,7 +160,7 @@ npx playwright install && yarn test:e2e    # Playwright frontend E2E; the backen
 │   ├── src/vault.rs        # AES-256-GCM file vault
 │   ├── src/schema.sql      # SQLite schema
 │   └── tauri.conf.json     # Packaging config (bundle target is msi only)
-├── e2e/ui/                 # Playwright specs (about 100) and Tauri IPC stubs
+├── e2e/ui/                 # Playwright specs (over 130 spec files) and Tauri IPC stubs
 ├── tests/                  # Pure-logic frontend check scripts (ls parsing, paste protection, highlighting rules, etc.)
 ├── scripts/                # Build, publish, icons, latest.json generation
 ├── docs/                   # User guide (Chinese and English) and screenshots

@@ -32,7 +32,7 @@
   <div class="wrap">
     <p class="eyebrow">Download &amp; setup</p>
     <h1>Getting started</h1>
-    <p class="lede">Install or build Wrolp Terminal v0.0.12, run it in development, and produce release packages.</p>
+    <p class="lede">Install or build Wrolp Terminal v0.0.13, run it in development, and produce release packages.</p>
   </div>
 </header>
 
@@ -41,7 +41,7 @@
 
 <section id="download">
   <h2>Download and supported platforms</h2>
-  <p>The current release is <strong>v0.0.12</strong> (released 2026-11-07). Release packages are
+  <p>The current release is <strong>v0.0.13</strong> (released 2026-11-16). Release packages are
   <strong>MSI only</strong>: the bundle target in <code>tauri.conf.json</code> is <code>["msi"]</code>.</p>
   <div class="table-wrap">
     <table>
@@ -56,7 +56,7 @@
   <a href="https://github.com/wrolp/wrolp/releases">github.com/wrolp/wrolp/releases</a>, with a mirror on
   <a href="https://gitee.com/wrolp/wrolp/releases">gitee.com/wrolp/wrolp/releases</a>.</p>
   <p>Direct download:
-  <a href="https://github.com/wrolp/wrolp/releases/download/v0.0.12/wrolp-terminal_0.0.12_x64.msi">wrolp-terminal_0.0.12_x64.msi</a>.</p>
+  <a href="https://github.com/wrolp/wrolp/releases/download/v0.0.13/wrolp-terminal_0.0.13_x64.msi">wrolp-terminal_0.0.13_x64.msi</a>.</p>
 </section>
 
 <section id="requirements">
@@ -97,6 +97,8 @@ yarn tauri build    # incremental development build</code></pre>
       </tbody>
     </table>
   </div>
+  <p>Release bundles build in their own target directory, so a clean is not blocked by rust-analyzer holding
+  files open; after a build the release target keeps only <code>release/</code>.</p>
 </section>
 
 <section id="test">
@@ -104,7 +106,7 @@ yarn tauri build    # incremental development build</code></pre>
 <pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
 cd src-tauri &amp;&amp; cargo run --bin ssh_test   # a standalone russh connectivity probe
 npx playwright install &amp;&amp; yarn test:e2e    # Playwright frontend E2E; the backend is stubbed via window.__TAURI_INTERNALS__, so no Rust build is needed</code></pre>
-  <p>The Playwright suite contains about 100 specs under <code>e2e/ui/</code>; the backend is stubbed through
+  <p>The Playwright suite contains over 130 spec files under <code>e2e/ui/</code>; the backend is stubbed through
   <code>window.__TAURI_INTERNALS__</code>, so no Rust build is needed to run it.</p>
 </section>
 

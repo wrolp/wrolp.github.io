@@ -66,14 +66,22 @@
   <figcaption>Ubuntu 24.04 上的 SSH 会话，底部显示连接状态、指纹与终端尺寸。</figcaption>
 </figure>
 
-<h2 id="split-tree">分割树与浮动面板</h2>
+<h2 id="split-tree">分割树与系统窗口窗格</h2>
 <ul>
   <li>终端区域采用<strong>分割树布局</strong>：面板可以水平或垂直分割，叶子节点承载
   终端、Docker 日志或编辑器。</li>
-  <li>任何面板都可以<strong>弹出为独立的浮动窗口</strong>。</li>
+  <li>任何窗格都可以<strong>弹出为真正的系统窗口</strong>：浮窗是无边框窗口，顶部是应用自己的标题栏，屏幕内容与标签上下文一并带走。停靠回来时回滚缓冲仍在，浮动窗口带该窗格的录制、重连与绑定此会话的 AI 栏。</li>
+  <li>另一个窗口接管活动终端时是<strong>“附着”到会话</strong>而不是重新连接，因此正在使用的 shell 不会被替换。</li>
   <li>打开的文件与日志<strong>按会话隔离</strong>，因此一个连接的编辑器或日志视图不会
   渗透到另一个连接中。</li>
   <li>本地 shell 与远程 shell 可以并排使用，因为两者都使用同一套 <code>RemoteFs</code> 抽象。</li>
+</ul>
+<h2 id="minimal">最小模式</h2>
+<p><code>Ctrl+Shift+Z</code> 或标题栏按钮进入最小模式：标题栏、活动栏、侧栏、标签栏、下栏、检查器与状态栏全部卸下，
+窗口整块交给终端。已保存的布局保持原样，退出最小模式即恢复之前的排布。</p>
+<ul>
+  <li>顶部悬停才出现的条带承担拖动、窗口控制与退出按钮。</li>
+  <li>设置项 <code>ui.minimalFullscreen</code> 还可直接进入系统全屏。</li>
 </ul>
 <h2 id="keybindings">快捷键</h2>
 <p>所有快捷键都集中在 <code>src/lib/keybindings.ts</code> 的一张表中，设置里可逐项重新绑定、重置单项或全部重置。
@@ -88,6 +96,7 @@
       <tr><td>显示或隐藏下栏</td><td><code>Ctrl+J</code></td></tr>
       <tr><td>在下栏与右栏之间切换面板位置</td><td><code>Ctrl+Alt+J</code></td></tr>
       <tr><td>显示或隐藏检视器</td><td><code>Ctrl+Alt+I</code></td></tr>
+      <tr><td>进入或退出最小模式</td><td><code>Ctrl+Shift+Z</code></td></tr>
       <tr><td>分屏终端</td><td><code>Ctrl+\</code></td></tr>
       <tr><td>命令片段列表</td><td><code>Ctrl+Shift+P</code></td></tr>
       <tr><td>命令历史</td><td><code>Ctrl+Shift+H</code></td></tr>
@@ -106,6 +115,9 @@
 <ul>
   <li>自定义标题栏。</li>
   <li>窗口几何尺寸与不透明度在多次运行之间持久化。</li>
+  <li>终端字体：字体、字号、行高与光标形状，并提供实时预览；Nerd Font 保留在回退链中。</li>
+  <li>底部抽屉可以从状态栏整体隐藏；抽屉隐藏时 <code>Ctrl+J</code> 会直接展开它。</li>
+  <li>下拉列表与 tooltip 改由应用内绘制并跟随主题；破坏性菜单项以红色呈现。</li>
   <li>单实例保护：再次启动应用不会创建第二个实例。</li>
   <li>中文和英文字符串；语言默认跟随系统语言。</li>
 </ul>

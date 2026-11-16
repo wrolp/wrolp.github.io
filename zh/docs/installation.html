@@ -76,8 +76,8 @@
 </div>
 
 <h2 id="download">安装 Windows 版本</h2>
-<p>当前版本为 <strong>v0.0.12</strong>（2026-11-07）。请直接下载 MSI
-（<a href="https://github.com/wrolp/wrolp/releases/download/v0.0.12/wrolp-terminal_0.0.12_x64.msi">wrolp-terminal_0.0.12_x64.msi</a>），
+<p>当前版本为 <strong>v0.0.13</strong>（2026-11-16）。请直接下载 MSI
+（<a href="https://github.com/wrolp/wrolp/releases/download/v0.0.13/wrolp-terminal_0.0.13_x64.msi">wrolp-terminal_0.0.13_x64.msi</a>），
 或从 <a href="https://github.com/wrolp/wrolp/releases">GitHub Releases 页面</a>（镜像：
 <a href="https://gitee.com/wrolp/wrolp/releases">Gitee Releases</a>）下载 MSI，双击运行并按安装向导完成安装。
 安装包只包含 Windows 目标，安装后可从开始菜单或桌面快捷方式启动。</p>
@@ -99,10 +99,12 @@ yarn</code></pre>
 yarn dev            # 仅前端，用于纯 UI 调试（不含 Rust/SSH）
 yarn build:clean    # 发布构建，输出到 src-tauri/target-release/release/bundle/
 yarn tauri build    # 增量构建，输出到 src-tauri/target/</code></pre>
+<p>发布构建在独立的 target 目录中进行，因此清理不会被 rust-analyzer 占用的文件卡住；构建完成后该 target
+只保留 <code>release/</code>。</p>
 <pre><code>cd src-tauri &amp;&amp; cargo check &amp;&amp; cargo clippy &amp;&amp; cargo test
 cd src-tauri &amp;&amp; cargo run --bin ssh_test   # 独立的 russh 连通性探测
 npx playwright install &amp;&amp; yarn test:e2e    # 前端 E2E，使用打桩的 Tauri IPC</code></pre>
-<p>E2E 测试套件位于 <code>e2e/ui/</code>，包含约 100 个用例。由于后端通过
+<p>E2E 测试套件位于 <code>e2e/ui/</code>，包含 130 多个用例文件。由于后端通过
 <code>window.__TAURI_INTERNALS__</code> 打桩，Playwright 运行不需要 Rust 构建。</p>
 
 <h2 id="releases">发布</h2>

@@ -73,10 +73,29 @@
 </ul>
 <p>十六进制视图为只读，页面内会标注只读提示；图片预览仅用于查看，两者都不提供编辑或保存。</p>
 
+<h2 id="html-preview">HTML 预览</h2>
+<p>HTML 文件可以在沙箱 iframe 中预览。预览内的脚本无法运行在应用源中，因此远端 HTML 文件无法触及应用本身。</p>
+
+<h2 id="sudo">保存登录用户写不了的文件</h2>
+<ul>
+  <li><strong>以 sudo 保存</strong>：先经 SFTP 暂存字节，再在 exec 通道上执行 <code>sudo -S cp</code> 写入。
+  密码只通过 stdin 传递，临时文件在每条路径上都会被清理。</li>
+  <li><strong>以其他用户保存</strong>：先校验凭据，并且可以让提权只生效一次。</li>
+  <li>保存失败会停在编辑器上方的横幅里，已输入的文字不会丢失。</li>
+</ul>
+
 <h2 id="languages">语言支持</h2>
 <p>工具栏可手动指定语言高亮，选项按字母排序，覆盖纯文本、JavaScript、TypeScript、JSON、HTML、CSS、SCSS、
 Less、XML、Markdown、Python、Rust、Go、Java、C、C++、C#、PHP、Ruby、Shell、YAML、INI/TOML、SQL、
-Dockerfile、Lua、Makefile、Nginx 配置与 Properties/.env。</p>
+Dockerfile、Lua、Makefile、Nginx 配置、SSH Config 与 Properties/.env。</p>
+<ul>
+  <li><strong>按内容探测</strong>：文件名看不出语言时，由 shebang、Vim/Emacs modeline 或首行标记决定。名称表还覆盖
+  systemd unit、shell rc 文件、<code>.env.*</code>、<code>ssh_config</code> 及其 drop-in。</li>
+  <li><strong>SSH Config 语法</strong>：<code>ssh_config</code> 拥有自己的语法与分词器。</li>
+  <li><strong>行注释</strong>：在 nginx、properties、sshconfig、Makefile 与 Dockerfile 文件中，<code>Ctrl+/</code>
+  可切换行注释。</li>
+  <li><strong>INI</strong>：重新分词后，<code>key: value</code>、缩进或带点键名、不带引号的值不再显示为同一种颜色。</li>
+</ul>
 
 <h2 id="related">相关章节</h2>
 <ul>

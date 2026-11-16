@@ -83,6 +83,26 @@
         <td>确保非交互式 shell 已经能获得凭据</td>
       </tr>
       <tr>
+        <td>zsh / powerlevel10k 提示符丢失颜色、链接或历史</td>
+        <td>v0.0.13 按渲染后的整行读取提示符，并重绘 p10k 以无 SGR 绘制的那一行</td>
+        <td>升级到 v0.0.13；旧版本无法可靠跟随 zsh 的右侧提示</td>
+      </tr>
+      <tr>
+        <td>中文提示符的 <code>#</code> 被吃掉，或命令后的第一次按键清掉提示符</td>
+        <td>v0.0.13 按缓冲区单元格而不是字符数测量输入行</td>
+        <td>升级到 v0.0.13</td>
+      </tr>
+      <tr>
+        <td>starship 的 <code>[Docker]</code> 被当成工作目录，<code>ls</code> 链接解析成 <code>[Docker]/name</code></td>
+        <td>v0.0.13 不再把 starship 的装饰当成工作目录</td>
+        <td>升级到 v0.0.13；<code>ls</code> 链接会按真实 cwd 解析</td>
+      </tr>
+      <tr>
+        <td>本机容器 shell 列出了宿主机的磁盘</td>
+        <td>v0.0.13 会探测容器内层 cwd，并预取其目录映射</td>
+        <td>升级到 v0.0.13；内层 <code>cd</code> 失败时保留原目录</td>
+      </tr>
+      <tr>
         <td>录制缺失</td>
         <td>录制默认关闭；<code>WROLP_RECORDING=1</code> 可强制开启</td>
         <td>检查设置与环境变量，然后在 <code>recordings/</code> 下查找</td>
@@ -117,6 +137,8 @@
   <li>Linux 构建需要该章列出的 Debian/Ubuntu 软件包。</li>
   <li><code>yarn build:clean</code> 的产物在 <code>src-tauri/target-release/release/bundle/</code>，
   <code>yarn tauri build</code> 的产物在 <code>src-tauri/target/</code>。</li>
+  <li>发布构建在独立的 target 目录中进行，因此清理不会被 rust-analyzer 占用的文件卡住；构建完成后该 target
+  只保留 <code>release/</code>。</li>
 </ul>
 
 <h2 id="database">数据库大小</h2>

@@ -31,7 +31,7 @@
 <header class="hero">
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <a class="release-badge" href="getting-started.html#download"><span class="status-dot" aria-hidden="true"></span><strong>v0.0.12</strong> 开源，让连接更简单 <span aria-hidden="true">↗</span></a>
+      <a class="release-badge" href="getting-started.html#download"><span class="status-dot" aria-hidden="true"></span><strong>v0.0.13</strong> 开源，让连接更简单 <span aria-hidden="true">↗</span></a>
       <h1>连接服务器，<br><em>不止于终端。</em></h1>
       <p class="tagline">从 SSH 连接到文件编辑，从容器管理到 AI 协作。<br>把日常运维收进一个工作空间，让你专注真正重要的事。</p>
       <div class="cta-row">
@@ -66,7 +66,7 @@
   <h2>一览</h2>
   <dl class="facts">
     <div class="fact"><dt>代码仓库</dt><dd><a href="https://github.com/wrolp/wrolp">github.com/wrolp/wrolp</a> · <a href="https://gitee.com/wrolp/wrolp">gitee.com/wrolp/wrolp</a></dd></div>
-    <div class="fact"><dt>当前版本</dt><dd><a href="https://github.com/wrolp/wrolp/releases/download/v0.0.12/wrolp-terminal_0.0.12_x64.msi">v0.0.12</a>（2026-11-07 发布）</dd></div>
+    <div class="fact"><dt>当前版本</dt><dd><a href="https://github.com/wrolp/wrolp/releases/download/v0.0.13/wrolp-terminal_0.0.13_x64.msi">v0.0.13</a>（2026-11-16 发布）</dd></div>
     <div class="fact"><dt>许可证</dt><dd>MIT（Copyright (c) 2026 Wrolp）</dd></div>
     <div class="fact"><dt>技术栈</dt><dd>Tauri 2 / React 19 / TypeScript / Rust</dd></div>
     <div class="fact"><dt>平台</dt><dd>Windows 为主要目标（仅发布 MSI）；可在 Linux/macOS 上运行与构建</dd></div>
@@ -80,19 +80,19 @@
     <div class="card">
       <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></svg></span>
       <h3>连接与终端</h3>
-      <p>由 xterm.js 渲染的多标签 SSH 终端，另有 Telnet、串口（COM）和本地 shell。SSH 基于 <code>russh</code>，而不是外部 OpenSSH 二进制。</p>
+      <p>由 xterm.js 渲染的多标签 SSH 终端，另有 Telnet、串口（COM）和本地 shell。最小模式把整个窗口交给终端；SSH 基于 <code>russh</code>，而不是外部 OpenSSH 二进制。</p>
       <a class="more" href="features.html#connection-terminal">了解连接功能 →</a>
     </div>
     <div class="card">
       <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7h18"/><path d="m10 12-3 3 3 3m4-6 3 3-3 3"/></svg></span>
       <h3>文件与编辑</h3>
-      <p>支持暂停与续传的 SFTP 浏览，按文件展示的传输队列，带 UTF-8/GBK 识别的 Monaco 编辑，以及十六进制或图片预览。</p>
+      <p>支持暂停与续传的 SFTP 浏览，按文件展示的传输队列，带 UTF-8/GBK 识别与 HTML 预览的 Monaco 编辑，以及保存登录用户写不了的文件。</p>
       <a class="more" href="features.html#files-editing">了解文件功能 →</a>
     </div>
     <div class="card">
       <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M12 6h5m-5 11h5M8 10v4m8-4v4"/></svg></span>
       <h3>服务器运维</h3>
-      <p>Docker 与 podman 主机、Kubernetes/Helm，以及由真实 <code>git</code> CLI 驱动的 Git 面板。Kubernetes 与 Git 面板会根据当前聚焦的终端选择主机。</p>
+      <p>Docker 与 podman 主机、Kubernetes/Helm，以及由真实 <code>git</code> CLI 驱动的 Git 面板 —— 还能根据已暂存的 diff 让 AI 起草 Conventional Commits 提交信息。Kubernetes 与 Git 面板会根据当前聚焦的终端选择主机。</p>
       <a class="more" href="features.html#ops-panels">了解运维面板 →</a>
     </div>
     <div class="card">
@@ -104,7 +104,7 @@
     <div class="card">
       <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M12 9v11m4-6 3 2-3 2v-4Z"/></svg></span>
       <h3>会话与数据</h3>
-      <p>带浮动面板的分割树、可导出为 asciinema 的 NDJSON 会话录制，以及包含加密连接信息的可迁移数据目录。</p>
+      <p>窗格可以弹出为真正系统窗口的分割树、可导出为 asciinema 的 NDJSON 会话录制，以及包含加密连接信息的可迁移数据目录。</p>
       <a class="more" href="features.html#interaction-data">了解会话与数据功能 →</a>
     </div>
   </div>

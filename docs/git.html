@@ -70,7 +70,8 @@ repositories run through the SSH exec channel, local ones are spawned directly o
 <ul>
   <li><strong>Status</strong> from porcelain v2.</li>
   <li><strong>Line-by-line diff</strong>, capped at 2 MB.</li>
-  <li><strong>Paginated history</strong> with commit-graph lanes.</li>
+  <li><strong>Paginated history</strong> with a coloured commit graph; branch and tag labels are coloured too, and pages
+  load from 100 to 1000 commits, with a “Load all” action and an overlay scrollbar.</li>
   <li><strong>Blame</strong>.</li>
   <li><strong>Conflict three-way view</strong>, with an operation abort.</li>
 </ul>
@@ -79,11 +80,13 @@ repositories run through the SSH exec channel, local ones are spawned directly o
 <ul>
   <li>Branch and remote management.</li>
   <li>Stage, unstage and discard.</li>
-  <li>Commit and amend.</li>
+  <li>Commit and amend; an AI can draft a Conventional Commits message from the staged diff into the commit box,
+  and nothing is committed until Commit is pressed.</li>
   <li><code>fetch</code>, <code>pull</code> and <code>push</code>.</li>
   <li>Stash.</li>
-  <li><code>clone</code> with progress.</li>
-  <li>Repository scanning and <code>git init</code>.</li>
+  <li><code>clone</code> with progress; the destination follows the URL's repository name, and a cancelled clone
+  removes only the tree it created.</li>
+  <li>Repository scanning (dot-directories included) and <code>git init</code>.</li>
 </ul>
 
 <h2 id="safeguards">Built-in safeguards</h2>
@@ -94,6 +97,7 @@ repositories run through the SSH exec channel, local ones are spawned directly o
   <li>Path arguments are never concatenated into a shell command. The backend rejects absolute paths, drive letters,
   backslashes and <code>..</code>.</li>
   <li>“Local ignore” writes only to <code>.git/info/exclude</code>, never to a tracked <code>.gitignore</code>.</li>
+  <li>Destructive actions are rendered red in menus.</li>
 </ul>
 
 <h2 id="related">Related chapters</h2>

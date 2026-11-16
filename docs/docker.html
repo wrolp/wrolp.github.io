@@ -74,7 +74,10 @@ why a container list is empty.</p>
   <li>One-shot and <strong>streaming logs</strong>.</li>
   <li>A three-layer analysis report.</li>
   <li>Browse container files.</li>
-  <li>Open a shell inside a container.</li>
+  <li>Open a shell inside a container. A local <code>docker exec</code> / <code>kubectl exec</code> shell browses the
+  container's filesystem rather than the host's drives: the inner cwd is detected right after the shell opens, that
+  directory's map is prefetched so a bare <code>ls</code> is coloured, and a failed <code>cd</code> keeps the previous
+  directory.</li>
 </ul>
 <h2 id="host-analysis">Host analysis</h2>
 <p><code>analyze_host</code> performs a <strong>read-only</strong> inspection of the server: OS, kernel, architecture,

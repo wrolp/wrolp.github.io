@@ -67,6 +67,7 @@ terminal should be read together.</p>
   <li>Context and namespace selectors, plus a search box.</li>
   <li>The default namespace filter is <strong>All namespaces</strong>.</li>
   <li>Namespace labels are coloured by name with a stable mapping, so the same namespace keeps its colour.</li>
+  <li>The saved context / namespace scope survives an empty-namespace validation.</li>
 </ul>
 
 <h2 id="resources">Resource kinds</h2>
@@ -80,7 +81,7 @@ configmaps and secrets.</p>
       <tr><td>Scale</td><td>Available on the shared row model</td></tr>
       <tr><td>Delete</td><td>Requires an in-app confirmation</td></tr>
       <tr><td>Logs</td><td>View or stream, with ANSI colours preserved</td></tr>
-      <tr><td>Pod shell</td><td>Enter a shell in a Pod</td></tr>
+      <tr><td>Pod shell</td><td>Enter a shell in a Pod; a local exec shell browses the container filesystem (chapter 7)</td></tr>
       <tr><td>Pod files</td><td>Browse files inside a Pod</td></tr>
       <tr><td>Port forwarding</td><td>Rules can be saved</td></tr>
     </tbody>

@@ -74,10 +74,32 @@
 <p>The hex view is read-only and says so in the page; image preview is display-only. Neither edits or saves binary
 content.</p>
 
+<h2 id="html-preview">HTML preview</h2>
+<p>An HTML file can be previewed in a sandboxed iframe. Scripts inside the preview cannot run in the application's
+origin, so a remote HTML file cannot reach the app.</p>
+
+<h2 id="sudo">Saving files the login user cannot write</h2>
+<ul>
+  <li><strong>Save with sudo</strong>: the bytes are staged over SFTP, then written with <code>sudo -S cp</code> on an
+  exec channel. The password travels only over stdin, and the temporary file is removed on every path.</li>
+  <li><strong>Save as another user</strong>: the credentials are verified first, and the elevation can be one-shot.</li>
+  <li>A failed save stays in a banner above the editor; the text you typed is never lost.</li>
+</ul>
+
 <h2 id="languages">Language support</h2>
 <p>The toolbar sets syntax highlighting manually from an alphabetically sorted list: plain text, JavaScript, TypeScript,
 JSON, HTML, CSS, SCSS, Less, XML, Markdown, Python, Rust, Go, Java, C, C++, C#, PHP, Ruby, Shell, YAML, INI/TOML, SQL,
-Dockerfile, Lua, Makefile, Nginx config and Properties/.env.</p>
+Dockerfile, Lua, Makefile, Nginx config, SSH Config and Properties/.env.</p>
+<ul>
+  <li><strong>Detection by content</strong>: when the file name says nothing, a shebang, a Vim/Emacs modeline or
+  first-line markup picks the language. The name table also covers systemd units, shell rc files, <code>.env.*</code>,
+  <code>ssh_config</code> and its drop-ins.</li>
+  <li><strong>SSH Config grammar</strong>: <code>ssh_config</code> has its own grammar and tokenizer.</li>
+  <li><strong>Line comments</strong>: <code>Ctrl+/</code> toggles line comments in nginx, properties, sshconfig, Makefile
+  and Dockerfile files.</li>
+  <li><strong>INI</strong>: after re-tokenising, <code>key: value</code>, indented or dotted keys and unquoted values no
+  longer render as one colour.</li>
+</ul>
 
 <h2 id="related">Related chapters</h2>
 <ul>

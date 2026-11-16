@@ -73,7 +73,9 @@
   <li>一次性日志与<strong>流式日志</strong>。</li>
   <li>三层分析报告。</li>
   <li>浏览容器内文件。</li>
-  <li>在容器内打开 shell。</li>
+  <li>在容器内打开 shell。本机 <code>docker exec</code> / <code>kubectl exec</code> 的 shell 浏览的是容器自己的
+  文件系统，而不是宿主机的磁盘：shell 打开后立即探测内层 cwd，并预取该目录的映射，裸 <code>ls</code> 也能按类型
+  着色；内层 <code>cd</code> 失败时保留原来的目录。</li>
 </ul>
 <h2 id="host-analysis">主机分析</h2>
 <p><code>analyze_host</code> 对服务器执行<strong>只读</strong>检查：操作系统、内核、架构、

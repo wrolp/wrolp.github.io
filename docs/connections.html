@@ -58,7 +58,7 @@
   <main id="main" class="doc-main">
     <p class="breadcrumb"><a href="index.html">User manual</a><span class="sep">/</span>Chapter 2</p>
 <h2 id="create">Creating a connection</h2>
-<p>Click <strong>+</strong> in the sidebar to open the new-connection dialog:</p>
+<p>Click <strong>+</strong> in the sidebar to open the new-connection dialog; the editor is a draggable window that stays above the command list:</p>
 <ul>
   <li><strong>Name</strong>: the label shown in the connection list.</li>
   <li><strong>Host / port / user</strong>: the target; the port defaults to 22.</li>
@@ -85,6 +85,7 @@ the terminal you have focused (details in chapters 7–9).</p>
   <li><strong>Terminal</strong>: xterm.js rendering, <code>xterm-256color</code> PTY, window-size synchronisation.</li>
   <li><strong>Keepalive</strong>: configurable interval and retry count.</li>
   <li><strong>Reconnect</strong>: a reconnect action reuses the same tab instance; a monotonically increasing <code>session_id</code> keeps stale background tasks from contaminating the new session.</li>
+  <li><strong>Prompts</strong>: the prompt is read from the rendered row, so zsh + powerlevel10k and CJK prompts keep <code>ls</code> links, command history and <code>cd</code> tracking; starship decorations are no longer taken for a working directory.</li>
 </ul>
 <h2 id="health">Connection health</h2>
 <p>Each tab shows a status dot driven by three backend events:</p>
@@ -103,11 +104,19 @@ the terminal you have focused (details in chapters 7–9).</p>
   baud rate, data bits, stop bits, parity and flow control. Baud-rate auto-detection tries each rate and ranks the
   results by how much the output looks like terminal text.</li>
   <li><strong>Local terminal</strong>: the local shell can be opened as a top-level tab or as a split pane beside remote
-  tabs.</li>
+  tabs; it belongs to the workspace that created it.</li>
+</ul>
+
+<h2 id="recent">Recent hosts and housekeeping</h2>
+<ul>
+  <li>A recent row can be <strong>forgotten</strong> without deleting the saved connection.</li>
+  <li>Groups are renamed in an app-styled modal; empty names are refused and <code>Esc</code> closes it.</li>
+  <li>Each group's collapsed state persists across restarts.</li>
 </ul>
 
 <h2 id="scan">Network scan</h2>
-<p>The <strong>Scan network</strong> button above the connection list finds open SSH / Telnet services in a range:</p>
+<p>The <strong>Scan network</strong> button above the connection list — or the titlebar's radar button — finds open
+SSH / Telnet services in a range. The hosts panel uses the same scan glyph:</p>
 <ul>
   <li><strong>Targets</strong>: CIDR (<code>192.168.1.0/24</code>), a single IP (<code>10.0.0.5</code>) or a last-octet range (<code>192.168.1.10-192.168.1.20</code>).</li>
   <li><strong>Ports</strong>: comma-separated, e.g. <code>22,2222</code>.</li>
